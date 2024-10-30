@@ -1,0 +1,72 @@
+.Header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px;
+}
+
+.App-logo{
+    height: 16vmin;
+    pointer-events: none;
+    margin-right: 10px;
+}
+
+.Header-text {
+    font-family: 'Jomhuria', sans-serif;
+    font-size: 100px;
+    color: #75A1DE;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    line-height: 1;
+    margin-right: auto;
+}
+
+.Header-buttons {
+    display: flex;
+    gap: 50px;
+    margin: 0px 20px;
+}
+
+.Header-button {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.LoginBtn {
+    background-color: #75A1DE;
+    color: #FEFEFE;
+}
+
+.SignUpBtn{
+    background-color: #4b5683;
+    color: #FEFEFE;
+}
+
+.LogoutBtn{
+    background-color: #682d43;
+    color: #FEFEFE;
+}
+
+.Header-button .Icon {
+    margin-right: 8px;
+    font-size: 30px;
+}
+
+/*Usamos los fonts importados*/
+@font-face {
+    font-family: 'Jomhuria';
+    src: url('./Fonts/Jomhuria-Regular.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+.Header-button:hover {
+    background-color: #303d69;
+}
+
+

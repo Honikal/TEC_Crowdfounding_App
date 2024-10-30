@@ -36,7 +36,7 @@ El archivo generado se ve de ésta manera:
 }
 ```
 
-## Instalación de Jest
+### Instalación de Jest
 Jest es una herramienta o Framework de testeo muy práctica en Javascript, suele usarse en proyectos usando Node, React, Angular y Vue. En éste caso será práctico pues lo usaremos en React, aunque por ahora en el Backend
 
 La instalación es simple, es solo de ejecutar éste comando:
@@ -89,3 +89,24 @@ Y en el directorio de nuestro frontend ejecutamos
 ```bash
 npm test
 ```
+
+### Instalación de Typescript
+
+Se es necesario o preferible usar typescript para tener control de tipos de datos en el sistema, para ésto, debemos de instalar un nodo de typescript y nodo types
+
+```bash
+npm install typescript @types/node
+```
+
+Luego, se requiere iniciar la configuración como tal
+
+```bash
+npx tsc --init
+```
+
+Y, también ya que usamos jest, nos sería práctico también instalar ésto ahí
+
+```bash
+npm install @types/jest
+```
+

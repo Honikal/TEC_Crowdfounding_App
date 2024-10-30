@@ -1,0 +1,105 @@
+/*Diseño de la página en general*/
+.LoginPage{
+    display: flex;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+/*Diseño del lado izquierdo (probablemente una imagen o algo)*/
+.Content-Left{
+    flex: 1;
+    padding: 20px;
+}
+
+
+/*Diseño del lado derecho (contenido del Login)*/
+.Content-Right{
+    flex: 1;
+    padding: 20px;
+    background-color: #A8CEFF;
+}
+.Form{
+    display: flex;
+    flex-direction: column;
+
+    margin: 10px 50px;
+    justify-content: center;
+}
+.Form h1{
+    margin: 13vmin auto 0px auto;
+
+    font-family: 'Jomhuria', sans-serif;
+    font-size: 110px;
+    text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.8);
+    color: #FFFFFF;
+}
+.Input {
+    display: flex;
+    align-items: center;
+    margin: 25px auto;
+    width: 45%;
+    padding: 20px;
+
+    background-color: #FEFEFE;
+    border-radius: 40px;
+}
+.Input input{
+    height: 3.3vmin;
+    width: 100%;
+    margin-right: 15px;
+
+    font-size: 28px;
+    border: none;
+}
+.icon{
+    font-size: 55px;
+    margin-right: 20px;
+}
+
+/*Sección botón*/
+.Login-btn {
+    margin: 14px auto; 
+    width: 25%;
+
+    background-color: #75A1DE;
+    transition: background-color 0.3s;
+
+    font-family: 'Kadwa', sans-serif;
+    font-size: 36px;
+    color: #FEFEFE;
+
+    border: none;
+    border-radius: 6cap;
+}
+.Login-btn:hover{
+    background-color: #303d69;
+}
+
+/*Todos los objetos que tengan manejo clickeable le asignamos ser parte de dicha clase*/
+.clickable{
+    cursor: pointer;
+}
+.Form a {
+    margin: 8px auto;
+
+    font-family: 'Kadwa', sans-serif;
+    font-size: 24px;
+    color: #FEFEFE;
+
+    cursor: pointer;
+}
+
+/*Usamos los fonts importados*/
+@font-face {
+    font-family: 'Jomhuria';
+    src: url('./Fonts/Jomhuria-Regular.ttf') format('truetype');
+    font-weight: lighter;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Kadwa';
+    src: url('./Fonts/Kadwa-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
