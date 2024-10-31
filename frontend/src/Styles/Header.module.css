@@ -4,29 +4,39 @@
     align-items: center;
     margin: 10px;
 }
+.HeaderLink{
+    margin-right: auto;
+    align-items: center;
+    text-decoration: none;
+}
+.MainHeaderSection{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
 
-.App-logo{
-    height: 16vmin;
+.AppLogo{
+    height: 12vmin;
+    width: 12vmin;
     pointer-events: none;
     margin-right: 10px;
 }
+.HeaderText {
+    margin: 0;
 
-.Header-text {
     font-family: 'Jomhuria', sans-serif;
-    font-size: 100px;
+    font-size: 12vmin;
     color: #75A1DE;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
     line-height: 1;
-    margin-right: auto;
 }
 
-.Header-buttons {
+.HeaderButtons {
     display: flex;
     gap: 50px;
     margin: 0px 20px;
 }
-
-.Header-button {
+.HeaderButton {
     display: flex;
     align-items: center;
     padding: 10px 20px;
@@ -35,6 +45,8 @@
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s;
+
+    text-decoration: none;
 }
 
 .LoginBtn {
@@ -52,7 +64,7 @@
     color: #FEFEFE;
 }
 
-.Header-button .Icon {
+.HeaderButton .Icon {
     margin-right: 8px;
     font-size: 30px;
 }

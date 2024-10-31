@@ -6,13 +6,13 @@
 }
 
 /*Diseño del lado izquierdo (probablemente una imagen o algo)*/
-.Content-Left{
+.ContentLeft{
     flex: 1;
     padding: 20px;
 }
 
 /*Diseño del lado derecho (contenido del Login)*/
-.Content-Right{
+.ContentRight{
     flex: 1;
     padding: 20px;
     background-color: #A8CEFF;
@@ -28,50 +28,76 @@
     margin: 13vmin auto 0px auto;
 
     font-family: 'Jomhuria', sans-serif;
-    font-size: 110px;
+    font-size: 12vmin;
     text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.8);
     color: #FFFFFF;
 }
-.Section-form{
+.SectionForm{
     display: flex;
     flex-direction: row;
 
     justify-content: space-between;
 }
+.InputController{
+    display: flex;
+    width: 100%;
+    margin: 25px 0px;
+
+
+    flex-direction: column;
+
+    justify-content: center;
+}
+
 
 /*Inputs*/
 .Input {
     display: flex;
     align-items: center;
-    margin: 25px auto;
-    width: 45%;
-    padding: 20px;
+    margin: 0px auto;
+    width: 80%;
+    padding: 4px 20px;
 
     background-color: #FEFEFE;
     border-radius: 40px;
 }
 .Input input{
-    height: 3.3vmin;
+    height: 5vmin;
     width: 100%;
-    margin-right: 15px;
-
-    font-size: 28px;
+    margin-right: 8px;
+    font-family: 'Kadwa', sans-serif;
+    font-size: 14px;
     border: none;
 }
 .icon{
-    font-size: 55px;
-    margin-right: 20px;
+    font-size: 40px;
+    margin-right: 10px;
 }
 
-.SignUp-btn {
+.ErrorIcon{
+    font-size: 1em;
+    color: #d32945;
+}
+.ErrorText{
+    margin-left: 1.8vmin;
+
+    font-family: 'Kadwa', sans-serif;
+    font-size: 12px;
+    color: #d32945;
+    text-align: left;
+}
+
+.SignupBtn {
     margin: 1.8em auto; 
-    width: 25%;
+    width: 35%;
+    padding: 10px;
 
     background-color: #75A1DE;
     transition: background-color 0.3s;
+    cursor: pointer;
 
     font-family: 'Kadwa', sans-serif;
-    font-size: 36px;
+    font-size: 24px;
     color: #FEFEFE;
 
     border: none;
@@ -79,6 +105,11 @@
 }
 .SignUp-btn:hover{
     background-color: #303d69;
+}
+
+/*Todos los objetos que tengan manejo clickeable le asignamos ser parte de dicha clase*/
+.clickable{
+    cursor: pointer;
 }
 
 /*Usamos los fonts importados*/

@@ -1,21 +1,24 @@
 import React, {useState, useEffect, ChangeEvent} from "react";
 import { FaUserCircle, FaUserLock, FaEye, FaEyeSlash } from 'react-icons/fa'
-import styles from '../Styles/LoginPage.module.css';
+import styles from '../Styles/ChangePassword.module.css';
 import { Link } from "react-router-dom";
 
 //Por cada uso de datos tipo object se ocupa un posible Interface
 interface User{
     email: string,
-    password: string
+    password: string,
+    confirmPassword: string
 };
 
-function LoginPage() {
+function ChangePassword() {
     const [usuario, setUsuario] = useState<User>({
         email: "",
-        password: ""
+        password: "",
+        confirmPassword: ""
     });
 
     const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
 
     //Función encargada de controlar el struct esperado para recibir datos de entrada del usuario
     const handleUserChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,19 +34,19 @@ function LoginPage() {
     }
 
     return (
-        <div className={styles.LoginPage}>
+        <div className={styles.ChangePasswordPage}>
             <div className={styles.ContentLeft}>
 
             </div>
             <div className={styles.ContentRight}>
                 <div className={styles.Form}>
-                    <h1>Es bueno verte de nuevo</h1>
+                    <h1>Cambiar contraseña</h1>
                     <div className={styles.Input}>
                         <FaUserCircle className={styles.icon}/>
                         <input
                             className="Input-Data"
                             type="email"
-                            placeholder="Usuario o correo"
+                            placeholder="Correo electrónico"
                             name="email"
                             onChange={handleUserChange}
                         />
@@ -63,18 +66,28 @@ function LoginPage() {
                             <FaEye className={`${styles.icon} ${styles.clickable}`} onClick={togglePasswordVissibility}/>
                         )}
                     </div>
+
+                    <div className={styles.Input}>
+                        <FaUserLock className={styles.icon}/>
+                        <input
+                            className="Input-Data"
+                            type={showConfirmPassword ? 'text' : 'password'}
+                            placeholder="Confirmar contraseña"
+                            name="confirmPassword"
+                            onChange={handleUserChange}
+                        />
+                        { showConfirmPassword ? (
+                            <FaEyeSlash className={`${styles.icon} ${styles.clickable}`} onClick={togglePasswordVissibility}/>
+                        ) : (
+                            <FaEye className={`${styles.icon} ${styles.clickable}`} onClick={togglePasswordVissibility}/>
+                        )}
+                    </div>
                     
-                    <button className= {`${styles.LoginBtn} ${styles.clickable}`}> Login</button>
-                    <Link to={'/change_password'}>
-                        <a>¿Olvidaste la contraseña?</a>
-                    </Link> 
-                    <Link to={'/signup'}>
-                        <a>Regístrate ahora</a>
-                    </Link>
+                    <button className={`${styles.ChangePassBtn} ${styles.clickable}`}>Cambiar Contraseña</button>
                 </div>
             </div>
         </div>
     )
 }
 
-export default LoginPage;
+export default ChangePassword;

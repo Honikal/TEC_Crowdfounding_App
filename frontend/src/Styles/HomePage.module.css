@@ -5,7 +5,7 @@
 }
 
 /*Contenido izquierdo de la aplicación*/
-.Content-Left{
+.ContentLeft{
     flex: 1;
     padding: 20px;
     background-color: #A8CEFF;
@@ -27,7 +27,7 @@
     margin-bottom: 30px;
 }   
 /*Botón que básicamente conecta al usuario a lo que requiere saber y a iniciar sesión de ser nuevo*/
-.Action-button{
+.ActionButton{
     padding: 10px 20px;
     font-size: 1.4em;
     color: #FEFEFE;
@@ -37,12 +37,12 @@
     cursor: pointer;
     transition: background-color 0.3s;
 }
-.Action-button:hover{
+.ActionButton:hover{
     background-color: #303d69;
 }
 
 /*Lado derecho donde se muestran todas las características*/
-.Content-Right{
+.ContentRight{
     flex: 1;
     padding: 20px;
     display: flex;

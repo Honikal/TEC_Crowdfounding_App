@@ -1,9 +1,10 @@
 import React, {useState, useEffect, ChangeEvent} from "react";
 import { FaUserCircle, FaIdCard, FaPhoneSquareAlt, FaUserLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { MdOutlineEmail, MdOutlineWork } from 'react-icons/md';
-import { GiReceiveMoney } from 'react-icons/gi'
+import { GiReceiveMoney } from 'react-icons/gi';
+import { BiSolidInfoCircle } from 'react-icons/bi';
 
-import '../Styles/SignUpPage.css';
+import styles from '../Styles/SignUpPage.module.css';
 
 //Por cada uso de datos tipo object se ocupa un posible Interface
 interface User{
@@ -12,7 +13,7 @@ interface User{
     email: string,
     work_area: string,
     telephone: string,
-    //budget inicial
+    budget: Number,
     password: string,
     confirmPassword: string
 };
@@ -24,11 +25,14 @@ function SignUpPage() {
         email: "",
         work_area: "",
         telephone: "",
+        budget: 0.00,
         password: "",
         confirmPassword: ""
     });
 
     const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [passwordStrength, setPasswordStrength] = useState<String>("");
+    const [errorMessages, setErrorMessages] = useState<{[key: string]: string}>({});
 
     //Función encargada de controlar el struct esperado para recibir datos de entrada del usuario
     const handleUserChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -36,129 +40,239 @@ function SignUpPage() {
             ...prev,
             [e.target.name]: e.target.value
         }));
+        //Hacemos función para validación dinámica
+        validateInput(e.target.name, e.target.value);
     }
 
     //Función encargada de manejar visualmente el cómo funciona el botón de toggle password
-    const togglePasswordVissibility = () => {
-        setShowPassword(!showPassword);
+    const togglePasswordVissibility = () => setShowPassword(!showPassword);
+
+    //Validaciones de datos iniciales
+    const validateInput = (name: string, value: string) => {
+        let error = "";
+
+        switch (name) {
+            case "email":
+                if (!/^[\w._%+-]+@estudiantec\.cr$/.test(value)){
+                    error = "Por favor usar un correo institucional de TEC (@estudiantec.cr)"
+                }
+                break;
+            case "telephone":
+                if (!/^[4,5,6,7,8][0-9]{3}-[0-9]{4}$/.test(value)){
+                    error = "Formato de teléfono incorrecto (ej. 8XXX-XXXX)";
+                }
+                break;
+            case "password":
+                setPasswordStrength(getPasswordStrength(value));
+                break;
+            case "confirmPassword":
+                if (value !== usuario.password) {
+                    error = "Las contraseñas no coinciden";
+                }
+                break;
+            default:
+                break;
+        }
+
+        setErrorMessages(prevErrors => ({ ...prevErrors, [name]: error }));
+    }
+
+    //Función para tomar la fuerza de la contraseña
+    const getPasswordStrength = (password : string) => {
+        if (password.length >= 8 && /[A-Z]/.test(password) && /\d/.test(password)){
+            return "Fuerte";
+        } else if (password.length >= 6) {
+            return "Medio";
+        } else {
+            return "Débil";
+        }
+    }
+
+    //Función encargada de hacer la validación del programa
+    const validateUserData = () => {
+        const requiredFields = ["name", "id", "email", "telephone", "password", "confirmPassword"];
+        let formIsValid = true;
+
+        //Ahora hacemos la validación de forma normal
+        requiredFields.forEach(field => {
+            if (!usuario[field as keyof User]) {
+                setErrorMessages(prevErrors => ({
+                    ...prevErrors,
+                    [field]: "Éste campo es obligatorio"
+                }));
+                formIsValid = false;
+            }
+        })
+
+        if (formIsValid) {
+            alert("Mockup de registro realizado exitosamente"); 
+        } else {
+            alert("No se puede registrar, corrija los errores");
+        }
     }
 
     return (
-        <div className="SignUpPage">
-            <div className="Content-Left">
-
-            </div>
-            <div className="Content-Right">
-                <div className="Form">
+        <div className={styles.SignUpPage}>
+            <div className={styles.ContentLeft}></div>
+            <div className={styles.ContentRight}>
+                <div className={styles.Form}>
                     <h1>Crear cuenta</h1>
 
-                    <div className="Section-form">
+                    <div className={styles.SectionForm}>
                         {/*Sección nombre de usuario e ID*/}
-                        <div className="Input">
-                            <FaUserCircle className="icon"/>
-                            <input
-                                className="InputData"
-                                type="text"
-                                placeholder="Nombre completo"
-                                name='name'
-                                onChange={handleUserChange}
-                            />
+                        <div className={styles.InputController}>
+                            <div className={styles.Input}>
+                                <FaUserCircle className={styles.icon}/>
+                                <input
+                                    className="InputData"
+                                    type="text"
+                                    placeholder="Nombre completo"
+                                    name='name'
+                                    onChange={handleUserChange}
+                                />
+                            </div>
+                            {errorMessages.name && 
+                                <small className={styles.ErrorText}>{errorMessages.name}</small>
+                            }
                         </div>
-                        <div className="Input">
-                            <FaIdCard className="icon"/>
-                            <input
-                                className="InputData"
-                                type="text"
-                                placeholder="ID de usuario"
-                                name='id'
-                                onChange={handleUserChange}
-                            />
+                        <div className={styles.InputController}>
+                            <div className={styles.Input}>
+                                <FaIdCard className={styles.icon}/>
+                                <input
+                                    className="InputData"
+                                    type="text"
+                                    placeholder="ID de usuario"
+                                    name='id'
+                                    onChange={handleUserChange}
+                                />
+                            </div>
+                            {errorMessages.id && 
+                                <small className={styles.ErrorText}>{errorMessages.id}</small>
+                            }
                         </div>
                     </div>
-
-                    <div className="Section-form">
+                        
+                    <div className={styles.SectionForm}>
                         {/*Sección Email y Área de trabajo*/}
-                        <div className="Input">
-                            <MdOutlineEmail className="icon"/>
-                            <input
-                                className="InputData"
-                                type="email"
-                                placeholder="Correo electrónico"
-                                name='email'
-                                onChange={handleUserChange}
-                            />
+                        <div className={styles.InputController}>
+                            <div className={styles.Input}>
+                                <MdOutlineEmail className={styles.icon}/>
+                                <input
+                                    className="InputData"
+                                    type="email"
+                                    placeholder="Correo electrónico"
+                                    name='email'
+                                    onChange={handleUserChange}
+                                />
+                            </div>
+                            {errorMessages.email && 
+                                <small className={styles.ErrorText}>{errorMessages.email}</small>
+                            }
                         </div>
-                        <div className="Input">
-                            <MdOutlineWork className="icon"/>
-                            <input
-                                className="InputData"
-                                type="text"
-                                placeholder="Área de trabajo"
-                                name='work_area'
-                                onChange={handleUserChange}
-                            />
+                        
+                        <div className={styles.InputController}>
+                            <div className={styles.Input}>
+                                <MdOutlineWork className={styles.icon}/>
+                                <input
+                                    className="InputData"
+                                    type="text"
+                                    placeholder="Área de trabajo"
+                                    name='work_area'
+                                    onChange={handleUserChange}
+                                />
+                            </div>
+                            {errorMessages.work_area && 
+                                <small className={styles.ErrorText}>{errorMessages.work_area}</small>
+                            }
                         </div>
                     </div>
 
-                    <div className="Section-form">
+                    <div className={styles.SectionForm}>
                         {/*Sección Teléfono y fondos iniciales*/}
-                        <div className="Input">
-                            <FaPhoneSquareAlt className="icon"/>
-                            <input
-                                className="InputData"
-                                type="tel"
-                                placeholder="Teléfono"
-                                name='telephone'
-                                onChange={handleUserChange}
-                            />
+                        <div className={styles.InputController}>
+                            <div className={styles.Input}>
+                                <FaPhoneSquareAlt className={styles.icon}/>
+                                <input
+                                    className="InputData"
+                                    type="tel"
+                                    placeholder="Teléfono"
+                                    name='telephone'
+                                    onChange={handleUserChange}
+                                />
+                            </div>
+                            {errorMessages.telephone && 
+                                <small className={styles.ErrorText}>{errorMessages.telephone}</small>
+                            }
                         </div>
-                        <div className="Input">
-                            <GiReceiveMoney className="icon"/>
-                            <input
-                                className="InputData"
-                                type="number"
-                                placeholder="Presupuesto inicial"
-                                //name='work_area'
-                                onChange={handleUserChange}
-                            />
+                        <div className={styles.InputController}>
+                            <div className={styles.Input}>
+                                <GiReceiveMoney className={styles.icon}/>
+                                <input
+                                    className="InputData"
+                                    type="number"
+                                    placeholder="Presupuesto inicial"
+                                    name='budget'
+                                    onChange={handleUserChange}
+                                />
+                                
+                            </div>
+                            {errorMessages.budget && (
+                                <>
+                                    <BiSolidInfoCircle className="Error-icon"/>
+                                    <small className={styles.ErrorText}>{errorMessages.budget}</small>
+                                </>
+                                )
+                            }
                         </div>
                     </div>
 
-                    <div className="Section-form">
+                    <div className={styles.SectionForm}>
                         {/*Sección Contraseña y Contraseñas*/}
-                        <div className="Input">
-                            <FaUserLock className="icon"/>
-                            <input
-                                className="InputData"
-                                type={showPassword ? 'text' : 'password'}
-                                placeholder="Contraseña"
-                                name='password'
-                                onChange={handleUserChange}
-                            />
-                            { showPassword ? (
-                                <FaEyeSlash className="icon clickable" onClick={togglePasswordVissibility}/>
-                            ) : (
-                                <FaEye className="icon clickable" onClick={togglePasswordVissibility}/>
-                            )}
+                        <div className={styles.InputController}>
+                            <div className={styles.Input}>
+                                <FaUserLock className={styles.icon}/>
+                                <input
+                                    className="InputData"
+                                    type={showPassword ? 'text' : 'password'}
+                                    placeholder="Contraseña"
+                                    name='password'
+                                    onChange={handleUserChange}
+                                />
+                                { showPassword ? (
+                                    <FaEyeSlash className={`${styles.icon} ${styles.clickable}`} onClick={togglePasswordVissibility}/>
+                                ) : (
+                                    <FaEye className={`${styles.icon} ${styles.clickable}`} onClick={togglePasswordVissibility}/>
+                                )}
+                            </div>
+                            <span className={styles.ErrorText}>{passwordStrength}</span>
+                            {errorMessages.password && 
+                                <small className={styles.ErrorText}>{errorMessages.password}</small>
+                            }
                         </div>
-                        <div className="Input">
-                            <FaUserLock className="icon"/>
-                            <input
-                                className="InputData"
-                                type={showPassword ? 'text' : 'password'}
-                                placeholder="Confirmar contraseña"
-                                name='confirmPassword'
-                                onChange={handleUserChange}
-                            />
-                            { showPassword ? (
-                                <FaEyeSlash className="icon clickable" onClick={togglePasswordVissibility}/>
-                            ) : (
-                                <FaEye className="icon clickable" onClick={togglePasswordVissibility}/>
-                            )}
+
+                        <div className={styles.InputController}>
+                            <div className={styles.Input}>
+                                <FaUserLock className={styles.icon}/>
+                                <input
+                                    className="InputData"
+                                    type={showPassword ? 'text' : 'password'}
+                                    placeholder="Confirmar contraseña"
+                                    name='confirmPassword'
+                                    onChange={handleUserChange}
+                                />
+                                { showPassword ? (
+                                    <FaEyeSlash className={`${styles.icon} ${styles.clickable}`} onClick={togglePasswordVissibility}/>
+                                ) : (
+                                    <FaEye className={`${styles.icon} ${styles.clickable}`} onClick={togglePasswordVissibility}/>
+                                )}
+                            </div>
+                            {errorMessages.confirmPassword && 
+                                <small className={styles.ErrorText}>{errorMessages.confirmPassword}</small>
+                            }
                         </div>
                     </div>
                     
-                    <button className="SignUp-btn">Sign Up</button>
+                    <button className={styles.SignupBtn} onClick={validateUserData}>Sign Up</button>
                 </div>
             </div>
         </div>
