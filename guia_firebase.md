@@ -13,9 +13,6 @@
 ```bash
 D:\Crowdfounding_App\frontend npm install -g firebase-tools
 ```
-```bash
-D:\Crowdfounding_App\frontend npm install firebase
-```
 Instalamos las herramientas de firebase y firebase como tal con éstos comandos
 3. Luego de ejecutarlo, debemos hacer sesion en google, para ésto, debemos de ejecutar el comando:
 ```bash
@@ -37,7 +34,12 @@ D:\Crowdfounding_App\frontend firebase init
 ![Selección de Configuración del Frontend](/docs/frontendConfiguration.png)
 7. Acá, elegiremos que se está usando un proyecto existente, y se elige el proyecto exacto.
 8. Acá, entraremos la opción de la configuración del Hosting, en la primera opción, debemos de asignar el valor como ***build***, luego, debemos de dar la opción de ***No***, pues usaremos múltiples pantallas, y finalmente, usaremos automatic builds, acá como es opcional, pondremos ***No***.
-9. Finalmente, es importante denotar que todos los cambios a denotar dentro del proyecto serán hechos dentro del Frontend, sin embargo, se requerirá hacer un deploy, para ésto podemos usar el siguiente comando:
+9. Una vez creado ésto, debemos saber que tenemos una carpeta llamada **build**, en la terminal debemos correr el comando:
+```bash
+D:\Crowdfounding_App\frontend npm run build
+```
+Mediante éste comando, damos a saber que el programa debe de tomar lo que tiene en el root '/', y debe considerarlo como ubicación del proyecto, por lo tanto, debe tomar todo lo de nuestro proyecto y considerarlo como build, mediante ésto, luego podremos pasarlo a hostear.
+10. Finalmente, es importante denotar que todos los cambios a denotar dentro del proyecto serán hechos dentro del Frontend, sin embargo, se requerirá hacer un deploy, para ésto podemos usar el siguiente comando:
 ```bash
 D:\Crowdfounding_App\frontend firebase deploy
 ```
