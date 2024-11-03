@@ -1,8 +1,11 @@
 .Header {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     align-items: center;
+    padding: 10px;
     margin: 10px;
+    width: 100%;
 }
 .HeaderLink{
     margin-right: auto;
@@ -33,14 +36,14 @@
 
 .HeaderButtons {
     display: flex;
-    gap: 50px;
+    gap: 40px;
     margin: 0px 20px;
 }
 .HeaderButton {
     display: flex;
     align-items: center;
     padding: 10px 20px;
-    font-size: 25px;
+    font-size: 1.3rem;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -66,7 +69,7 @@
 
 .HeaderButton .Icon {
     margin-right: 8px;
-    font-size: 30px;
+    font-size: 1.2rem;
 }
 
 /*Usamos los fonts importados*/
@@ -81,4 +84,120 @@
     background-color: #303d69;
 }
 
+@media (max-width: 1024px){
+    .HeaderText {
+        font-size: 9vmin;
+    }
+    .AppLogo{
+        height: 9vmin;
+        width: 9vmin;
+    }
+
+    .HeaderButtons{
+        gap: 10px;
+        max-width: 40%;
+    }
+
+    .HeaderButton{
+        font-size: 1.2rem;
+    }
+
+    .HeaderButton .Icon{
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 768px){
+    .Header {
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+
+    .AppLogo {
+        height: 8vmin;
+        width: 8vmin;
+    }
+
+    .HeaderText{
+        font-size: 8vmin;
+    }
+
+    .HeaderButtons{
+        width: 100%;
+        justify-content: space-evenly;
+    }
+
+    .HeaderButton{
+        font-size: 1rem;
+        padding: 6px 10px;
+        border-radius: 6px;
+    }
+
+    .HeaderButton .Icon {
+        margin-right: 8px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px){
+    .Header {
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .AppLogo {
+        height:8vmin;
+        width: 8vmin;
+    }
+    .HeaderText{
+        font-size: 8vmin;
+    }
+
+    .HeaderButtons{
+        width: 100%;
+        justify-content: space-evenly;
+        gap: 1.7vmin;
+        margin-bottom: 3px;
+    }
+
+    .HeaderButton{
+        font-size: 3.2vmin;
+        padding: 4px 10px;
+        border-radius: 4px;
+    }
+
+    .HeaderButton .Icon {
+        margin-right: 2px;
+        font-size: 2.6vmin;
+    }
+}
+
+
+/*Pantallas 4K*/
+@media (min-width: 2560px) {
+    .Header{
+        justify-content: space-between;
+    }
+    .HeaderText{
+        font-size: 14vmin;
+    }
+    .AppLogo{
+        height: 14vmin;
+        width: 14vmin;
+    }
+    .HeaderButtons{
+        gap: 10px;
+    }
+    .HeaderButton{
+        font-size: 3.5rem;
+        padding: 16px 40px;
+        border-radius: 20px;
+    }
+    .HeaderButton .Icon{
+        margin-right: 20px;
+        font-size: 3.3rem;
+    }
+
+
+}
 

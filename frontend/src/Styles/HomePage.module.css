@@ -1,7 +1,10 @@
 .Homepage {
     display: flex;
-    padding: 40px;
+    padding: 15px;
     min-height: 100vh;
+    flex-direction: row;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 /*Contenido izquierdo de la aplicación*/
@@ -13,7 +16,7 @@
 
 /*Slogan de la aplicación*/
 .Slogan{
-    font-size: 2.5em;
+    font-size: calc(1.4em + 1.7vw);
     font-weight: bold;
     color: #75A1DE;
     margin-top: 32vmin;
@@ -22,14 +25,14 @@
 /*Descripción ligera de la aplicación*/
 .Description {
     max-width: 24em;
-    font-size: 1.4em;
+    font-size: calc(1.4em + 0.5vw);
     flex-wrap: wrap;
     margin-bottom: 30px;
 }   
 /*Botón que básicamente conecta al usuario a lo que requiere saber y a iniciar sesión de ser nuevo*/
 .ActionButton{
     padding: 10px 20px;
-    font-size: 1.4em;
+    font-size: calc(1.4em + 0.5vw);
     color: #FEFEFE;
     background-color: #6b6e7a;
     border: none;
@@ -45,7 +48,8 @@
 .ContentRight{
     flex: 1;
     padding: 20px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr;
     flex-direction: column;
 }
 /*Diseño de cada una de las características*/
@@ -57,10 +61,53 @@
 }
 /*Título de cada característica*/
 .Feature h3{
-    font-size: 1.4em;
+    font-size: calc(2em + 0.6vw);
     margin-bottom: 10px;
 }
 /*Descripción de cada característica*/
 .Feature p{
-    font-size: 1.2em;
+    font-size: calc(1.2em + 0.4vw);
 }
+
+.Feature img{
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+/*Ajustes responsive para pantallas pequeñas*/
+@media (max-width: 768px) {
+    .Homepage {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .ContentLeft, .ContentRight {
+        width: 100%;
+        padding: 20px;
+    }
+    .Slogan {
+        font-size: 2em;
+        margin-top: 20px;
+    }
+    .Description{
+        font-size: 1.2em;
+    }
+    .ActionButton{
+        font-size: 1.2em;
+        padding: 8px 16px;
+    }
+
+    .Feature{
+        padding: 0.4vmin;
+        margin: 10px 0;
+    }
+    .Feature h3{
+        font-size: calc(1.2em + 0.6vw);
+        margin-bottom: 10px;
+    }
+    .Feature p{
+        font-size: calc(0.9em + 0.4vw);
+    }
+}
+

@@ -2,6 +2,7 @@ import React, {useState, useEffect, ChangeEvent} from "react";
 import { FaUserCircle, FaUserLock, FaEye, FaEyeSlash } from 'react-icons/fa'
 import styles from '../Styles/LoginPage.module.css';
 import { Link } from "react-router-dom";
+import { loginUser } from "../ConnectionToBackend/Routes/loginUser";
 
 //Por cada uso de datos tipo object se ocupa un posible Interface
 interface User{
@@ -10,24 +11,48 @@ interface User{
 };
 
 function LoginPage() {
-    const [usuario, setUsuario] = useState<User>({
-        email: "",
-        password: ""
-    });
-
+    const [email, setEmail] = useState<String>("");
+    const [password, setPassword] = useState<String>("");
     const [showPassword, setShowPassword] = useState<boolean>(false);
 
     //Función encargada de controlar el struct esperado para recibir datos de entrada del usuario
-    const handleUserChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setUsuario(prev => ({
-            ...prev,
-            [e.target.name]: e.target.value
-        }));
-    }
+    const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
+    const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
+    
 
     //Función encargada de manejar visualmente el cómo funciona el botón de toggle password
     const togglePasswordVissibility = () => {
         setShowPassword(!showPassword);
+    }
+
+    const validateEmail = (email: String) => {
+        // Usando expresiones regulares
+        const emailPattern = /^[\w._%+-]+@estudiantec\.cr$/;
+        return emailPattern.test(String(email).toLowerCase());
+    }
+
+    //Función principal, encargada primero de validar los datos y luego llamar al backend
+    const validateAndSubmit = async() => {
+        if (!email.trim() || !password.trim()){
+            alert('Campos obligatorios, por favor rellenar los campos para iniciar sesión');
+            return;
+        }
+
+        //Validación de correo electrónico que sea compatible
+        /*
+        if (!validateEmail(email)){
+            alert('Debe ingresar un correo institucional de estudiantec');
+            return;
+        }*/
+
+        //Una vez ya validado, iniciamos con el sistema
+        try {
+            const userData = await loginUser(email, password);
+            console.log('Información de usuario: ', userData);
+            alert('El usuario ha hecho sesión: ');
+        } catch (error){
+            alert('Inicio de sesión fallido, intenta de nuevo');
+        }
     }
 
     return (
@@ -45,7 +70,7 @@ function LoginPage() {
                             type="email"
                             placeholder="Usuario o correo"
                             name="email"
-                            onChange={handleUserChange}
+                            onChange={handleEmailChange}
                         />
                     </div>
                     <div className={styles.Input}>
@@ -55,7 +80,7 @@ function LoginPage() {
                             type={showPassword ? 'text' : 'password'}
                             placeholder="Contraseña"
                             name="password"
-                            onChange={handleUserChange}
+                            onChange={handlePasswordChange}
                         />
                         { showPassword ? (
                             <FaEyeSlash className={`${styles.icon} ${styles.clickable}`} onClick={togglePasswordVissibility}/>
@@ -64,7 +89,7 @@ function LoginPage() {
                         )}
                     </div>
                     
-                    <button className= {`${styles.LoginBtn} ${styles.clickable}`}> Login</button>
+                    <button className= {`${styles.LoginBtn} ${styles.clickable}`} onClick={validateAndSubmit}> Login</button>
                     <Link to={'/change_password'}>
                         <a>¿Olvidaste la contraseña?</a>
                     </Link> 

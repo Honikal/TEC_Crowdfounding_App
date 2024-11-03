@@ -32,6 +32,9 @@ function ChangePassword() {
     const togglePasswordVissibility = () => {
         setShowPassword(!showPassword);
     }
+    const toggleConfirmPasswordVissibility = () => {
+        setShowConfirmPassword(!showConfirmPassword);
+    }
 
     return (
         <div className={styles.ChangePasswordPage}>
@@ -77,9 +80,9 @@ function ChangePassword() {
                             onChange={handleUserChange}
                         />
                         { showConfirmPassword ? (
-                            <FaEyeSlash className={`${styles.icon} ${styles.clickable}`} onClick={togglePasswordVissibility}/>
+                            <FaEyeSlash className={`${styles.icon} ${styles.clickable}`} onClick={toggleConfirmPasswordVissibility}/>
                         ) : (
-                            <FaEye className={`${styles.icon} ${styles.clickable}`} onClick={togglePasswordVissibility}/>
+                            <FaEye className={`${styles.icon} ${styles.clickable}`} onClick={toggleConfirmPasswordVissibility}/>
                         )}
                     </div>
                     
@@ -87,7 +90,7 @@ function ChangePassword() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default ChangePassword;

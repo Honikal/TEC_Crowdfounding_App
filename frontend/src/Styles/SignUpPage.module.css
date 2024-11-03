@@ -1,7 +1,6 @@
 /*Diseño de la página en general*/
 .SignUpPage{
     display: flex;
-    padding: 20px;
     min-height: 100vh;
 }
 
@@ -20,8 +19,7 @@
 .Form{
     display: flex;
     flex-direction: column;
-
-    margin: 10px 50px;
+    margin: 10px;
     justify-content: center;
 }
 .Form h1{
@@ -42,8 +40,6 @@
     display: flex;
     width: 100%;
     margin: 25px 0px;
-
-
     flex-direction: column;
 
     justify-content: center;
@@ -55,7 +51,7 @@
     display: flex;
     align-items: center;
     margin: 0px auto;
-    width: 80%;
+    width: 83%;
     padding: 4px 20px;
 
     background-color: #FEFEFE;
@@ -66,23 +62,31 @@
     width: 100%;
     margin-right: 8px;
     font-family: 'Kadwa', sans-serif;
-    font-size: 14px;
+    font-size: 0.75rem;
     border: none;
 }
 .icon{
-    font-size: 40px;
+    font-size: 1.875rem;
     margin-right: 10px;
 }
 
+/*Sección de error*/
+.ErrorSection{
+    height: 2.4em;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin: 0 16px;
+}
 .ErrorIcon{
-    font-size: 1em;
+    font-size: 1.2rem;
     color: #d32945;
 }
 .ErrorText{
     margin-left: 1.8vmin;
 
     font-family: 'Kadwa', sans-serif;
-    font-size: 12px;
+    font-size: 0.625rem;
     color: #d32945;
     text-align: left;
 }

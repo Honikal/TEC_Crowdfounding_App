@@ -52,6 +52,11 @@ function SignUpPage() {
         let error = "";
 
         switch (name) {
+            case "id":
+                if(!/^[1-9]{1}-\d{4}-\d{4}$/.test(value)){
+                    error = "Por favor digitar la cédula de identificación (ej. 1-XXXX-XXXX)"
+                }
+                break;
             case "email":
                 if (!/^[\w._%+-]+@estudiantec\.cr$/.test(value)){
                     error = "Por favor usar un correo institucional de TEC (@estudiantec.cr)"
@@ -60,6 +65,11 @@ function SignUpPage() {
             case "telephone":
                 if (!/^[4,5,6,7,8][0-9]{3}-[0-9]{4}$/.test(value)){
                     error = "Formato de teléfono incorrecto (ej. 8XXX-XXXX)";
+                }
+                break;
+            case "budget":
+                if (parseFloat(value) < 0){
+                    error = "El número debe ser un valor entero";
                 }
                 break;
             case "password":
@@ -131,9 +141,10 @@ function SignUpPage() {
                                     onChange={handleUserChange}
                                 />
                             </div>
-                            {errorMessages.name && 
+                            <div className={styles.ErrorSection}>
+                                { errorMessages.name && <BiSolidInfoCircle className={styles.ErrorIcon}/>}
                                 <small className={styles.ErrorText}>{errorMessages.name}</small>
-                            }
+                            </div>
                         </div>
                         <div className={styles.InputController}>
                             <div className={styles.Input}>
@@ -141,14 +152,15 @@ function SignUpPage() {
                                 <input
                                     className="InputData"
                                     type="text"
-                                    placeholder="ID de usuario"
+                                    placeholder="N° de identificación"
                                     name='id'
                                     onChange={handleUserChange}
                                 />
                             </div>
-                            {errorMessages.id && 
+                            <div className={styles.ErrorSection}>
+                            { errorMessages.id && <BiSolidInfoCircle className={styles.ErrorIcon}/>}
                                 <small className={styles.ErrorText}>{errorMessages.id}</small>
-                            }
+                            </div>
                         </div>
                     </div>
                         
@@ -165,9 +177,10 @@ function SignUpPage() {
                                     onChange={handleUserChange}
                                 />
                             </div>
-                            {errorMessages.email && 
+                            <div className={styles.ErrorSection}>
+                                { errorMessages.email && <BiSolidInfoCircle className={styles.ErrorIcon}/>}
                                 <small className={styles.ErrorText}>{errorMessages.email}</small>
-                            }
+                            </div>
                         </div>
                         
                         <div className={styles.InputController}>
@@ -181,9 +194,10 @@ function SignUpPage() {
                                     onChange={handleUserChange}
                                 />
                             </div>
-                            {errorMessages.work_area && 
+                            <div className={styles.ErrorSection}>
+                                { errorMessages.work_area && <BiSolidInfoCircle className={styles.ErrorIcon}/>}
                                 <small className={styles.ErrorText}>{errorMessages.work_area}</small>
-                            }
+                            </div>
                         </div>
                     </div>
 
@@ -200,9 +214,10 @@ function SignUpPage() {
                                     onChange={handleUserChange}
                                 />
                             </div>
-                            {errorMessages.telephone && 
+                            <div className={styles.ErrorSection}>
+                                { errorMessages.telephone && <BiSolidInfoCircle className={styles.ErrorIcon}/>}
                                 <small className={styles.ErrorText}>{errorMessages.telephone}</small>
-                            }
+                            </div>
                         </div>
                         <div className={styles.InputController}>
                             <div className={styles.Input}>
@@ -213,19 +228,17 @@ function SignUpPage() {
                                     placeholder="Presupuesto inicial"
                                     name='budget'
                                     onChange={handleUserChange}
+                                    min={0}
                                 />
                                 
                             </div>
-                            {errorMessages.budget && (
-                                <>
-                                    <BiSolidInfoCircle className="Error-icon"/>
-                                    <small className={styles.ErrorText}>{errorMessages.budget}</small>
-                                </>
-                                )
-                            }
+                            <div className={styles.ErrorSection}>
+                                { errorMessages.budget && <BiSolidInfoCircle className={styles.ErrorIcon}/>}
+                                <small className={styles.ErrorText}>{errorMessages.budget}</small>
+                            </div>
                         </div>
                     </div>
-
+                    
                     <div className={styles.SectionForm}>
                         {/*Sección Contraseña y Contraseñas*/}
                         <div className={styles.InputController}>
@@ -244,10 +257,11 @@ function SignUpPage() {
                                     <FaEye className={`${styles.icon} ${styles.clickable}`} onClick={togglePasswordVissibility}/>
                                 )}
                             </div>
-                            <span className={styles.ErrorText}>{passwordStrength}</span>
-                            {errorMessages.password && 
+                            <div className={styles.ErrorSection}>
+                                <span className={styles.ErrorText}>{passwordStrength}</span>
+                                { errorMessages.password && <BiSolidInfoCircle className={styles.ErrorIcon}/>}
                                 <small className={styles.ErrorText}>{errorMessages.password}</small>
-                            }
+                            </div>
                         </div>
 
                         <div className={styles.InputController}>
@@ -266,9 +280,10 @@ function SignUpPage() {
                                     <FaEye className={`${styles.icon} ${styles.clickable}`} onClick={togglePasswordVissibility}/>
                                 )}
                             </div>
-                            {errorMessages.confirmPassword && 
+                            <div className={styles.ErrorSection}>
+                            { errorMessages.confirmPassword && <BiSolidInfoCircle className={styles.ErrorIcon}/>}
                                 <small className={styles.ErrorText}>{errorMessages.confirmPassword}</small>
-                            }
+                            </div>
                         </div>
                     </div>
                     
