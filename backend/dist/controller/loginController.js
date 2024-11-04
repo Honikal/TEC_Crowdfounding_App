@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginController = void 0;
+const axios_1 = __importDefault(require("axios"));
 //Acá haremos acceso a todas las rutas que puede acceder la aplicación
 const firebaseAdmin_1 = __importDefault(require("../config/firebaseAdmin"));
 const usersDBConnection_1 = __importDefault(require("../entities/usersDBConnection"));
@@ -31,16 +32,36 @@ const loginController = (req, res) => __awaiter(void 0, void 0, void 0, function
             return;
         }
         //Espacio de autenticación por Firebase y Token
-        //Inicializamos Usuario entidad y tomamos el usuario por correo
-        const usuarioEntidad = new usersDBConnection_1.default(firebaseAdmin_1.default);
-        const usuario = yield usuarioEntidad.authenticateUser(email, password);
-        //Checamos la existencia de un usuario
-        if (!usuario) {
-            res.status(404).send('Usuario no encontrado en la base de datos');
-            return;
+        let userRecord;
+        try {
+            userRecord = yield firebaseAdmin_1.default.auth().getUserByEmail(email);
         }
-        //Respondemos con la información del usuario
-        res.status(200).json(usuario);
+        catch (error) {
+            if (error.code === 'auth/user-not-found') {
+                res.status(404).send('Usuario no encontrado en la base de datos');
+                return;
+            }
+            throw error;
+        }
+        //Conectamos entidad completa con el sistema de autenticación de Firebase, llamando al REST API de éste
+        try {
+            //Haremos login desde firebase
+            const apiKey = process.env.API_KEY;
+            const signInResponse = yield axios_1.default.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${apiKey}`, { email, password, returnSecureToken: true });
+            //Si el valor de signInResponse retorna de forma correcta, el usuario inició sesión, podemos extraer el usuario
+            const usuarioEntidad = new usersDBConnection_1.default();
+            const usuario = yield usuarioEntidad.getUserByEmail(email);
+            res.status(200).json(usuario);
+        }
+        catch (authError) {
+            if (authError.response && authError.response.data && authError.response.data.error.message === 'INVALID_PASSWORD') {
+                res.status(401).send('Contraseña incorrecta');
+            }
+            else {
+                console.error('Login Error:', authError);
+                res.status(500).send('Error en autenticación de usuario');
+            }
+        }
     }
     catch (error) {
         console.error(error);

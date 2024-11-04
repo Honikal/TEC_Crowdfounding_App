@@ -4,19 +4,18 @@ import Usuario from '../models/users';
 export default class UsuarioEntidad {
     #dbRef;
 
-    constructor(app: any) {
+    constructor() {
         this.#dbRef = admin.database().ref('users');
     }
 
-    //GET Usuario  (Método de validación para usuario por correo y contraseña)
+    //GETTERS Usuario  (Método de validación para usuario por correo y contraseña)
     /**
-     * Función encargada de la validación de un usuario por correo y contraseña
+     * Función encargada de validar la existencia de un usuario antes de ingresar o iniciar sesión
      * @async
      * @param {String} email
-     * @param {String} password
      * @returns {Promise<Usuario>}       - Retorna true si encuentra un usuario con ese correo, sino, no retorna false
      */
-    async authenticateUser(email: string, password: string) {
+    async getUserByEmail(email: string) {
         try {
             const snapshot = await this.#dbRef.get();
             if (snapshot.exists()){
@@ -25,9 +24,39 @@ export default class UsuarioEntidad {
                     ...userData[id],
                     idUsuario: id
                 }));
-                return usuarios.find((user) => user.correo === email && user.password === password) || null;
+                return usuarios.find((user) => user.correo === email) || null;
             }
             return null;
+        } catch (error){
+            console.error("Error en la capa entidad, (authenticateUser): ", error);
+            throw error;
+        }
+    }
+
+
+    //ADD
+    /**
+     * Función encargada de la validación de un usuario por correo y contraseña
+     * @async
+     * @param {Usuario} usuario
+     * @returns {void}      
+     */
+    async addUsuario(usuario: Usuario) {
+        try {
+            const newUsuarioRef = this.#dbRef.push();
+            await newUsuarioRef.set(
+                {
+                    admin: usuario.isAdmin,
+                    activa: usuario.isActiva,
+                    nombre_completo: usuario.getNombre,
+                    cedula: usuario.getCedula,
+                    area_trabajo: usuario.getAreaTrabajo,
+                    presupuesto: usuario.getPresupuesto,
+                    telefono: usuario.getTelefono,
+                    correo: usuario.getCorreo,
+                    password: usuario.getPassword
+                }
+            );
         } catch (error){
             console.error("Error en la capa entidad, (authenticateUser): ", error);
             throw error;

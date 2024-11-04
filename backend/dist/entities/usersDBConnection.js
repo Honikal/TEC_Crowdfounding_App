@@ -27,28 +27,56 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const firebaseAdmin_1 = __importDefault(require("../config/firebaseAdmin"));
 const users_1 = __importDefault(require("../models/users"));
 class UsuarioEntidad {
-    constructor(app) {
+    constructor() {
         _UsuarioEntidad_dbRef.set(this, void 0);
         __classPrivateFieldSet(this, _UsuarioEntidad_dbRef, firebaseAdmin_1.default.database().ref('users'), "f");
     }
-    //GET Usuario  (Método de validación para usuario por correo y contraseña)
+    //GETTERS Usuario  (Método de validación para usuario por correo y contraseña)
     /**
-     * Función encargada de la validación de un usuario por correo y contraseña
+     * Función encargada de validar la existencia de un usuario antes de ingresar o iniciar sesión
      * @async
      * @param {String} email
-     * @param {String} password
      * @returns {Promise<Usuario>}       - Retorna true si encuentra un usuario con ese correo, sino, no retorna false
      */
-    authenticateUser(email, password) {
+    getUserByEmail(email) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const snapshot = yield __classPrivateFieldGet(this, _UsuarioEntidad_dbRef, "f").get();
                 if (snapshot.exists()) {
                     const userData = snapshot.val();
                     const usuarios = Object.keys(userData).map((id) => (Object.assign(Object.assign({}, userData[id]), { idUsuario: id })));
-                    return usuarios.find((user) => user.correo === email && user.password === password) || null;
+                    return usuarios.find((user) => user.correo === email) || null;
                 }
                 return null;
+            }
+            catch (error) {
+                console.error("Error en la capa entidad, (authenticateUser): ", error);
+                throw error;
+            }
+        });
+    }
+    //ADD
+    /**
+     * Función encargada de la validación de un usuario por correo y contraseña
+     * @async
+     * @param {Usuario} usuario
+     * @returns {void}
+     */
+    addUsuario(usuario) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const newUsuarioRef = __classPrivateFieldGet(this, _UsuarioEntidad_dbRef, "f").push();
+                yield __classPrivateFieldGet(this, _UsuarioEntidad_dbRef, "f").set({
+                    admin: usuario.isAdmin,
+                    activa: usuario.isActiva,
+                    nombre_completo: usuario.getCedula,
+                    cedula: usuario.getCedula,
+                    area_trabajo: usuario.getAreaTrabajo,
+                    presupuesto: usuario.getPresupuesto,
+                    telefono: usuario.getTelefono,
+                    correo: usuario.getCorreo,
+                    password: usuario.getPassword
+                });
             }
             catch (error) {
                 console.error("Error en la capa entidad, (authenticateUser): ", error);
