@@ -63,6 +63,25 @@ export default class UsuarioEntidad {
         }
     }
 
+    //EDIT Usuario
+    /**
+     * Función encargada de aplicar cambios en el sistema al usuario
+     * @async
+     * @param {string} idUsuario             - ID del usuario a modificar
+     * @param {data}   datosActualizar       - Struct con distintos datos del objeto a modificar
+     * @returns {void} No retorna nada, nada más aplica los cambios e imprime un console.log() verificando los cambios
+     */
+    async editUsuario(idUsuario: string, datosActualizar: any){
+        try {
+            const usuarioRef = this.#dbRef.child(idUsuario);
+            await usuarioRef.update(datosActualizar);
+            console.log("Confirmación capa entidad de actualización del usuario");
+        } catch (error) {
+            console.error("Error desde la capa entidad intentando modificar al usuario: ", error);
+            throw error;
+        }
+    }
+
     /**
      * Función encargada de aplicar formato de base de datos a usuario clase
      * @async
