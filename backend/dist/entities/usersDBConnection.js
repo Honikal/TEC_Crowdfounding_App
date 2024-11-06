@@ -55,6 +55,29 @@ class UsuarioEntidad {
             }
         });
     }
+    /**
+     * Función encargada de validar la existencia de un usuario antes de ingresar o iniciar sesión
+     * @async
+     * @param {string} id_usuario
+     * @returns {Promise<Usuario>}       - Retorna true si encuentra un usuario con ese correo, sino, no retorna false
+     */
+    getUserByID(id_usuario) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const snapshot = yield __classPrivateFieldGet(this, _UsuarioEntidad_dbRef, "f").child(id_usuario).get();
+                if (snapshot.exists()) {
+                    const usuarioData = snapshot.val();
+                    const usuario = this.createUsuarioFromData(usuarioData);
+                    return usuario;
+                }
+                return null;
+            }
+            catch (error) {
+                console.error("Error en la capa entidad, (authenticateUser): ", error);
+                throw error;
+            }
+        });
+    }
     //ADD
     /**
      * Función encargada de la validación de un usuario por correo y contraseña
@@ -66,20 +89,49 @@ class UsuarioEntidad {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const newUsuarioRef = __classPrivateFieldGet(this, _UsuarioEntidad_dbRef, "f").push();
-                yield __classPrivateFieldGet(this, _UsuarioEntidad_dbRef, "f").set({
-                    admin: usuario.isAdmin,
+                yield newUsuarioRef.set({
+                    rol: usuario.getRole,
                     activa: usuario.isActiva,
-                    nombre_completo: usuario.getCedula,
+                    nombre_completo: usuario.getNombre,
                     cedula: usuario.getCedula,
                     area_trabajo: usuario.getAreaTrabajo,
                     presupuesto: usuario.getPresupuesto,
                     telefono: usuario.getTelefono,
                     correo: usuario.getCorreo,
-                    password: usuario.getPassword
+                    password: usuario.getPassword,
+                    categorias: usuario.getCategorias,
                 });
             }
             catch (error) {
                 console.error("Error en la capa entidad, (authenticateUser): ", error);
+                throw error;
+            }
+        });
+    }
+    //EDIT Usuario
+    /**
+     * Función encargada de aplicar cambios en el sistema al usuario
+     * @async
+     * @param {string} idUsuario             - ID del usuario a modificar
+     * @param {data}   datosActualizar       - Struct con distintos datos del objeto a modificar
+     * @returns {void} No retorna nada, nada más aplica los cambios e imprime un console.log() verificando los cambios
+     */
+    editUsuario(idUsuario, datosActualizar) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const usuarioRef = __classPrivateFieldGet(this, _UsuarioEntidad_dbRef, "f").child(idUsuario);
+                const snapshot = yield usuarioRef.get();
+                //Checamos la existencia del proyecto, si no tiramos el error
+                if (!snapshot.exists()) {
+                    console.log(`Usuario con ID ${idUsuario} no encontrado.`);
+                    throw new Error(`El usuario ingresado no existe en la Base de Datos.`);
+                }
+                //Si funciona, entonces proceder con la actualización del proyecto
+                yield usuarioRef.update(datosActualizar);
+                console.log("Confirmación capa entidad de actualización del usuario");
+            }
+            catch (error) {
+                console.error("Error desde la capa entidad intentando modificar al usuario: ", error);
                 throw error;
             }
         });
@@ -92,8 +144,8 @@ class UsuarioEntidad {
      */
     createUsuarioFromData(usuarioData) {
         //Extraemos la data de la base de datos como tal
-        const { idUsuario, admin, activa, nombre_completo, cedula, area_trabajo, cantidad_bolsillo, telefono, correo, password } = usuarioData;
-        const usuario = new users_1.default(idUsuario, nombre_completo, cedula, area_trabajo, cantidad_bolsillo, telefono, correo, password, admin, activa);
+        const { idUsuario, activa, nombre_completo, cedula, area_trabajo, cantidad_bolsillo, telefono, correo, password, categorias, rol } = usuarioData;
+        const usuario = new users_1.default(idUsuario, nombre_completo, cedula, area_trabajo, cantidad_bolsillo, telefono, correo, password, activa, categorias, rol);
         return usuario;
     }
 }

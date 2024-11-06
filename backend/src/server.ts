@@ -5,6 +5,8 @@ import cors from 'cors';
 
 //Importamos las librerías de rutas
 import userRoutes from './routes/userRoutes';
+import projectRoutes from './routes/projectRoutes';
+import adminRoutes from './routes/adminRoutes';
 
 //Importamos dotenv
 const dotenv = require('dotenv');
@@ -32,6 +34,8 @@ app.use(express.json());
 const PORT = process.env.PORT || 8000;
 
 app.use('/', userRoutes);
+app.use('/', projectRoutes);
+app.use('/admin', adminRoutes);
 app.listen(PORT, () => {
     console.log(`Server está siendo ejecutado en puerto: ${PORT}`)
 })

@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 import axios from 'axios';
 
 //Acá haremos acceso a todas las rutas que puede acceder la aplicación
-import admin from '../config/firebaseAdmin';
-import UsuarioEntidad from '../entities/usersDBConnection';
+import admin from '../../config/firebaseAdmin';
+import UsuarioEntidad from '../../entities/usersDBConnection';
 
 export const loginController = async(req: Request, res: Response): Promise<void> => {
     try {
@@ -36,18 +36,24 @@ export const loginController = async(req: Request, res: Response): Promise<void>
 
         //Conectamos entidad completa con el sistema de autenticación de Firebase, llamando al REST API de éste
         try {
+            //Si el valor de signInResponse retorna de forma correcta, el usuario inició sesión, podemos extraer el usuario
+            const usuarioEntidad = new UsuarioEntidad();
+            const usuario = await usuarioEntidad.getUserByEmail(email);
+
+            //Checamos si el usuario es activo o no
+            if (!usuario.activa){
+                res.status(404).send('Se ha bloqueado el acceso a ésta cuenta, por favor comunicarse con soporte y atención para discutir la razón');
+                return;
+            }
+
             //Haremos login desde firebase
             const apiKey = process.env.API_KEY;
             const signInResponse = await axios.post(
                 `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${apiKey}`,
                 { email, password, returnSecureToken: true }
             )
-
-            //Si el valor de signInResponse retorna de forma correcta, el usuario inició sesión, podemos extraer el usuario
-            const usuarioEntidad = new UsuarioEntidad();
-            const usuario = await usuarioEntidad.getUserByEmail(email);
-            res.status(200).json(usuario);
             
+            res.status(200).json(usuario);
         } catch (authError: any) {
             if (authError.response && authError.response.data.error.message === 'INVALID_PASSWORD') {
                 res.status(401).send('Contraseña incorrecta');

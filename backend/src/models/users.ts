@@ -1,27 +1,23 @@
+export enum UserRole {
+    REGULAR = 'regular',
+    ADMIN = 'admin',
+    MENTOR = 'mentor'
+}
+
 export default class Usuario {
     #idUsuario: string;
-    #admin: boolean;
     #activa: boolean;
     #nombre: string;
     #cedula: string;
     #areaTrabajo: string;
     #presupuesto: number;
+    #categoriasPreferidas: string[];
     #telefono: string;
     #correo: string;
     #password: string;
+    #role: UserRole;
+    #mentorPrize?: number;
 
-    /**
-     * Constructor de clase Usuario
-     * @param {string} idUsuario            - ID única generada al ser guardado en RealTime Database de firebase
-     * @param {string} admin                - Nombre completo del usuario
-     * @param {string} nombre               - Nombre completo del usuario
-     * @param {string} cedula               - Valor id del usuario para identificar
-     * @param {string} areaTrabajo          - Departamento en el cual está trabajando
-     * @param {string} presupuesto          - Dinero inicial con el que se empieza o se tiene
-     * @param {string} telefono             - Número de teléfono de trabajo
-     * @param {string} correo               - Correo electrónico de trabajo
-     * @param {string} password             - Contraseña del usuario
-    */
     constructor (
         idUsuario = '',
         nombre = '',
@@ -31,27 +27,44 @@ export default class Usuario {
         telefono = '',
         correo = '',
         password = '',
-        admin = false,
-        activa = true
+        activa = true,
+        categoriasPreferidas = [],
+        role: UserRole = UserRole.REGULAR,
+        mentorPrize?: number, //Opcional para mentores
     ){
-        this.#idUsuario = idUsuario,
-        this.#admin = admin,
-        this.#activa = activa,
-        this.#nombre = nombre,
-        this.#cedula = cedula
-        this.#areaTrabajo = areaTrabajo,
-        this.#presupuesto = presupuesto,
-        this.#telefono = telefono,
-        this.#correo = correo,
-        this.#password = password
+        this.#idUsuario = idUsuario;
+        this.#role = role;
+        this.#activa = activa;
+        this.#nombre = nombre;
+        this.#cedula = cedula;
+        this.#areaTrabajo = areaTrabajo;
+        this.#categoriasPreferidas = categoriasPreferidas;
+        this.#presupuesto = presupuesto;
+        this.#telefono = telefono;
+        this.#correo = correo;
+        this.#password = password;
+        this.#mentorPrize = mentorPrize;
     }
 
     //getters
     get getIdUsuario(): string{
         return this.#idUsuario;
     }
+    //Validación para roles
+    get getRole(): UserRole{
+        return this.#role;
+    }
     get isAdmin(): boolean{
-        return this.#admin;
+        return this.#role === UserRole.ADMIN;
+    }
+    get isRegular(): boolean{
+        return this.#role === UserRole.REGULAR;
+    }
+    get isMentor(): boolean{
+        return this.#role === UserRole.MENTOR;
+    }
+    get mentorPrize(): number | undefined {
+        return this.#mentorPrize;
     }
     get isActiva(): boolean{
         return this.#activa;
@@ -61,6 +74,9 @@ export default class Usuario {
     }
     get getCedula(): string{
         return this.#cedula;
+    }
+    get getCategorias(): string[] {
+        return this.#categoriasPreferidas;
     }
     get getAreaTrabajo(): string{
         return this.#areaTrabajo;

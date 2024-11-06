@@ -33,6 +33,76 @@ export default class UsuarioEntidad {
         }
     }
 
+    /**
+     * Función encargada de validar la existencia de un usuario antes de ingresar o iniciar sesión
+     * @async
+     * @param {string} id_usuario
+     * @returns {Promise<Usuario>}       - Retorna true si encuentra un usuario con ese correo, sino, no retorna false
+     */
+    async getUserByID(id_usuario: string) {
+        try {
+            const snapshot = await this.#dbRef.child(id_usuario).get();
+            if (snapshot.exists()){
+                const usuarioData = snapshot.val(); 
+                const usuario = this.createUsuarioFromData(usuarioData);
+                return usuario;
+            }
+            return null;
+        } catch (error){
+            console.error("Error en la capa entidad, (authenticateUser): ", error);
+            throw error;
+        }
+    }
+
+    /**
+     * Función encargada de retornar la lista completa de usuarios dentro del sistema
+     * @async
+     * @returns {Promise<Usuario[]>}       - Retorna true si encuentra un usuario con ese correo, sino, no retorna false
+     */
+
+    async getUsers() {
+        try {
+            const snapshot = await this.#dbRef.get();
+            if (snapshot.exists()){
+                const usuarioData = snapshot.val(); 
+
+                const usuarios = Object.keys(usuarioData).map((id) => {
+                    const dataWithId = {
+                        ...usuarioData[id],
+                        idUsuario: id,
+                    };
+                    return this.createUsuarioFromData(dataWithId)
+                });
+                return usuarios;
+            }
+            return null;
+        } catch (error){
+            console.error("Error en la capa entidad, (authenticateUser): ", error);
+            throw error;
+        }
+    }
+    /*
+    async getUsers() {
+        try {
+            const snapshot = await this.#dbRef.get();
+            if (snapshot.exists()){
+                const usuarioData = snapshot.val(); 
+
+                const usuarios = Object.keys(usuarioData).map((id) => {
+                    return {
+                        ...usuarioData[id],
+                        idUsuario: id
+                    }
+                });
+                return usuarios;
+            }
+            return null;
+        } catch (error){
+            console.error("Error en la capa entidad, (authenticateUser): ", error);
+            throw error;
+        }
+    }
+    */
 
     //ADD
     /**
@@ -46,7 +116,7 @@ export default class UsuarioEntidad {
             const newUsuarioRef = this.#dbRef.push();
             await newUsuarioRef.set(
                 {
-                    admin: usuario.isAdmin,
+                    rol: usuario.getRole,
                     activa: usuario.isActiva,
                     nombre_completo: usuario.getNombre,
                     cedula: usuario.getCedula,
@@ -54,7 +124,8 @@ export default class UsuarioEntidad {
                     presupuesto: usuario.getPresupuesto,
                     telefono: usuario.getTelefono,
                     correo: usuario.getCorreo,
-                    password: usuario.getPassword
+                    password: usuario.getPassword,
+                    categorias: usuario.getCategorias,
                 }
             );
         } catch (error){
@@ -74,6 +145,15 @@ export default class UsuarioEntidad {
     async editUsuario(idUsuario: string, datosActualizar: any){
         try {
             const usuarioRef = this.#dbRef.child(idUsuario);
+            const snapshot = await usuarioRef.get();
+
+            //Checamos la existencia del proyecto, si no tiramos el error
+            if (!snapshot.exists()){
+                console.log(`Usuario con ID ${idUsuario} no encontrado.`);
+                throw new Error(`El usuario ingresado no existe en la Base de Datos.`);
+            }
+
+            //Si funciona, entonces proceder con la actualización del proyecto
             await usuarioRef.update(datosActualizar);
             console.log("Confirmación capa entidad de actualización del usuario");
         } catch (error) {
@@ -92,7 +172,6 @@ export default class UsuarioEntidad {
         //Extraemos la data de la base de datos como tal
         const {
             idUsuario,
-            admin,
             activa,
             nombre_completo,
             cedula,
@@ -100,7 +179,9 @@ export default class UsuarioEntidad {
             cantidad_bolsillo,
             telefono,
             correo,
-            password
+            password,
+            categorias,
+            rol
         } = usuarioData;
 
         const usuario = new Usuario(
@@ -112,8 +193,9 @@ export default class UsuarioEntidad {
             telefono,
             correo,
             password,
-            admin,
-            activa
+            activa,
+            categorias,
+            rol
         );
         return usuario;
     }

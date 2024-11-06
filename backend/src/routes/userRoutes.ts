@@ -1,9 +1,9 @@
 //Acá manejaremos todas las rutas de importancia relacionadas con usuario
 import { Router } from "express";
-import { loginController } from "../controller/loginController";
-import { signupController } from "../controller/signUpController";
-import { ChngPasswordController } from "../controller/chpassController";
-import { ModUserController } from "../controller/ModUserController";
+import { loginController } from "../controller/users/loginController";
+import { signupController } from "../controller/users/signUpController";
+import { ChngPasswordController } from "../controller/users/chpassController";
+import { ModUserController } from "../controller/users/ModUserController";
 
 const router = Router();
 

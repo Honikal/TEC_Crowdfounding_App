@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
 
 //Acá haremos acceso a todas las rutas que puede acceder la aplicación
-import admin from '../config/firebaseAdmin';
-import UsuarioEntidad from '../entities/usersDBConnection';
-import Usuario from '../models/users';
-import sendEmail from '../entities/emailSender';
+import admin from '../../config/firebaseAdmin';
+import UsuarioEntidad from '../../entities/usersDBConnection';
+import Usuario from '../../models/users';
+import { UserRole } from '../../models/users'
+import sendEmail from '../../entities/emailSender';
 
 export const signupController = async(req: Request, res: Response): Promise<void> => {
     try {
@@ -16,10 +17,10 @@ export const signupController = async(req: Request, res: Response): Promise<void
         }
 
         //Extraemos los datos
-        const { name, id, email, work_area, telephone, budget, password, confirmPassword } = req.body;
+        const { name, id, email, work_area, telephone, budget, password, confirmPassword, categories } = req.body;
 
         //Validamos si las entradas son válidas
-        if (!name || !id || !email || !work_area || !telephone || !budget || !password || !confirmPassword){
+        if (!name || !id || !email || !work_area || !categories || !telephone || !budget || !password || !confirmPassword){
             res.status(400).send('Todos los campos son requeridos');
             return;
         }
@@ -44,13 +45,13 @@ export const signupController = async(req: Request, res: Response): Promise<void
             //Paso 2: Si no existe error de usuario ya existente, guardamos el usuario en la base de datos
             //Crear un nuevo usuario en la base de datos
             const usuarioEntidad = new UsuarioEntidad();
-            const usuario = new Usuario('', name, id, work_area, budget, telephone, email, password, false, true);
+            const usuario = new Usuario('', name, id, work_area, budget, telephone, email, password, true, categories);
             usuarioEntidad.addUsuario(usuario);
 
             //Una vez el usuario si ha sido registrado, enviaremos un correo electrónico
             await sendEmail(
                 usuario.getCorreo,
-                'Bienvenido a Crowdfounder',
+                `Bienvenido a Crowdfounder ${usuario.getNombre}`,
                 'Bienvenido a Crowdfounder, aplicación del TEC donde podrás crear y producir tus futuros proyectos. Muchas gracias por unirte'
             );
             res.status(201).send('Usuario registrado exitosamente');

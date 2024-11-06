@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 
 //Acá haremos acceso a todas las rutas que puede acceder la aplicación
-import admin from '../config/firebaseAdmin';
-import UsuarioEntidad from '../entities/usersDBConnection';
-import sendEmail from '../entities/emailSender';
+import admin from '../../config/firebaseAdmin';
+import UsuarioEntidad from '../../entities/usersDBConnection';
+import sendEmail from '../../entities/emailSender';
 
 export const ModUserController = async(req: Request, res: Response): Promise<void> => {
     try {
