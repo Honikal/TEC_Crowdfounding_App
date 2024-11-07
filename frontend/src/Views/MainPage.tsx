@@ -14,7 +14,7 @@ function MainPage(){
     return (
         <div className={styles.Homepage}>
             <CategoryContent categories={categories}/>
-
+            
         </div>
     )
 }

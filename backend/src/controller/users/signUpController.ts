@@ -54,7 +54,10 @@ export const signupController = async(req: Request, res: Response): Promise<void
                 `Bienvenido a Crowdfounder ${usuario.getNombre}`,
                 'Bienvenido a Crowdfounder, aplicación del TEC donde podrás crear y producir tus futuros proyectos. Muchas gracias por unirte'
             );
-            res.status(201).send('Usuario registrado exitosamente');
+
+            //Enviamos el usuario al sistema
+            const user = usuarioEntidad.getUserByEmail(email);
+            res.status(200).json(user);
         } catch (authError: any) {
             if (authError.code === 'auth/email-already-exists'){
                 res.status(409).send('El usuario ya está registrado');

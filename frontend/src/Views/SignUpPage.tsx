@@ -4,7 +4,11 @@ import { MdOutlineEmail, MdOutlineWork } from 'react-icons/md';
 import { GiReceiveMoney } from 'react-icons/gi';
 import { BiSolidInfoCircle } from 'react-icons/bi';
 
+import { useNavigate } from "react-router-dom";
+
+
 import styles from '../Styles/SignUpPage.module.css';
+import { signUpUser } from "../ConnectionToBackend/Routes/signUpUser";
 
 //Por cada uso de datos tipo object se ocupa un posible Interface
 interface User{
@@ -15,7 +19,8 @@ interface User{
     telephone: string,
     budget: Number,
     password: string,
-    confirmPassword: string
+    confirmPassword: string,
+    categories: string[]
 };
 
 function SignUpPage() {
@@ -27,8 +32,12 @@ function SignUpPage() {
         telephone: "",
         budget: 0.00,
         password: "",
-        confirmPassword: ""
+        confirmPassword: "",
+        categories: ["tecnologia", "cocina", "videojuegos"]
     });
+
+    //Activamos la navegacion
+    const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [passwordStrength, setPasswordStrength] = useState<String>("");
@@ -99,7 +108,7 @@ function SignUpPage() {
     }
 
     //Función encargada de hacer la validación del programa
-    const validateUserData = () => {
+    const validateUserData = async() => {
         const requiredFields = ["name", "id", "email", "telephone", "password", "confirmPassword"];
         let formIsValid = true;
 
@@ -115,7 +124,12 @@ function SignUpPage() {
         })
 
         if (formIsValid) {
-            alert("Mockup de registro realizado exitosamente"); 
+            //alert("Mockup de registro realizado exitosamente"); 
+            console.log("Datos pasados: ", usuario);
+
+            const userData = await signUpUser(usuario);
+            console.log('Dato de usuario registrado: ', userData);
+            navigate("/main-page", { state: { user: userData } });
         } else {
             alert("No se puede registrar, corrija los errores");
         }
