@@ -78,6 +78,53 @@ class UsuarioEntidad {
             }
         });
     }
+    /**
+     * Función encargada de retornar la lista completa de usuarios dentro del sistema
+     * @async
+     * @returns {Promise<Usuario[]>}       - Retorna true si encuentra un usuario con ese correo, sino, no retorna false
+     */
+    getUsers() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const snapshot = yield __classPrivateFieldGet(this, _UsuarioEntidad_dbRef, "f").get();
+                if (snapshot.exists()) {
+                    const usuarioData = snapshot.val();
+                    const usuarios = Object.keys(usuarioData).map((id) => {
+                        const dataWithId = Object.assign(Object.assign({}, usuarioData[id]), { idUsuario: id });
+                        return this.createUsuarioFromData(dataWithId);
+                    });
+                    return usuarios;
+                }
+                return null;
+            }
+            catch (error) {
+                console.error("Error en la capa entidad, (authenticateUser): ", error);
+                throw error;
+            }
+        });
+    }
+    /*
+    async getUsers() {
+        try {
+            const snapshot = await this.#dbRef.get();
+            if (snapshot.exists()){
+                const usuarioData = snapshot.val();
+
+                const usuarios = Object.keys(usuarioData).map((id) => {
+                    return {
+                        ...usuarioData[id],
+                        idUsuario: id
+                    }
+                });
+                return usuarios;
+            }
+            return null;
+        } catch (error){
+            console.error("Error en la capa entidad, (authenticateUser): ", error);
+            throw error;
+        }
+    }
+    */
     //ADD
     /**
      * Función encargada de la validación de un usuario por correo y contraseña

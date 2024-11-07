@@ -53,9 +53,19 @@ const filterProjController = (req, res) => __awaiter(void 0, void 0, void 0, fun
             res.status(200).json([]); //No hay proyectos a filtrar
             return;
         }
+        console.log("Proyectos a mostrar: ", allProyectos);
         //Filtramos los proyectos basados en las categorías preferidas del usuario
         const categoriasPreferidas = usuarioInstancia.getCategorias;
-        const filteredProjects = allProyectos.filter(proyect => proyect.getCategoria.some((categoria) => categoriasPreferidas.includes(categoria)));
+        console.log("Categorias seleccionadas: ", categoriasPreferidas);
+        if (!categoriasPreferidas || categoriasPreferidas.length === 0) {
+            res.status(200).json(allProyectos);
+            return;
+        }
+        const filteredProjects = allProyectos.filter((proyect) => proyect.getCategoria.some(categoria => categoriasPreferidas.includes(categoria.toLowerCase())));
+        // Log filtered projects for debugging
+        filteredProjects.forEach((proyecto, index) => {
+            console.log(`Proyecto ${index}: ${proyecto.getNombre}`);
+        });
         //Respondemos con la lista de los proyectos
         res.status(200).json(filteredProjects);
     }

@@ -6,6 +6,10 @@ import HomePage from "../Views/HomePage";
 import LoginPage from "../Views/LoginPage";
 import SignUpPage from "../Views/SignUpPage";
 import ChangePassword from "../Views/ChangePassword";
+import MainPage from "../Views/MainPage";
+
+//Main Page
+
 
 //Acá nos encargaremos de manejar las rutas dentro de la página
 export const router = createBrowserRouter([
@@ -30,8 +34,14 @@ export const router = createBrowserRouter([
             },
             {
                 //Página de contraseña
-                path: "/change_password",
+                path: "/change-password",
                 element: <ChangePassword/>
+            },
+
+            {
+                //Página de inicio de usuario
+                path: "/main-page",
+                element: <MainPage/>
             }
         ]        
     }

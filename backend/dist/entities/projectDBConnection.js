@@ -90,7 +90,10 @@ class ProyectoEntidad {
                 const snapshot = yield __classPrivateFieldGet(this, _ProyectoEntidad_dbRef, "f").get();
                 if (snapshot.exists()) {
                     const proyectoData = snapshot.val();
-                    const proyectos = Object.keys(proyectoData).map((id) => (Object.assign(Object.assign({}, proyectoData[id]), { idUsuario: id })));
+                    const proyectos = Object.keys(proyectoData).map((id) => {
+                        const dataWithId = Object.assign(Object.assign({}, proyectoData[id]), { idUsuario: id });
+                        return this.createProyectoFromData(dataWithId);
+                    });
                     return proyectos;
                 }
                 return null;
@@ -101,6 +104,27 @@ class ProyectoEntidad {
             }
         });
     }
+    /*
+    async getProjectos() {
+        try {
+            const snapshot = await this.#dbRef.get();
+            if (snapshot.exists()){
+                const proyectoData = snapshot.val();
+
+                const proyectos = Object.keys(proyectoData).map((id) => {
+                    return {
+                        ...proyectoData[id],
+                        idProyecto: id
+                    }
+                });
+                return proyectos;
+            }
+            return null;
+        } catch (error){
+            console.error("Error en la capa entidad, (authenticateUser): ", error);
+            throw error;
+        }
+    }*/
     //ADD
     /**
      * Función encargada de la validación de un usuario por correo y contraseña

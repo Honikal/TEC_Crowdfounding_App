@@ -1,0 +1,60 @@
+.HeaderContainer{
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding: 0 15px;
+}
+
+/*Estilos para manejar los contenedores de categorias*/
+.categoriesContainer{
+    display: flex;
+    justify-content: space-between;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    gap: 10px;
+    padding: 10px;
+    white-space: nowrap;
+    flex-grow: 1;
+}
+.categoryButton{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: hsl(0, 0%, 95%);
+    padding: 8px 12px;
+    border: 1px solid #F1F1F1;
+    cursor: pointer;
+    font-family: 'Kadwa', sans-serif;
+    font-size: 0.9rem;
+    color: #75A1DE;
+    white-space: nowrap;
+    transition: background-color 0.2s;
+}
+
+
+/*Estilos de los botones para selección o scroll*/
+.Scrollbutton{  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    z-index: 1;
+}
+.ScrollIcon{
+    font-size: 1.1rem;
+    color: #75A1DE
+}
+
+/*Usamos los fonts importados*/
+@font-face {
+    font-family: 'Kadwa';
+    src: url('./Fonts/Kadwa-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
