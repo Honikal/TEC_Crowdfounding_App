@@ -84,4 +84,20 @@ export default class Proyecto {
     get getMedia(): string[] {
         return this.#media;
     }
+
+    toJson(){
+        return {
+            idProyecto: this.#idProyecto,
+            id_creador: this.#idCreador,
+            activa: this.#activa,
+            nombre: this.#nombre,
+            descripcion: this.#descripcion,
+            categorias: this.#categoria,
+            fecha_creacion: this.#fechaCreacion,
+            fecha_limite: this.#fechaLimite,
+            fondos_recaudados: this.#fondosRecaudados,
+            objetivo_financiero: this.#objetivoFinanciero,
+            media: this.#media
+        }
+    }
 }

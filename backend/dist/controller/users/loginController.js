@@ -56,7 +56,8 @@ const loginController = (req, res) => __awaiter(void 0, void 0, void 0, function
             //Haremos login desde firebase
             const apiKey = process.env.API_KEY;
             const signInResponse = yield axios_1.default.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${apiKey}`, { email, password, returnSecureToken: true });
-            res.status(200).json(usuario);
+            const retornarUsuario = usuarioEntidad.createUsuarioFromData(usuario).toJson();
+            res.status(200).json(retornarUsuario);
         }
         catch (authError) {
             if (authError.response && authError.response.data.error.message === 'INVALID_PASSWORD') {

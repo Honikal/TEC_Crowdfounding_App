@@ -191,8 +191,8 @@ class UsuarioEntidad {
      */
     createUsuarioFromData(usuarioData) {
         //Extraemos la data de la base de datos como tal
-        const { idUsuario, activa, nombre_completo, cedula, area_trabajo, cantidad_bolsillo, telefono, correo, password, categorias, rol } = usuarioData;
-        const usuario = new users_1.default(idUsuario, nombre_completo, cedula, area_trabajo, cantidad_bolsillo, telefono, correo, password, activa, categorias, rol);
+        const { idUsuario, activa, nombre_completo, cedula, area_trabajo, presupuesto, telefono, correo, password, categorias, rol } = usuarioData;
+        const usuario = new users_1.default(idUsuario, nombre_completo, cedula, area_trabajo, presupuesto, telefono, correo, password, activa, categorias, rol);
         return usuario;
     }
 }

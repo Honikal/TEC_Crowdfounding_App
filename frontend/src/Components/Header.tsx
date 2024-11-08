@@ -97,6 +97,9 @@ function Header(){
                                     <button className={styles.DropdownItem} onClick={configUser}>
                                         Configurar usuario
                                     </button>
+                                    <button className={styles.DropdownItem}>
+                                        Mis Proyectos
+                                    </button>
                                     <button className={styles.DropdownItem} onClick={logingOut}>
                                         Logout
                                     </button>

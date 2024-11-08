@@ -54,7 +54,9 @@ const signupController = (req, res) => __awaiter(void 0, void 0, void 0, functio
             usuarioEntidad.addUsuario(usuario);
             //Una vez el usuario si ha sido registrado, enviaremos un correo electrónico
             yield (0, emailSender_1.default)(usuario.getCorreo, `Bienvenido a Crowdfounder ${usuario.getNombre}`, 'Bienvenido a Crowdfounder, aplicación del TEC donde podrás crear y producir tus futuros proyectos. Muchas gracias por unirte');
-            res.status(201).send('Usuario registrado exitosamente');
+            //Enviamos el usuario al sistema
+            const user = usuarioEntidad.createUsuarioFromData(yield usuarioEntidad.getUserByEmail(email));
+            res.status(200).json(user.toJson());
         }
         catch (authError) {
             if (authError.code === 'auth/email-already-exists') {

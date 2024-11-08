@@ -12,8 +12,6 @@ function CategoryContent( { categories }: CategoryContentProps){
 
     const [isOverflowing, setIsOverflowing] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
-    console.log("Categorias pasadas a CategoryContent: ")
-
     const checkOverflow = () => {
         const container = containerRef.current;
         if (container){

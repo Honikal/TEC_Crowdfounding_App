@@ -88,15 +88,15 @@ class ProyectoEntidad {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const snapshot = yield __classPrivateFieldGet(this, _ProyectoEntidad_dbRef, "f").get();
-                if (snapshot.exists()) {
-                    const proyectoData = snapshot.val();
-                    const proyectos = Object.keys(proyectoData).map((id) => {
-                        const dataWithId = Object.assign(Object.assign({}, proyectoData[id]), { idUsuario: id });
-                        return this.createProyectoFromData(dataWithId);
-                    });
-                    return proyectos;
+                if (!snapshot.exists()) {
+                    return [];
                 }
-                return null;
+                const proyectoData = snapshot.val();
+                const proyectos = Object.keys(proyectoData).map((id) => {
+                    const dataWithId = Object.assign(Object.assign({}, proyectoData[id]), { idProyecto: id });
+                    return this.createProyectoFromData(dataWithId);
+                });
+                return proyectos;
             }
             catch (error) {
                 console.error("Error en la capa entidad, (authenticateUser): ", error);
@@ -191,7 +191,7 @@ class ProyectoEntidad {
      */
     createProyectoFromData(proyectoData) {
         //Extraemos la data de la base de datos como tal
-        const { idProyecto, id_creador, activa, nombre, descripcion, categorias, objetivo_financiero, fondos_recaudados, fecha_creacion, fecha_limite, media } = proyectoData;
+        const { idProyecto, id_creador, activa, nombre, descripcion, categorias, objetivo_financiero, fondos_recaudados, fecha_creacion, fecha_limite, media = [] } = proyectoData;
         const proyecto = new projects_1.default(idProyecto, id_creador, activa, nombre, descripcion, categorias, objetivo_financiero, fondos_recaudados, fecha_creacion, fecha_limite, media);
         return proyecto;
     }

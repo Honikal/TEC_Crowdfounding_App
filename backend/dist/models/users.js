@@ -93,6 +93,22 @@ class Usuario {
     get getPassword() {
         return __classPrivateFieldGet(this, _Usuario_password, "f");
     }
+    toJson() {
+        return {
+            idUsuario: __classPrivateFieldGet(this, _Usuario_idUsuario, "f"),
+            activa: __classPrivateFieldGet(this, _Usuario_activa, "f"),
+            nombre: __classPrivateFieldGet(this, _Usuario_nombre, "f"),
+            cedula: __classPrivateFieldGet(this, _Usuario_cedula, "f"),
+            areaTrabajo: __classPrivateFieldGet(this, _Usuario_areaTrabajo, "f"),
+            presupuesto: __classPrivateFieldGet(this, _Usuario_presupuesto, "f"),
+            categorias: __classPrivateFieldGet(this, _Usuario_categoriasPreferidas, "f"),
+            telefono: __classPrivateFieldGet(this, _Usuario_telefono, "f"),
+            correo: __classPrivateFieldGet(this, _Usuario_correo, "f"),
+            password: __classPrivateFieldGet(this, _Usuario_password, "f"),
+            role: __classPrivateFieldGet(this, _Usuario_role, "f"),
+            mentorPrize: __classPrivateFieldGet(this, _Usuario_mentorPrize, "f")
+        };
+    }
 }
 _Usuario_idUsuario = new WeakMap(), _Usuario_activa = new WeakMap(), _Usuario_nombre = new WeakMap(), _Usuario_cedula = new WeakMap(), _Usuario_areaTrabajo = new WeakMap(), _Usuario_presupuesto = new WeakMap(), _Usuario_categoriasPreferidas = new WeakMap(), _Usuario_telefono = new WeakMap(), _Usuario_correo = new WeakMap(), _Usuario_password = new WeakMap(), _Usuario_role = new WeakMap(), _Usuario_mentorPrize = new WeakMap();
 exports.default = Usuario;

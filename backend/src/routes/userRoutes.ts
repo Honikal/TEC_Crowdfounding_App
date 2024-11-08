@@ -5,6 +5,7 @@ import { signupController } from "../controller/users/signUpController";
 import { ChngPasswordController } from "../controller/users/chpassController";
 import { ModUserController } from "../controller/users/ModUserController";
 import { logoutController } from "../controller/users/logoutController";
+import { getProjectsController } from "../controller/admin/getProjectsController";
 
 const router = Router();
 
@@ -14,5 +15,7 @@ router.post('/signup', signupController);
 router.post('/change-password', ChngPasswordController);
 router.post('/user-settings', ModUserController);
 router.post('/logout', logoutController);
+
+router.get('/main-page', getProjectsController)
 
 export default router;

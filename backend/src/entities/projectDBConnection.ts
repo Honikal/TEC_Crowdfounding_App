@@ -63,19 +63,19 @@ export default class ProyectoEntidad {
     async getProjectos() {
         try {
             const snapshot = await this.#dbRef.get();
-            if (snapshot.exists()){
-                const proyectoData = snapshot.val();
-
-                const proyectos = Object.keys(proyectoData).map((id) => {
-                    const dataWithId = {
-                        ...proyectoData[id],
-                        idUsuario: id,
-                    };
-                    return this.createProyectoFromData(dataWithId)
-                });
-                return proyectos;
+            if (!snapshot.exists()){
+                return [];
             }
-            return null;
+            const proyectoData = snapshot.val();
+            const proyectos = Object.keys(proyectoData).map((id) => {
+                const dataWithId = {
+                    ...proyectoData[id],
+                    idProyecto: id,
+                };
+                //return this.createProyectoFromData(dataWithId);
+                return dataWithId;
+            });
+            return proyectos;
         } catch (error){
             console.error("Error en la capa entidad, (authenticateUser): ", error);
             throw error;
@@ -180,7 +180,7 @@ export default class ProyectoEntidad {
             fondos_recaudados,
             fecha_creacion,
             fecha_limite,
-            media 
+            media = []
         } = proyectoData;
 
         const proyecto = new Proyecto(
