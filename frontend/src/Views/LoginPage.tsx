@@ -2,6 +2,7 @@ import React, {useState, useEffect, ChangeEvent} from "react";
 import { FaUserCircle, FaUserLock, FaEye, FaEyeSlash } from 'react-icons/fa'
 import styles from '../Styles/LoginPage.module.css';
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from '../Components/AuthContext'
 import { loginUser } from "../ConnectionToBackend/Routes/loginUser";
 
 //Por cada uso de datos tipo object se ocupa un posible Interface
@@ -11,6 +12,8 @@ interface User{
 };
 
 function LoginPage() {
+    const { isAuthenticated, login, logout } = useAuth();
+
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -42,16 +45,19 @@ function LoginPage() {
         }
 
         //Validación de correo electrónico que sea compatible
+        /*
         if (!validateEmail(email)){
             alert('Debe ingresar un correo institucional de estudiantec');
             return;
         }
+        */
         
         //Una vez ya validado, iniciamos con el sistema
         try {
             const userData = await loginUser(email, password);
             //console.log('Información de usuario: ', userData);
             //alert('El usuario ha hecho sesión: ');
+            login();
             navigate("/main-page", { state: {user: userData } })
         } catch (error){
             alert('Inicio de sesión fallido, intenta de nuevo');

@@ -93,4 +93,21 @@ export default class Usuario {
     get getPassword(): string{
         return this.#password;
     }
+
+    toJson(){
+        return {
+            idUsuario: this.#idUsuario,
+            activa: this.#activa,
+            nombre: this.#nombre,
+            cedula: this.#cedula,
+            areaTrabajo: this.#areaTrabajo,
+            presupuesto: this.#presupuesto,
+            categorias: this.#categoriasPreferidas,
+            telefono: this.#telefono,
+            correo: this.#correo,
+            password: this.#password,
+            role: this.#role,
+            mentorPrize: this.#mentorPrize
+        }
+    }
 }

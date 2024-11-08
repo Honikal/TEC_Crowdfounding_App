@@ -3,12 +3,12 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    margin: 10px;
+    padding: 1.302vmin;
     width: 100%;
+    box-sizing: border-box;
 }
 .HeaderLink{
-    margin-right: auto;
+    display: flex;
     align-items: center;
     text-decoration: none;
 }
@@ -17,35 +17,35 @@
     flex-direction: row;
     align-items: center;
 }
-
 .AppLogo{
-    height: 12vmin;
-    width: 12vmin;
+    height: 10vmin;
+    width: 10vmin;
     pointer-events: none;
-    margin-right: 10px;
+    margin-right: 1.302vmin;
 }
 .HeaderText {
     margin: 0;
 
     font-family: 'Jomhuria', sans-serif;
-    font-size: 12vmin;
+    font-size: 10vmin;
     color: #75A1DE;
     text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
     line-height: 1;
 }
 
+
 .HeaderButtons {
     display: flex;
-    gap: 40px;
-    margin: 0px 20px;
+    gap: 5.208vmin;
+    margin: 0px 2.604vmin;
 }
 .HeaderButton {
     display: flex;
     align-items: center;
-    padding: 10px 20px;
-    font-size: 1.3rem;
+    padding: 1.302vmin 2.604vmin;
+    font-size: 2.708vmin;
     border: none;
-    border-radius: 8px;
+    border-radius: 1.042vmin;
     cursor: pointer;
     transition: background-color 0.3s;
 
@@ -62,15 +62,126 @@
     color: #FEFEFE;
 }
 
+.userBtn{
+    padding: 10px 12px;
+    border: none;
+    border-radius: 2.1rem;
+    background-color: #682d43;
+    color: #75A1DE;
+    font-size: 1.1rem;
+
+    cursor: pointer;
+}
+
 .LogoutBtn{
     background-color: #682d43;
     color: #FEFEFE;
 }
 
+/*Sección de dropdown*/
+.UserDropdown{
+    position: absolute;
+    background-color: #ffffff;
+    box-shadow: 0 8px 16px 4px rbga(0, 0, 0, 0.5);
+    width: 225px;
+    right: 20px;
+    top: 60px;
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 10;
+}
+.UserDetails{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.UserImage{
+    width: 6.51vmin;
+    height: 6.51vmin;
+    background-color: #ccc;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    color: white;
+}   
+.ProfileIcon{
+    font-size: 1.5rem;
+}
+.UserInfo{
+    margin-left: 10px;
+    color: black;
+    font-family: 'Kadwa', sans-serif;
+    font-size: 0.8rem;
+}
+p{
+    margin: 0
+}
+.DropdownItem{
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    color: black;
+    text-decoration: none;
+    background: none;
+
+    text-align: left;
+    border: none;
+
+    cursor: pointer;
+}
+.DropdownItem:hover {
+    background-color: #dbd6d6;
+}
+
 .HeaderButton .Icon {
     margin-right: 8px;
-    font-size: 1.2rem;
+    font-size: 2.708vmin;
 }
+
+/*Sección de búsqueda*/
+.searchContainer {
+    display: flex;
+
+    padding-left: 1.2rem;
+}
+.searchContainerInput{
+    display: flex;
+
+    align-items: center;
+
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+
+    box-shadow: 0px 6px 16px 0px rgba(0, 0, 0, 0.12);
+}
+.searchInput{
+    width: 80%;
+    padding: 0.5rem;
+    margin-right: 5px;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+}
+.searchButton{
+    margin-left: 5px;
+
+    background-color: #75A1DE;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: white;
+    border-radius: 2px;
+    cursor: pointer;
+}
+.searchIcon{
+    margin-left: 10px;
+    width: 1.2rem;
+    height: 1.2rem;
+    color: #ccc;
+}
+
 
 /*Usamos los fonts importados*/
 @font-face {
@@ -79,6 +190,13 @@
     font-weight: 100;
     font-style: normal;
 }
+@font-face {
+    font-family: 'Kadwa';
+    src: url('./Fonts/Kadwa-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 
 .Header-button:hover {
     background-color: #303d69;
@@ -86,11 +204,11 @@
 
 @media (max-width: 1024px){
     .HeaderText {
-        font-size: 9vmin;
+        font-size: 8vmin;
     }
     .AppLogo{
-        height: 9vmin;
-        width: 9vmin;
+        height: 8vmin;
+        width: 8vmin;
     }
 
     .HeaderButtons{
@@ -114,12 +232,12 @@
     }
 
     .AppLogo {
-        height: 8vmin;
-        width: 8vmin;
+        height: 6vmin;
+        width: 6vmin;
     }
 
     .HeaderText{
-        font-size: 8vmin;
+        font-size: 6vmin;
     }
 
     .HeaderButtons{
@@ -137,6 +255,10 @@
         margin-right: 8px;
         font-size: 1.1rem;
     }
+
+    .SearchInput, .SearchButton {
+        font-size: 0.9rem;  /* Adjust font size for smaller devices */
+    }
 }
 
 @media (max-width: 480px){
@@ -146,11 +268,11 @@
     }
 
     .AppLogo {
-        height:8vmin;
-        width: 8vmin;
+        height:6vmin;
+        width: 6vmin;
     }
     .HeaderText{
-        font-size: 8vmin;
+        font-size: 6vmin;
     }
 
     .HeaderButtons{

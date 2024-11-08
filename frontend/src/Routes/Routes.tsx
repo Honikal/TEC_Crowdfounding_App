@@ -7,6 +7,7 @@ import LoginPage from "../Views/LoginPage";
 import SignUpPage from "../Views/SignUpPage";
 import ChangePassword from "../Views/ChangePassword";
 import MainPage from "../Views/MainPage";
+import ModifyUserPage from "../Views/ModifyUserPage";
 
 //Main Page
 
@@ -36,6 +37,11 @@ export const router = createBrowserRouter([
                 //Página de contraseña
                 path: "/change-password",
                 element: <ChangePassword/>
+            },
+            {
+                //Página para modificar los datos del usuario
+                path: "/user-settings",
+                element: <ModifyUserPage/>
             },
 
             {

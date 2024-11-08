@@ -52,8 +52,9 @@ export const loginController = async(req: Request, res: Response): Promise<void>
                 `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${apiKey}`,
                 { email, password, returnSecureToken: true }
             )
-            
-            res.status(200).json(usuario);
+
+            const retornarUsuario = usuarioEntidad.createUsuarioFromData(usuario).toJson();
+            res.status(200).json(retornarUsuario);
         } catch (authError: any) {
             if (authError.response && authError.response.data.error.message === 'INVALID_PASSWORD') {
                 res.status(401).send('Contraseña incorrecta');

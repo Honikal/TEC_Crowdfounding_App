@@ -1,7 +1,6 @@
 /*Diseño de la página en general*/
-.LoginPage{
+.SignUpPage{
     display: flex;
-    padding: 20px;
     min-height: 100vh;
 }
 
@@ -10,7 +9,6 @@
     flex: 1;
     padding: 20px;
 }
-
 
 /*Diseño del lado derecho (contenido del Login)*/
 .ContentRight{
@@ -21,8 +19,7 @@
 .Form{
     display: flex;
     flex-direction: column;
-
-    margin: 10px 50px;
+    margin: 10px;
     justify-content: center;
 }
 .Form h1{
@@ -33,40 +30,73 @@
     text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.8);
     color: #FFFFFF;
 }
+
+.InputController{
+    display: flex;
+    width: 70%;
+    margin: 10px auto;
+    flex-direction: column;
+
+    justify-content: center;
+    border: none;
+}
+
+
+/*Inputs*/
 .Input {
     display: flex;
     align-items: center;
-    margin: 20px auto;
-    width: 65%;
-    padding: 10px 20px;
+    margin: 0px auto;
+    width: 83%;
+    padding: 4px 20px;
 
     background-color: #FEFEFE;
     border-radius: 40px;
+
 }
 .Input input{
     height: 5vmin;
     width: 100%;
-    margin-right: 15px;
-
-    padding: 0px 10px;
-
-    font-size: 20px;
+    margin-right: 8px;
+    font-family: 'Kadwa', sans-serif;
+    font-size: 0.75rem;
     border: none;
     outline: none;
 }
 .icon{
-    font-size: 40px;
+    font-size: 1.875rem;
     margin-right: 10px;
 }
 
-/*Sección botón*/
-.LoginBtn {
-    margin: 14px auto; 
+/*Sección de error*/
+.ErrorSection{
+    height: 2.4em;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin: 0 16px;
+}
+.ErrorIcon{
+    font-size: 1.2rem;
+    color: #d32945;
+}
+.ErrorText{
+    margin-left: 1.8vmin;
+
+    font-family: 'Kadwa', sans-serif;
+    font-size: 0.625rem;
+    color: #d32945;
+    text-align: left;
+}
+
+.ModifyBtn {
+    margin: 1.8em auto; 
     width: 35%;
     padding: 10px;
 
     background-color: #75A1DE;
     transition: background-color 0.3s;
+    cursor: pointer;
 
     font-family: 'Kadwa', sans-serif;
     font-size: 1.25rem;
@@ -75,23 +105,13 @@
     border: none;
     border-radius: 6cap;
 }
-.Login-btn:hover{
+.ModifyBtn:hover{
     background-color: #303d69;
 }
 
 /*Todos los objetos que tengan manejo clickeable le asignamos ser parte de dicha clase*/
 .clickable{
     cursor: pointer;
-}
-.Form a {
-    margin: 8px auto;
-
-    font-family: 'Kadwa', sans-serif;
-    font-size: 24px;
-    color: #FEFEFE;
-
-    cursor: pointer;
-    text-decoration: none;
 }
 
 /*Usamos los fonts importados*/

@@ -3,7 +3,7 @@ import { FaUserCircle, FaIdCard, FaPhoneSquareAlt, FaUserLock, FaEye, FaEyeSlash
 import { MdOutlineEmail, MdOutlineWork } from 'react-icons/md';
 import { GiReceiveMoney } from 'react-icons/gi';
 import { BiSolidInfoCircle } from 'react-icons/bi';
-
+import { useAuth } from '../Components/AuthContext'
 import { useNavigate } from "react-router-dom";
 
 
@@ -24,6 +24,8 @@ interface User{
 };
 
 function SignUpPage() {
+    const { isAuthenticated, login, logout } = useAuth();
+
     const [usuario, setUsuario] = useState<User>({
         name: "",
         id: "",
@@ -77,7 +79,7 @@ function SignUpPage() {
                 }
                 break;
             case "budget":
-                if (parseFloat(value) < 0){
+                if (Number.isNaN(value) || parseFloat(value) < 0){
                     error = "El número debe ser un valor entero";
                 }
                 break;
@@ -109,6 +111,14 @@ function SignUpPage() {
 
     //Función encargada de hacer la validación del programa
     const validateUserData = async() => {
+//Checamos por errores existentes
+        const hasErrors = Object.values(errorMessages).some(message => message !== "");
+
+        if (hasErrors){
+            alert("Corrige los errores antes de continuar");
+            return;
+        }
+
         const requiredFields = ["name", "id", "email", "telephone", "password", "confirmPassword"];
         let formIsValid = true;
 
@@ -125,10 +135,15 @@ function SignUpPage() {
 
         if (formIsValid) {
             //alert("Mockup de registro realizado exitosamente"); 
-            console.log("Datos pasados: ", usuario);
 
-            const userData = await signUpUser(usuario);
-            console.log('Dato de usuario registrado: ', userData);
+            //Validamos o parseamos los datos
+            const validUserData = {
+                ...usuario,
+                budget: Number(usuario.budget)
+            };
+
+            const userData = await signUpUser(validUserData);
+            login();
             navigate("/main-page", { state: { user: userData } });
         } else {
             alert("No se puede registrar, corrija los errores");

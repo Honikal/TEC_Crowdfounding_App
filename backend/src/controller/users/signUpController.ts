@@ -56,8 +56,8 @@ export const signupController = async(req: Request, res: Response): Promise<void
             );
 
             //Enviamos el usuario al sistema
-            const user = usuarioEntidad.getUserByEmail(email);
-            res.status(200).json(user);
+            const user = usuarioEntidad.createUsuarioFromData(await usuarioEntidad.getUserByEmail(email));
+            res.status(200).json(user.toJson());
         } catch (authError: any) {
             if (authError.code === 'auth/email-already-exists'){
                 res.status(409).send('El usuario ya está registrado');

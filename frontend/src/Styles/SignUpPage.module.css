@@ -23,7 +23,7 @@
     justify-content: center;
 }
 .Form h1{
-    margin: 13vmin auto 0px auto;
+    margin: 4vmin auto 0px auto;
 
     font-family: 'Jomhuria', sans-serif;
     font-size: 12vmin;
@@ -64,6 +64,7 @@
     font-family: 'Kadwa', sans-serif;
     font-size: 0.75rem;
     border: none;
+    outline: none;
 }
 .icon{
     font-size: 1.875rem;
@@ -101,7 +102,7 @@
     cursor: pointer;
 
     font-family: 'Kadwa', sans-serif;
-    font-size: 24px;
+    font-size: 1.25rem;
     color: #FEFEFE;
 
     border: none;
