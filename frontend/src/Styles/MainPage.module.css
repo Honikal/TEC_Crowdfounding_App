@@ -1,22 +1,177 @@
 .Mainpage {
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     margin: 0;
     min-height: 100vh;
-    flex-direction: row;
-    max-width: 1200px;
+    justify-content: center;
+    gap: 60px;
+    padding: 20px;
 }
 
 /*Sección de proyecto más destacado en la app en la actualidad*/
-.Featured{
-    
+.Featured, .Recommended{
+    flex: 1 1 100%; /* Each column takes up equal space */
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Space between cards */
+    border-radius: 20px;
 }
-.FeaturedProject{
 
-}
 .Recommended{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, min-max(300px, 1fr));
+    gap: 20px
+}
 
+.Featured h2, .Recommended h2{
+    padding-left: 10px;
+    color: #838379;
+    border-left: 5px solid #75A1DE; /* Blue vertical bar before titles */
+    margin-bottom: 5px;
+
+    font-family: 'Kadwa', sans-serif;
+    font-size: 1rem;
+}
+
+/*Sección de proyecto*/
+.FeaturedProject, .RecommendedProyecto{
+    display: flex;
+    flex-direction: column;
+
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    transition: transform 0.2s;
+
+    font-family: 'Kadwa', sans-serif;
+    font-size: 1rem;
+
+    cursor: pointer;
+}
+
+.FeaturedProject:hover, .RecommendedProyecto:hover {
+    transform: scale(1.05); /* Slightly enlarge cards on hover */
+}
+.FeaturedProject p, .RecommendedProyecto p{
+    font-size: 0.8rem;
+}
+.FeaturedProject img, .Recommended img{
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+/*Sección de datos de usuario*/
+.UserDisplay{
+    display: flex;
+    flex-direction: row;
+
+    align-items: center;
+}
+.userIcon{
+    padding: 10px;
+    width:  40px;
+    height: 40px;
+    border-radius: 50px;
+
+    background-color: #919eb1;
+}
+.UserInfo{
+    margin-left: 10px;
+}
+.timeFundsData{
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+.timeFundsData p{
+    font-size: 0.95rem;
+}
+.calendarIcon{
+    width: 20px;
+    height: 20px;
+    color: #303d69;
+}
+
+/*Textos y descripciones*/
+.RecommendedProyecto h3, .RecommendedProyecto p {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+/*Para mostrar detalles una vez hover*/
+.Description{
+    display: none;
+}
+#desc{
+    font-size: 1rem;
+    font-style: italic;
+}
+.FeaturedProject:hover .Description{
+    display: flex;
+    flex-direction: column;
+}
+
+/*Sección manejo de categorías*/
+.Categories{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.Category{
+    padding: 2px 20px;
+
+    border: 3px solid #75A1DE;
+    border-radius: 22px;
+    text-transform: capitalize;
+}
+.SelectCategory{
+    margin-top: 6px;
+
+    padding: 6px 20px;
+    transition: background-color 0.2ms;
+    transition: transform 0.2s;
+}
+.SelectCategory:hover{
+    background-color: #4769b3;
+    transform: scale(1.05); /* Slightly enlarge cards on hover */
+    border: 3px solid #aabcbe;
+    color: #f9f9f9;
+    cursor: pointer;
+}
+.Selected {
+    background-color: #A8CEFF;
+    transform: scale(1.1);
+}
+
+/*Caso de Proyectos expirados*/
+.ProjectExpired {
+    opacity: 0.6;
+    background-color: #ffcccc;
+    pointer-events: none; /*Evita los proyectos sean clickeables*/
+}
+.expiredMessage {
+    color: #d9534f;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-top: 10px;
 }
 
 
 
-
+@font-face {
+    font-family: 'Kadwa';
+    src: url('./Fonts/Kadwa-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
