@@ -71,6 +71,10 @@
     font-size: 1.1rem;
 
     cursor: pointer;
+    transition: transform 0.2s;
+}
+.userBtn:hover{
+    transform: scale(1.15);
 }
 
 .LogoutBtn{
@@ -130,9 +134,12 @@ p{
     border: none;
 
     cursor: pointer;
+
+    transition: transform 0.2s;
 }
 .DropdownItem:hover {
     background-color: #dbd6d6;
+    transform: scale(1.05);
 }
 
 .HeaderButton .Icon {
@@ -164,7 +171,15 @@ p{
     border: none;
     outline: none;
 }
-.searchButton{
+.searchIcon{
+    margin-left: 10px;
+    width: 1.2rem;
+    height: 1.2rem;
+    color: #ccc;
+}
+
+/*Botón para iniciar proyecto*/
+.createProjectButton{
     margin-left: 5px;
 
     background-color: #75A1DE;
@@ -174,12 +189,10 @@ p{
     color: white;
     border-radius: 2px;
     cursor: pointer;
+    transition: transform 0.2s;
 }
-.searchIcon{
-    margin-left: 10px;
-    width: 1.2rem;
-    height: 1.2rem;
-    color: #ccc;
+.createProjectButton:hover{
+    transform: scale(1.05);
 }
 
 

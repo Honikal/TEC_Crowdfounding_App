@@ -68,8 +68,6 @@ function MainPage(){
             setProyectos(fetchedProyectos);
             categorizeProjects(fetchedProyectos, selectedCategories);
         }
-
-        console.log("Se vuelve a llamar");
         getProyectos();
     }, [selectedCategories])
 
@@ -83,7 +81,7 @@ function MainPage(){
             ? fetchedProyectos.filter(proyecto => 
                 proyecto.categorias.some(categoria => categorias.includes(categoria))
             )
-            : activeProyectos;
+            : fetchedProyectos;
 
         if (activeProyectos.length){
             //Determinamos el proyecto destacado

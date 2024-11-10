@@ -8,6 +8,7 @@ import SignUpPage from "../Views/SignUpPage";
 import ChangePassword from "../Views/ChangePassword";
 import MainPage from "../Views/MainPage";
 import ModifyUserPage from "../Views/ModifyUserPage";
+import NewProyectoPage from "../Views/NewProyectoPage";
 
 //Main Page
 
@@ -44,10 +45,19 @@ export const router = createBrowserRouter([
                 element: <ModifyUserPage/>
             },
 
+            /*Sección de main-page y búsqueda respectiva*/
             {
                 //Página de inicio de usuario
                 path: "/main-page",
                 element: <MainPage/>
+            },
+
+
+            /*Sección de Proyectos*/
+            {
+                //Página de creación de Proyectos
+                path: "/new-proyecto",
+                element: <NewProyectoPage/>
             }
         ]        
     }

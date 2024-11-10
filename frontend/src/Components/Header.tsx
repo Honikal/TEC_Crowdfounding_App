@@ -1,6 +1,6 @@
 import app_logo from '../app_logo.svg'
 import React, {useState} from 'react'
-import { FaSignInAlt, FaUser, FaSignOutAlt, FaSearch } from 'react-icons/fa'
+import { FaSignInAlt, FaUser, FaSearch } from 'react-icons/fa'
 import styles from '../Styles/Header.module.css'
 import { useAuth } from './AuthContext'
 import { useUser } from './UserContext'
@@ -41,6 +41,11 @@ function Header(){
         }})
     }
 
+    const createProject = () => {
+        setShowDropdown(false);
+        navigate("/new-proyecto", { state: {user}})
+    }
+
     const logingOut = async() => {
         setShowDropdown(false);
         await logoutUser(user?.correo);
@@ -63,10 +68,12 @@ function Header(){
                             <FaSearch className={styles.searchIcon}/>
                             <input type='text' placeholder='Buscar proyectos' className={styles.searchInput}/>
                         </div>
-                        <button className={styles.searchButton}>
-                            Buscar
-                        </button>
                     </div>
+                )}
+                {isMainPage && (
+                    <button className={styles.createProjectButton} onClick={createProject}>
+                        Empieza un proyecto
+                    </button>
                 )}
 
                 {!isAuthPage && (
