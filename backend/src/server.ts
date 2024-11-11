@@ -3,6 +3,7 @@ import express from 'express';
 //Inicializamos un sistema CORS para múltiple contacto en distintos PORTS
 import cors from 'cors';
 
+
 //Importamos las librerías de rutas
 import userRoutes from './routes/userRoutes';
 import projectRoutes from './routes/projectRoutes';
@@ -15,7 +16,10 @@ dotenv.config();
 //Preparamos la app
 const app = express();
 app.use(cors());
-app.use(express.json());
+
+//Incrementamos el uso de payload o sistema o límite para soportar mayores cargas de archivos
+app.use(express.json( { limit: '100Mb' }));
+app.use(express.urlencoded({ limit: '100Mb', extended: true }))
 
 /*Recordatorio (para pruebas locales el archivo está en PORT = 3000), en producción, cambiar a:
 */

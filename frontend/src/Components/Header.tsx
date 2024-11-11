@@ -43,7 +43,7 @@ function Header(){
 
     const createProject = () => {
         setShowDropdown(false);
-        navigate("/new-proyecto", { state: {user}})
+        navigate("/new-project", { state: {user}})
     }
 
     const logingOut = async() => {

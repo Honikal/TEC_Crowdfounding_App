@@ -35,7 +35,7 @@ export default class Proyecto {
         fondosRecaudados = 0.0,
         fechaCreacion = '',
         fechaLimite = '',
-        media = []
+        media: string[] = []
     ){
         this.#idProyecto = idProyecto,
         this.#idCreador = idCreador,

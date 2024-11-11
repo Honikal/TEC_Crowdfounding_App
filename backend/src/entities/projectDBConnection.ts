@@ -10,12 +10,9 @@ export default class ProyectoEntidad {
 
     //GETTERS Proyecto  (Método de validación para usuario por correo y contraseña)
     /**
-     * Función encargada de recibir una id_proyecto y retornar el proyecto específico como tal
-     * Es práctico a la hora del método GET para mostrar los datos del proyecto al modificar
-     * @async
-     * @param {string} id_proyecto
-     * @returns {Promise<Proyecto>}       - Retorna true si encuentra un usuario con ese correo, sino, no retorna false
-     */
+    * Función encargada de recibir una id_proyecto y retornar el proyecto específico como tal
+    * Es práctico a la hora del método GET para mostrar los datos del proyecto al modificar
+    */
     async getProjectoByID(id_proyecto: string) {
         try {
             const snapshot = await this.#dbRef.child(id_proyecto).get();
@@ -30,12 +27,7 @@ export default class ProyectoEntidad {
         }
     }
 
-    /**
-     * Función encargada de recibir una id_creador y con base a éste, retornar el proyecto del usuario como tal a realizar
-     * @async
-     * @param {string} id_creador
-     * @returns {Promise<Proyecto>}       - Retorna true si encuentra un usuario con ese correo, sino, no retorna false
-     */
+    //Función encargada de recibir una id_creador y con base a éste, retornar el proyecto del usuario como tal a realizar
     async getProjectoByIDCreador(id_creador: string) {
         try {
             const snapshot = await this.#dbRef.get();
@@ -54,12 +46,29 @@ export default class ProyectoEntidad {
         }
     }
 
-    /**
-     * Función encargada de retornar toda una lista de proyectos dentro del sistema a mostrar,
-     * luego por fuera nos encargaremos a categorizar cuales mostrar y cuales no, o cambiaremos ésta función
-     * @async
-     * @returns {Promise<Proyecto[]>}       - Retorna true si encuentra un usuario con ese correo, sino, no retorna false
-     */
+    async getProjectoByCategory(category: string) {
+        try {
+            const snapshot = await this.#dbRef.get();
+            if (snapshot.exists()){
+                const proyectoData = snapshot.val();
+                const proyectos = Object.keys(proyectoData).map((id) => ({
+                    ...proyectoData[id],
+                    idUsuario: id
+                }));
+                //Filtramos los proyectos que incluyan la categoría
+                return proyectos.filter((proyecto) => proyecto.categorias.includes(category));
+            }
+            return [];
+        } catch (error){
+            console.error("Error en la capa entidad, (authenticateUser): ", error);
+            throw error;
+        }
+    }
+
+    /*
+    Función encargada de retornar toda una lista de proyectos dentro del sistema a mostrar,
+    luego por fuera nos encargaremos a categorizar cuales mostrar y cuales no, o cambiaremos ésta función
+    */
     async getProjectos() {
         try {
             const snapshot = await this.#dbRef.get();
@@ -104,15 +113,10 @@ export default class ProyectoEntidad {
     }*/
 
     //ADD
-    /**
-     * Función encargada de la validación de un usuario por correo y contraseña
-     * @async
-     * @param {Proyecto} proyecto
-     * @returns {void}      
-     */
-    async addProyecto(proyecto: Proyecto) {
+    //Función encargada de la validación de un usuario por correo y contraseña
+    async addProyecto(proyecto: Proyecto, projectId?: string) {
         try {
-            const newProyectoRef = this.#dbRef.push();
+            const newProyectoRef = projectId ? this.#dbRef.child(projectId) : this.#dbRef.push();
             await newProyectoRef.set(
                 {
                     activa: proyecto.isActiva,
@@ -132,15 +136,13 @@ export default class ProyectoEntidad {
             throw error;
         }
     }
+    async generateIDKey(){
+        const newProjectRef = this.#dbRef.push();
+        return newProjectRef.key;
+    }
 
     //EDIT Usuario
-    /**
-     * Función encargada de aplicar cambios en el sistema al usuario
-     * @async
-     * @param {string} idProyecto            - ID del proyecto a modificar
-     * @param {data}   datosActualizar       - Struct con distintos datos del objeto a modificar
-     * @returns {void} No retorna nada, nada más aplica los cambios e imprime un console.log() verificando los cambios
-     */
+    //Función encargada de aplicar cambios en el sistema al usuario
     async editProyecto(idProyecto: string, datosActualizar: any){
         try {
             const proyectoRef = this.#dbRef.child(idProyecto);
@@ -161,12 +163,7 @@ export default class ProyectoEntidad {
         }
     }
 
-    /**
-     * Función encargada de aplicar formato de base de datos a usuario clase
-     * @async
-     * @param {Object} proyectoData           - Objeto de usuario extraído del sistema
-     * @returns {Proyecto}                    - Retorna la clase usuario como tal
-     */
+    //Función encargada de aplicar formato de base de datos a usuario clase
     createProyectoFromData ( proyectoData: any ){
         //Extraemos la data de la base de datos como tal
         const {

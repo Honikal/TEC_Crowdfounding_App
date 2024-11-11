@@ -6,9 +6,13 @@ import HomePage from "../Views/HomePage";
 import LoginPage from "../Views/LoginPage";
 import SignUpPage from "../Views/SignUpPage";
 import ChangePassword from "../Views/ChangePassword";
+
 import MainPage from "../Views/MainPage";
 import ModifyUserPage from "../Views/ModifyUserPage";
-import NewProyectoPage from "../Views/NewProyectoPage";
+import ProjectPage from "../Views/ProjectPage";
+import NewProjectPage from "../Views/NewProjectPage";
+import SearchedProjectPage from "../Views/SearchedProjectPage";
+
 
 //Main Page
 
@@ -56,8 +60,18 @@ export const router = createBrowserRouter([
             /*Sección de Proyectos*/
             {
                 //Página de creación de Proyectos
-                path: "/new-proyecto",
-                element: <NewProyectoPage/>
+                path: "/new-project",
+                element: <NewProjectPage/>
+            },
+            {
+                //Página de proyecto de forma individual
+                path: "/project",
+                element: <ProjectPage/>
+            },
+            {
+                //Páginas específicas para proyectos
+                path: "/search/categories",
+                element: <SearchedProjectPage/>
             }
         ]        
     }

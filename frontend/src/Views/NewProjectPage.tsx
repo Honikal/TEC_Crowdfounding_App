@@ -2,7 +2,7 @@ import React, {useEffect, useState, ChangeEvent} from 'react';
 import styles from '../Styles/NewProyectoPage.module.css';
 import { FaLongArrowAltLeft } from 'react-icons/fa'
 import { IoCalendarOutline, IoArrowBackOutline, IoArrowForwardOutline } from 'react-icons/io5'
-
+import { createProject } from '../ConnectionToBackend/Routes/createProject';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 interface Proyecto {
@@ -18,7 +18,7 @@ interface Proyecto {
     media: string[]
 }
 
-function NewProyectoPage() {
+function NewProjectPage() {
     //Activamos la navegacion y extracción de parámetros
     const navigate = useNavigate();
     const location = useLocation();
@@ -111,16 +111,33 @@ function NewProyectoPage() {
         }
     }
     const handleFileSelection = (files: FileList) => {
+        /*Tenemos que convertir los links recibidos
+        blob:http://localhost:3000/e954e51a-bd3c-4674-8411-6bb71ee766b2
+
+        en una versión que sea base64 String, para poder subir los datos al sistema o backend
+        */
         const filesArray = Array.from(files).map(file => {
-            const url = URL.createObjectURL(file);
-            //El código como tal indica que solo se puede reproducir los primeros 5 segundos
-            //return file.type.startsWith('video') ? `${url}#t=0,5` : url;
-            return file.type.startsWith('video') ? url : url;
+            return new Promise<string>((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    //Convertimos a un string de 64 bits
+                    const result = reader.result as string;
+                    resolve(result);
+                }
+                reader.onerror = reject;
+                //Convertimos el archivo en base 64 bits
+                reader.readAsDataURL(file);
+            });
         });
-        setProyecto(prev => ({
-            ...prev,
-            media: [...prev.media, ...filesArray].slice(0, maxMedia) //Limitamos a 8 archivos
-        }));
+
+        Promise.all(filesArray)
+            .then((base64strings) => {
+                //Guardamos el array de strings de url en 64 bits
+                setProyecto(prev => ({
+                    ...prev,
+                    media: [...prev.media, ...base64strings].slice(0, maxMedia) 
+                }))
+            })
     }
 
     //Manejar quitar imágenes de la lista
@@ -348,7 +365,7 @@ function NewProyectoPage() {
         setErrorMessages(prevErrors => ({ ...prevErrors, [name]: error }));
     }
 
-    const validateCreateProject = () => {
+    const validateCreateProject = async() => {
         const hasErrors = Object.values(errorMessages).some(message => message !== "");
         if (hasErrors){
             alert("Corrige los errores antes de continuar");
@@ -387,6 +404,10 @@ function NewProyectoPage() {
             };
 
             console.log("dato validado: ", validUserData);
+            const projecto = await createProject(user, validUserData);
+            console.log("Proyecto creado: ", projecto);
+            alert("Proyecto creado de forma exitosa");
+            navigate("/main-page", { state: {user: user } })
         }
         
     }
@@ -430,4 +451,4 @@ function NewProyectoPage() {
     )
 }
 
-export default NewProyectoPage;
+export default NewProjectPage;

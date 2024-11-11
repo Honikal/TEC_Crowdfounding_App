@@ -5,7 +5,7 @@ import { signupController } from "../controller/users/signUpController";
 import { ChngPasswordController } from "../controller/users/chpassController";
 import { ModUserController } from "../controller/users/ModUserController";
 import { logoutController } from "../controller/users/logoutController";
-import { getProjectController } from "../controller/projects/getProyectosController";
+import { getProjectController } from "../controller/projects/getProjectsController";
 
 const router = Router();
 
