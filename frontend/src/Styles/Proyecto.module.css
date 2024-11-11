@@ -67,6 +67,10 @@ img{
 
     cursor: pointer;
 }
+.CategoryUser{
+    background-color: #0B3979;
+    color: #FEFEFE;   
+}
 .Category:hover{
     background-color: #4f617a;
     color: #aabcbe;

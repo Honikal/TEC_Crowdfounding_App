@@ -65,7 +65,7 @@
 /*Usamos los fonts importados*/
 @font-face {
     font-family: 'Kadwa';
-    src: url('./Fonts/Kadwa-Regular.ttf') format('truetype');
+    src: url('../Fonts/Kadwa-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }

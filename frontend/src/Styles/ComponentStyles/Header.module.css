@@ -1,12 +1,16 @@
 .Header {
     display: flex;
+    padding: 1rem;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 1.302vmin;
     width: 100%;
     box-sizing: border-box;
 }
+.HeaderAuthenticated{
+    gap: 1.5rem;
+}
+
 .HeaderLink{
     display: flex;
     align-items: center;
@@ -62,120 +66,16 @@
     color: #FEFEFE;
 }
 
-.userBtn{
-    padding: 10px 12px;
-    border: none;
-    border-radius: 2.1rem;
-    background-color: #682d43;
-    color: #75A1DE;
-    font-size: 1.1rem;
 
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-.userBtn:hover{
-    transform: scale(1.15);
-}
 
 .LogoutBtn{
     background-color: #682d43;
     color: #FEFEFE;
 }
 
-/*Sección de dropdown*/
-.UserDropdown{
-    position: absolute;
-    background-color: #ffffff;
-    box-shadow: 0 8px 16px 4px rbga(0, 0, 0, 0.5);
-    width: 225px;
-    right: 20px;
-    top: 60px;
-    border-radius: 8px;
-    padding: 10px;
-    z-index: 10;
-}
-.UserDetails{
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-.UserImage{
-    width: 6.51vmin;
-    height: 6.51vmin;
-    background-color: #ccc;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5rem;
-    color: white;
-}   
-.ProfileIcon{
-    font-size: 1.5rem;
-}
-.UserInfo{
-    margin-left: 10px;
-    color: black;
-    font-family: 'Kadwa', sans-serif;
-    font-size: 0.8rem;
-}
-p{
-    margin: 0
-}
-.DropdownItem{
-    display: block;
-    width: 100%;
-    padding: 8px 12px;
-    color: black;
-    text-decoration: none;
-    background: none;
-
-    text-align: left;
-    border: none;
-
-    cursor: pointer;
-
-    transition: transform 0.2s;
-}
-.DropdownItem:hover {
-    background-color: #dbd6d6;
-    transform: scale(1.05);
-}
-
 .HeaderButton .Icon {
     margin-right: 8px;
     font-size: 2.708vmin;
-}
-
-/*Sección de búsqueda*/
-.searchContainer {
-    display: flex;
-
-    padding-left: 1.2rem;
-}
-.searchContainerInput{
-    display: flex;
-
-    align-items: center;
-
-    border: 1px solid #ccc;
-    border-radius: 4px 0 0 4px;
-
-    box-shadow: 0px 6px 16px 0px rgba(0, 0, 0, 0.12);
-}
-.searchInput{
-    width: 80%;
-    padding: 0.5rem;
-    margin-right: 5px;
-    font-size: 1rem;
-    border: none;
-    outline: none;
-}
-.searchIcon{
-    margin-left: 10px;
-    width: 1.2rem;
-    height: 1.2rem;
-    color: #ccc;
 }
 
 /*Botón para iniciar proyecto*/
@@ -199,13 +99,13 @@ p{
 /*Usamos los fonts importados*/
 @font-face {
     font-family: 'Jomhuria';
-    src: url('./Fonts/Jomhuria-Regular.ttf') format('truetype');
+    src: url('../Fonts/Jomhuria-Regular.ttf') format('truetype');
     font-weight: 100;
     font-style: normal;
 }
 @font-face {
     font-family: 'Kadwa';
-    src: url('./Fonts/Kadwa-Regular.ttf') format('truetype');
+    src: url('../Fonts/Kadwa-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }

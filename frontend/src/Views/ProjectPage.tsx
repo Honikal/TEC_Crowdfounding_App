@@ -69,7 +69,10 @@ function ProjectPage(){
                         <div className={styles.MediaContentCategories}>
                             {proyecto.categorias.map((categoria: string) => (
                                 <div
-                                    className={`${styles.Category}`}>
+                                    className={`
+                                        ${styles.Category}
+                                        ${user.categorias.includes(categoria) ? styles.CategoryUser : ''}
+                                    `}>
                                     <p>{categoria}</p>
                                 </div>
                             ))}

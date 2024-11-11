@@ -42,7 +42,6 @@ function SearchedProjectPage(){
     const [proyectos, setProyectos] = useState<Proyecto[]>([]);
     const [featuredProject, setFeaturedProject] = useState<Proyecto | null>(null);
     const [recommendedProjects, setRecommendedProjects] = useState<Proyecto[]>([]);
-    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
     const [totalCategorias, setTotalCategorias] = useState<string[]>([
         "Tecnología", 
@@ -63,7 +62,6 @@ function SearchedProjectPage(){
         const userData = location.state?.user;
         if (userData){
             setUser(userData);
-            setSelectedCategories(userData.categorias);
             console.log("Asignamos las categorías del usuario: ", userData.categorias);
         }
     }, [location, setUser]);
@@ -87,46 +85,18 @@ function SearchedProjectPage(){
 
         const getProyectos = async() => {
             const fetchedProyectos = await getProjectsCategory(categoryToSearch);
-            setProyectos(fetchedProyectos);
-            categorizeProjects(fetchedProyectos, selectedCategories);
-            await fetchVideoIndexes(fetchedProyectos);
+            const filteredProyectos = categorizeProjects(fetchedProyectos);
+            setProyectos(filteredProyectos);
+            await fetchVideoIndexes(filteredProyectos);
         }
         getProyectos();
-    }, [selectedCategories])
+    }, [location.state?.category])
 
     //Filtrar proyectos
-    const categorizeProjects = (fetchedProyectos: Proyecto[], categorias: string[]) => {
+    const categorizeProjects = (fetchedProyectos: Proyecto[]) => {
         //Filtramos proyectos no expirados
         const activeProyectos = fetchedProyectos.filter(proyecto => proyecto.diasRestantes > 0);
-
-        //Filtrar por proyectos recomendados por las categorías del usuario
-        const filteredProjects = categorias.length > 0 
-            ? fetchedProyectos.filter(proyecto => 
-                proyecto.categorias.some(categoria => categorias.includes(categoria))
-            )
-            : fetchedProyectos;
-
-        if (activeProyectos.length){
-            //Determinamos el proyecto destacado
-            const ordenadosPorFondos = filteredProjects.sort((a, b) => 
-                (b.fondos_recaudados / b.objetivo_financiero) - (a.fondos_recaudados / a.objetivo_financiero)
-            );
-            setFeaturedProject(ordenadosPorFondos[0]);
-        }
-        setRecommendedProjects(filteredProjects);
-    }
-
-    //Manejar el sistema de elección de nuevas categorías
-    const handleCategoryClick = (categoria: string) => {
-        const newCategories = selectedCategories.includes(categoria)
-            ? selectedCategories.filter(c => c !== categoria)
-            : [...selectedCategories, categoria]
-
-        console.log("Lista categorias anteriores: ", selectedCategories);
-        console.log("Lista de categorías nuevas: ", newCategories);
-
-        setSelectedCategories(newCategories);
-        categorizeProjects(proyectos, newCategories)
+        return activeProyectos
     }
 
     const isVideoFile = async (fileUrl: string): Promise<boolean> => {
@@ -203,7 +173,7 @@ function SearchedProjectPage(){
                         {proyecto.categorias.map(categoria => (
                             <div
                                 className={`${styles.Category}
-                                ${selectedCategories.includes(categoria) ? styles.Selected : ''}`}>
+                                ${user.categorias.includes(categoria) ? styles.CategoryUser : ''}`}>
                                 <p>{categoria}</p>
                             </div>
                         ))}
@@ -224,7 +194,7 @@ function SearchedProjectPage(){
                 <div className={styles.ProjectSection}>
                     <div className={styles.ProjectsDivision}>
                         {proyectos.map(proyecto => (
-                            <div className={styles.Project}>
+                            <div className={styles.Project} onClick={() => navigateToProject(proyecto)}>
                                 {DisplayProjectContent(proyecto)}
                             </div>
                         ))}

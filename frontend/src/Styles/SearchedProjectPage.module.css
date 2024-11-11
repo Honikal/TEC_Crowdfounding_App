@@ -59,6 +59,7 @@ select{
     border-radius: 10px;
 
     cursor: pointer;
+    position: relative;
 }
 .Project:hover{
     transform: scale(1.02);
@@ -66,7 +67,8 @@ select{
     box-shadow: 0 8px 16px rgba(0,0,0,0.2);
 }
 .TextDescription{
-    height: 200px;
+    flex-wrap: wrap;
+    height: 20px;
     margin: 0;
 }
 #desc{
@@ -143,9 +145,8 @@ select{
     opacity: 0;
     overflow-wrap: break-word;
 }
-
 .Project:hover .Description{
-    bottom: 0;
+    bottom: -20%;
     opacity: 1;
 }
 .Categories{
@@ -166,6 +167,10 @@ select{
     transition: transform 0.3s ease;
 
     cursor: pointer;
+}
+.CategoryUser{
+    background-color: #0B3979;
+    color: #FEFEFE;   
 }
 .Category:hover{
     background-color: #4f617a;

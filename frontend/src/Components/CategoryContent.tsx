@@ -1,5 +1,5 @@
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa'
-import styles from '../Styles/CategoryContent.module.css'
+import styles from '../Styles/ComponentStyles/CategoryContent.module.css'
 import React, { useEffect, useRef, useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
