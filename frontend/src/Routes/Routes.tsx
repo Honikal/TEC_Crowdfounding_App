@@ -12,6 +12,7 @@ import ModifyUserPage from "../Views/ModifyUserPage";
 import ProjectPage from "../Views/ProjectPage";
 import NewProjectPage from "../Views/NewProjectPage";
 import SearchedProjectPage from "../Views/SearchedProjectPage";
+import MyProjectsPage from "../Views/MyProjectsPage";
 
 
 //Main Page
@@ -72,6 +73,11 @@ export const router = createBrowserRouter([
                 //Páginas específicas para proyectos
                 path: "/search/categories",
                 element: <SearchedProjectPage/>
+            },
+            {
+                //Páginas específicas para proyecto de usuario
+                path: "/my-projects",
+                element: <MyProjectsPage/>
             }
         ]        
     }

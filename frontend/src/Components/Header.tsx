@@ -41,8 +41,8 @@ function Header(){
                 </div>
             </Link>
             
-            {isAuthenticated && (
-                <SearchBar/>
+            {isAuthenticated && user && (
+                <SearchBar user={user}/>
             )}
 
             <div className={styles.HeaderButtons}>

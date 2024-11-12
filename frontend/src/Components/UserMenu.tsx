@@ -26,9 +26,8 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, logout }) => {
         navigate("/");
     }
 
-    //Función para manejar el cambio del usuario
-    const handleModifyUser = () => {
-        navigate("/user-settings", { state: {user: 
+    const handleMyProjects = async() => {
+        navigate("/my-projects", { state: {user: 
             {
                 'idUsuario': user?.idUsuario,
                 'nombre': user?.nombre,
@@ -38,6 +37,13 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, logout }) => {
                 'categorias': user?.categorias
             } 
         }})
+    }
+
+    //Función para manejar el cambio del usuario
+    const handleModifyUser = () => {
+        navigate("/user-settings", 
+            { state: {user: user}}
+        )
     }
 
     return (
@@ -59,7 +65,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, logout }) => {
                     <button className={styles.DropdownItem} onClick={handleModifyUser}>
                         Configurar usuario
                     </button>
-                    <button className={styles.DropdownItem}>
+                    <button className={styles.DropdownItem} onClick={handleMyProjects}>
                         Mis Proyectos
                     </button>
                     <button className={styles.DropdownItem}>

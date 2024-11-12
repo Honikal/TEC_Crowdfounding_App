@@ -5,6 +5,7 @@ import { createProjectController } from "../controller/projects/createProjContro
 import { modProjectController } from "../controller/projects/modProjController";
 import { filterProjController } from "../controller/projects/filterProjController";
 import { getProjectsCategoryController } from "../controller/projects/getProjectsCategoryController";
+import { getProjectsUserController } from "../controller/projects/getProjectsUserController";
 
 const router = Router();
 
@@ -14,5 +15,6 @@ router.post('/editProject', modProjectController);
 router.post('/filterProjects', filterProjController);
 
 router.get('/search/categories', getProjectsCategoryController);
+router.get('/my-projects', getProjectsUserController)
 
 export default router;
