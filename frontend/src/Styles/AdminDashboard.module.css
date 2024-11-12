@@ -1,0 +1,76 @@
+/* Estilo general del Dashboard */
+.AdminDashboard {
+    padding: 40px;
+    text-align: center;
+    background-color: #F5F8FB;
+    min-height: 100vh;
+}
+
+/* Título */
+.AdminDashboard h1 {
+    font-family: 'Jomhuria', sans-serif;
+    font-size: 3em;
+    color: #303d69;
+    margin-bottom: 40px;
+}
+
+/* Contenedor de estadísticas */
+.StatsContainer {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* Tarjetas de estadísticas */
+.StatCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 200px;
+    padding: 20px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.StatCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Icono de cada tarjeta */
+.icon {
+    font-size: 3rem;
+    color: #75A1DE;
+    margin-bottom: 15px;
+}
+
+/* Título y descripción */
+.StatCard h2 {
+    font-size: 2.5rem;
+    color: #303d69;
+    margin: 10px 0;
+    font-family: 'Kadwa', sans-serif;
+}
+
+.StatCard p {
+    font-size: 1.125rem;
+    color: #7D8DA5;
+    font-family: 'Kadwa', sans-serif;
+}
+
+/* Fuentes */
+@font-face {
+    font-family: 'Jomhuria';
+    src: url('./Fonts/Jomhuria-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Kadwa';
+    src: url('./Fonts/Kadwa-Regular.ttf') format('truetype');
+}

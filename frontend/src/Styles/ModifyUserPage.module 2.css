@@ -1,0 +1,130 @@
+/*Diseño de la página en general*/
+.SignUpPage{
+    display: flex;
+    min-height: 100vh;
+}
+
+/*Diseño del lado izquierdo (probablemente una imagen o algo)*/
+.ContentLeft{
+    flex: 1;
+    padding: 20px;
+}
+
+/*Diseño del lado derecho (contenido del Login)*/
+.ContentRight{
+    flex: 1;
+    padding: 20px;
+    background-color: #A8CEFF;
+}
+.Form{
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    justify-content: center;
+}
+.Form h1{
+    margin: 4vmin auto 0px auto;
+
+    font-family: 'Jomhuria', sans-serif;
+    font-size: 12vmin;
+    text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.8);
+    color: #FFFFFF;
+}
+
+.InputController{
+    display: flex;
+    width: 70%;
+    margin: 10px auto;
+    flex-direction: column;
+
+    justify-content: center;
+    border: none;
+}
+
+
+/*Inputs*/
+.Input {
+    display: flex;
+    align-items: center;
+    margin: 0px auto;
+    width: 83%;
+    padding: 4px 20px;
+
+    background-color: #FEFEFE;
+    border-radius: 40px;
+
+}
+.Input input{
+    height: 5vmin;
+    width: 100%;
+    margin-right: 8px;
+    font-family: 'Kadwa', sans-serif;
+    font-size: 0.75rem;
+    border: none;
+    outline: none;
+}
+.icon{
+    font-size: 1.875rem;
+    margin-right: 10px;
+}
+
+/*Sección de error*/
+.ErrorSection{
+    height: 2.4em;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin: 0 16px;
+}
+.ErrorIcon{
+    font-size: 1.2rem;
+    color: #d32945;
+}
+.ErrorText{
+    margin-left: 1.8vmin;
+
+    font-family: 'Kadwa', sans-serif;
+    font-size: 0.625rem;
+    color: #d32945;
+    text-align: left;
+}
+
+.ModifyBtn {
+    margin: 1.8em auto; 
+    width: 35%;
+    padding: 10px;
+
+    background-color: #75A1DE;
+    transition: background-color 0.3s;
+    cursor: pointer;
+
+    font-family: 'Kadwa', sans-serif;
+    font-size: 1.25rem;
+    color: #FEFEFE;
+
+    border: none;
+    border-radius: 6cap;
+}
+.ModifyBtn:hover{
+    background-color: #303d69;
+}
+
+/*Todos los objetos que tengan manejo clickeable le asignamos ser parte de dicha clase*/
+.clickable{
+    cursor: pointer;
+}
+
+/*Usamos los fonts importados*/
+@font-face {
+    font-family: 'Jomhuria';
+    src: url('./Fonts/Jomhuria-Regular.ttf') format('truetype');
+    font-weight: lighter;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Kadwa';
+    src: url('./Fonts/Kadwa-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+

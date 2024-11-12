@@ -1,0 +1,87 @@
+.HeaderContainer{
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    width: 100%;  
+    height: 6.51vmin;
+    background-color: hsl(0, 0%, 95%);
+}
+
+/*Estilos para manejar los contenedores de categorias*/
+.categoriesContainer{
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    gap: 1px;
+    padding: 2px 0;
+    margin: 0 10px;
+    white-space: nowrap;
+    flex-grow: 1;
+}
+.spaceBetween{
+    justify-content: space-between;
+}
+
+/*Botón de categoría*/
+.categoryButton{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    border: 1px solid #F1F1F1;
+    cursor: pointer;
+    font-family: 'Kadwa', sans-serif;
+    font-size: 3.125vmin;
+    color: #75A1DE;
+    white-space: nowrap;
+    transition: background-color 0.2s;
+}
+
+/*Estilos de los botones para selección o scroll*/
+.Scrollbutton{  
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0.781vmin;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.ScrollIcon{
+    font-size: 3.646vmin;
+    color: #75A1DE
+}
+
+/*Mostrar los botones de scroll solo cuando haya overflow*/
+.overflowing .Scrollbutton {
+    display: flex;
+}
+
+
+/*Usamos los fonts importados*/
+@font-face {
+    font-family: 'Kadwa';
+    src: url('./Fonts/Kadwa-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*Distancias de scrolls*/
+:root{
+    --scroll-distance: 150px;
+}
+
+@media (max-width: 600px){
+    :root{
+        --scroll-distance: 100px;
+    }
+}
+
+@media (min-width: 1200px){
+    :root{
+        --scroll-distance: 200px;
+    }
+}
