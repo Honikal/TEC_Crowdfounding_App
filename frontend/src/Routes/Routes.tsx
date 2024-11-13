@@ -8,7 +8,7 @@ import SignUpPage from "../Views/SignUpPage";
 import ChangePassword from "../Views/ChangePassword";
 import MainPage from "../Views/MainPage";
 import ModifyUserPage from "../Views/ModifyUserPage";
-
+import DonationsManagement from "../Views/admin/DonationsManagement";
 //Main Page
 
 
@@ -48,6 +48,12 @@ export const router = createBrowserRouter([
                 //Página de inicio de usuario
                 path: "/main-page",
                 element: <MainPage/>
+            },
+
+            {
+                //Página de administración de donaciones
+                path: "/donations-management",
+                element: <DonationsManagement/>
             }
         ]        
     }

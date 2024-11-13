@@ -1,0 +1,69 @@
+.fullPage {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.container {
+    flex: 1;
+    padding: 10px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.scroller {
+    width: 100%;
+    overflow-y: auto;
+}
+
+.noResults {
+    color: #FFF;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.donacionesContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 6px 0;
+    padding: 10px 12px;
+    align-items: center;
+    background-color: #ECF7FD;
+    border: 3px solid #0B3979;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.icon {
+    font-size: 20px;
+    color: #000000;
+    margin-left: 10px;
+}
+
+.infoDonationContainer {
+    display: flex;
+    flex-direction: column;
+    margin-left: 24px;
+}
+
+.infoDonationText, .infoDonadorText, .infoDescription {
+    word-wrap: break-word;
+}
+
+.infoDonadorText {
+    width: 80%;
+    font-size: 14px;
+    color: #0B3979;
+}
+
+.infoDonadorName {
+    font-style: italic;
+}
+
+.infoDescription {
+    width: 80%;
+    font-size: 16px;
+    font-weight: bold;
+    color: #0B3979;
+}
