@@ -35,7 +35,7 @@ export default class ProyectoEntidad {
                 const proyectoData = snapshot.val();
                 const proyectos = Object.keys(proyectoData).map((id) => ({
                     ...proyectoData[id],
-                    idUsuario: id
+                    idProyecto: id
                 }));
                 return proyectos.find((proyecto) => proyecto.id_creador === id_creador) || null;
             }
@@ -90,27 +90,6 @@ export default class ProyectoEntidad {
             throw error;
         }
     }
-    /*
-    async getProjectos() {
-        try {
-            const snapshot = await this.#dbRef.get();
-            if (snapshot.exists()){
-                const proyectoData = snapshot.val();
-
-                const proyectos = Object.keys(proyectoData).map((id) => {
-                    return {
-                        ...proyectoData[id],
-                        idProyecto: id
-                    }
-                });
-                return proyectos;
-            }
-            return null;
-        } catch (error){
-            console.error("Error en la capa entidad, (authenticateUser): ", error);
-            throw error;
-        }
-    }*/
 
     //ADD
     //Función encargada de la validación de un usuario por correo y contraseña
@@ -141,10 +120,13 @@ export default class ProyectoEntidad {
         return newProjectRef.key;
     }
 
-    //EDIT Usuario
+    //EDIT Proyecto
+    //-OBT01vj19Y3Po1hR8aH  
+    //-OBT01vj19Y3Po1hR8aH
     //Función encargada de aplicar cambios en el sistema al usuario
     async editProyecto(idProyecto: string, datosActualizar: any){
         try {
+            console.log("Id proyecto recibida: ", idProyecto);
             const proyectoRef = this.#dbRef.child(idProyecto);
             const snapshot = await proyectoRef.get();
 
@@ -158,7 +140,7 @@ export default class ProyectoEntidad {
             await proyectoRef.update(datosActualizar);
             console.log("Confirmación capa entidad de actualización del usuario");
         } catch (error) {
-            console.error("Error desde la capa entidad intentando modificar al usuario: ", error);
+            console.error("Error desde la capa entidad intentando modificar al proyecto: ", error);
             throw error;
         }
     }

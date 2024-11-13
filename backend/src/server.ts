@@ -8,6 +8,7 @@ import cors from 'cors';
 import userRoutes from './routes/userRoutes';
 import projectRoutes from './routes/projectRoutes';
 import adminRoutes from './routes/adminRoutes';
+import donationsRoutes from './routes/donationsRoutes';
 
 //Importamos dotenv
 const dotenv = require('dotenv');
@@ -40,6 +41,7 @@ const PORT = process.env.PORT || 8000;
 app.use('/', userRoutes);
 app.use('/', projectRoutes);
 app.use('/admin', adminRoutes);
+app.use('/', donationsRoutes);
 app.listen(PORT, () => {
     console.log(`Server está siendo ejecutado en puerto: ${PORT}`)
 })

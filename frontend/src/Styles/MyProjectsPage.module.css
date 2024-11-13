@@ -1,0 +1,139 @@
+p{
+    font-family: 'Kadwa', sans-serif;
+    font-size: 0.8rem;
+}
+
+.MyProjectsPage{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    align-items: flex-start;
+}
+
+.Project{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    padding: 10px;
+    border-radius: 10px;
+
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+
+    transition: box-shadow 0.2s ease;
+    transition: transform 0.3s ease;
+}
+.Project:hover{
+    transform: translateX(5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.ShownContainer{
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    align-items: center;
+}
+
+/*Área de media*/
+.MediaContainer{
+    position: relative;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    border-radius: 8px;
+}
+.ImageDisplay, .VideoDisplay{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.UserDisplay{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.UserIcon{
+    padding: 10px;
+    width:  40px;
+    height: 40px;
+    border-radius: 50px;
+    background-color: #919eb1;
+}
+
+/*Info usuario*/
+.UserInfo{
+    margin: 10px 0;
+    margin-left: 10px;
+}
+.CalendarIcon{
+    margin: 0;
+    height: 14px;
+    width: 14px;
+}
+.TimeFundsData{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+/*Área de descripción*/
+.Description{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    position: absolute;
+
+    top: 0;
+    right: -520px; /*Inicialmente escondido*/
+    width: 500px;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /*Semitransparente*/
+    color: #fefefe;
+    padding: 10px;
+    border-radius: 10px;
+    transition: right 0.4s ease-in-out, opacity 0.4s ease-in-out;
+    opacity: 0;
+    overflow: hidden;
+}
+.Project:hover .Description{
+    right: 0;
+    opacity: 1;
+}
+
+.Categories{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px 5px;
+    gap: 8px;
+}
+.Category{
+    padding: 2px 20px;
+
+    border: 3px solid #75A1DE;
+    border-radius: 22px;
+    text-transform: capitalize;
+
+    transition: background-color 0.2s ease;
+    transition: color 0.2s ease;
+    transition: transform 0.3s ease;
+
+    cursor: pointer;
+}
+.CategoryUser{
+    background-color: #0B3979;
+    color: #FEFEFE;   
+}
+.Category:hover{
+    background-color: #4f617a;
+    color: #aabcbe;
+    transform: translateY(-2px);
+}
+

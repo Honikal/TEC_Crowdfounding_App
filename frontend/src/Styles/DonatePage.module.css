@@ -1,0 +1,177 @@
+h1{
+    font-family: 'Jomhuria', sans-serif;
+    font-size: 3.8rem;
+}
+h2{
+    font-family: 'Jomhuria', sans-serif;
+    font-size: 3rem;
+    font-weight: normal;
+    margin: 0;
+}
+h3{
+    font-family: 'Kadwa', sans-serif;
+    font-size: 1.1rem;
+    font-weight: normal;
+}
+p{
+    font-family: 'Kadwa', sans-serif;
+    font-size: 0.9rem;
+}
+
+.DonatePage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 10px;
+}
+.DonateTitle{
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    max-height: 20vh;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 20px;
+
+    background-color: hsl(0, 0%, 95%);
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+
+/*Control de donación*/
+.DonationSection{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.RewardSection{
+    display: flex;
+    flex-direction: column;
+
+    margin: 15px 60px;
+}
+
+/*Para futuros casos, tenemos una sección para distribución sin recompensa,
+y una con posibles recompensas que los usuarios pueden agregar en un futuro*/
+.ContributionNoReward{
+    display: flex;
+    flex-direction: column;
+
+    margin: 20px 0;
+
+    width: 65%;
+    padding: 10px 15px;
+
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, border 0.2s ease-in-out;
+}
+.ContributionNoReward:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+}
+.DisabledHover{
+    pointer-events: auto;
+    transform: none;
+    box-shadow: none;
+    cursor: default;
+    border: 1px solid rgba(0, 0, 0, 0.8);
+}
+
+/*Si no está seleccionado, no mostrar los datos*/
+.HiddenOption{
+    display: none;
+}
+.ShownOption{
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 20px;
+}
+.ShownOption p{
+    font-size: 0.75rem;
+}
+
+.InputSection{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 30px;
+}
+.Input{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+
+    border: 1px solid rgba(0, 0, 0, 0.6);
+}
+.Input p{
+    padding: 8px 20px;
+    font-size: 1.2rem;
+    border-right: 1px solid rgba(0, 0, 0, 0.4);
+}
+.Input input{
+    width: 100%;
+    height: 60%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    outline: none;
+    background: none;
+    border: none;
+    font-family: 'Kadwa', sans-serif;
+    font-size: 1rem;
+
+    /*Remover las flechas (spinners) para inputs de números*/
+    /*-moz-appearance: textfield;*/
+}
+/*Remover las flechas spinners para distintos navegadores*/
+.Input input::-webkit-outer-spin-button,
+.Input input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.DonateButton{
+    display: flex;
+
+    width: 50%;
+    padding: 5px;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #75A1DE;
+    transition: background-color 0.2s ease;
+
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+.DonateButton:hover{
+    background-color: #4f617a;
+}
+.DonateButton p{
+    font-size: 1rem;
+    color: #FEFEFE;
+}
+
+
+@font-face {
+    font-family: 'Jomhuria';
+    src: url('./Fonts/Jomhuria-Regular.ttf') format('truetype');
+    font-weight: lighter;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Kadwa';
+    src: url('./Fonts/Kadwa-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+

@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import styles from '../Styles/Proyecto.module.css';
-import { FaUser, FaCalendarDay } from 'react-icons/fa';
+import { FaEdit, FaMoneyBillWave } from 'react-icons/fa';
 
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useUser } from '../Components/UserContext';
 import CategoryContent from '../Components/CategoryContent';
 import { getProjects } from '../ConnectionToBackend/Routes/getProjects';
@@ -18,15 +18,21 @@ interface Proyecto {
     fecha_limite: string,
     fondos_recaudados: number,
     objetivo_financiero: number,
-    media: string[]
+    media: string[],
+
+    nombre_creador: string,
+    diasRestantes: number,
+    porcentajeFundado: number
 }
 
 function ProjectPage(){
     //Manejamos el recibo de parámetros
     const location = useLocation();
+    const navigate = useNavigate();
+
     const { setUser } = useUser();
     const user = location.state?.user;        //Recibimos al usuario
-    const proyecto = location.state?.project //Recibimos el proyecto seleccionado
+    const proyecto = location.state?.project as Proyecto //Recibimos el proyecto seleccionado
 
     const [totalCategorias, setTotalCategorias] = useState<string[]>([
         "Tecnología", 
@@ -41,6 +47,10 @@ function ProjectPage(){
         "Música",
         "Artesanías"
     ])
+
+    const donateToProject = () => {
+        navigate("/project/donate", { state: { user: user, project: proyecto }})
+    }
 
     useEffect(() => {
         //Asumimos que obtenemos los datos del usuario de otro modo
@@ -97,14 +107,21 @@ function ProjectPage(){
                             <p>días más</p>
                         </div>
 
-                        <div className={styles.DonateButton}>
-                            <p>Patrocina éste proyecto</p>
-                        </div>
+                        { proyecto.id_creador === user.idUsuario ? (
+                            <div className={styles.DonateButton}>
+                                <FaEdit className={styles.Icon}/>
+                                <p>Modificar proyecto</p>
+                            </div>
+                        ) : (
+                            <div className={styles.DonateButton} onClick={donateToProject}>
+                                <FaMoneyBillWave className={styles.Icon}/>
+                                <p>Patrocina éste proyecto</p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
         </>
-        
     )
 }
 

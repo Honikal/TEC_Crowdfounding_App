@@ -102,43 +102,48 @@ function MyProjectsPage(){
 
         return (
             <>  
-                <div
-                    className={styles.mediaContainer}
-                    onMouseEnter={() => setHoveredProject(proyecto.idProyecto)}
-                    onMouseLeave={() => setHoveredProject(null)}
-                >
-                    {hoveredProject === proyecto.idProyecto && videoIndex !== -1 ? (
-                        <video
-                            src={proyecto.media[videoIndex]}
-                            className={styles.VideoDisplay}
-                            controls
-                            autoPlay
-                            muted
-                            loop
-                            preload='metadata'
-                        />
-                    ) : (
-                        <img
-                            src={proyecto.media[0]}
-                            alt={proyecto.nombre}
-                            className={styles.ImageDisplay}
-                        />
-                    )}
-                </div>
-                <div className={styles.UserDisplay}>
-                    <FaUser className={styles.UserIcon}/>
-                    <div className={styles.UserInfo}>
-                        <h3>{proyecto.nombre}</h3>
-                        <p className={styles.infoProyecto}>{proyecto.nombre_creador}</p>
-                        <div className={styles.TimeFundsData}>
-                            <FaCalendarDay className={styles.CalendarIcon}></FaCalendarDay>
-                            <p>{proyecto.diasRestantes} días restantes</p>
-                            <p>{proyecto.porcentajeFundado}</p>
+                <div className={styles.ShownContainer}>
+                    <div
+                        className={styles.MediaContainer}
+                        onMouseEnter={() => setHoveredProject(proyecto.idProyecto)}
+                        onMouseLeave={() => setHoveredProject(null)}
+                    >
+                        {hoveredProject === proyecto.idProyecto && videoIndex !== -1 ? (
+                            <video
+                                src={proyecto.media[videoIndex]}
+                                className={styles.VideoDisplay}
+                                controls
+                                autoPlay
+                                muted
+                                loop
+                                preload='metadata'
+                            />
+                        ) : (
+                            <img
+                                src={proyecto.media[0]}
+                                alt={proyecto.nombre}
+                                className={styles.ImageDisplay}
+                            />
+                        )}
+                    </div>
+                    <div className={styles.UserDisplay}>
+                        <FaUser className={styles.UserIcon}/>
+                        <div className={styles.UserInfo}>
+                            <h3>{proyecto.nombre}</h3>
+                            <p className={styles.infoProyecto}>{proyecto.nombre_creador}</p>
+                            <div className={styles.TimeFundsData}>
+                                <FaCalendarDay className={styles.CalendarIcon}></FaCalendarDay>
+                                <p>{proyecto.diasRestantes} días restantes</p>
+                                <p>{proyecto.porcentajeFundado}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div className={styles.Description}>
+                <div
+                    className={`
+                        ${styles.Description}
+                    `}>
                     <div className={styles.TextDescription}>
                         <p id={styles.desc}>{proyecto.descripcion}</p>
                     </div>
@@ -159,16 +164,12 @@ function MyProjectsPage(){
     return (
         <>
             <CategoryContent categories={totalCategorias} user={user}/>
-            <div className={styles.SearchedProjectPage}>
-                <div className={styles.ProjectSection}>
-                    <div className={styles.ProjectsDivision}>
-                        {proyectos.map(proyecto => (
-                            <div className={styles.Project}>
-                                {DisplayProjectContent(proyecto)}
-                            </div>
-                        ))}
+            <div className={styles.MyProjectsPage}>
+                {proyectos.map(proyecto => (
+                    <div className={styles.Project}>
+                        {DisplayProjectContent(proyecto)}
                     </div>
-                </div>
+                ))}
             </div>
         </>
         

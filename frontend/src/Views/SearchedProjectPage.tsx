@@ -129,38 +129,40 @@ function SearchedProjectPage(){
 
         return (
             <>  
-                <div
-                    className={styles.mediaContainer}
-                    onMouseEnter={() => setHoveredProject(proyecto.idProyecto)}
-                    onMouseLeave={() => setHoveredProject(null)}
-                >
-                    {hoveredProject === proyecto.idProyecto && videoIndex !== -1 ? (
-                        <video
-                            src={proyecto.media[videoIndex]}
-                            className={styles.VideoDisplay}
-                            controls
-                            autoPlay
-                            muted
-                            loop
-                            preload='metadata'
-                        />
-                    ) : (
-                        <img
-                            src={proyecto.media[0]}
-                            alt={proyecto.nombre}
-                            className={styles.ImageDisplay}
-                        />
-                    )}
-                </div>
-                <div className={styles.UserDisplay}>
-                    <FaUser className={styles.UserIcon}/>
-                    <div className={styles.UserInfo}>
-                        <h3>{proyecto.nombre}</h3>
-                        <p className={styles.infoProyecto}>{proyecto.nombre_creador}</p>
-                        <div className={styles.TimeFundsData}>
-                            <FaCalendarDay className={styles.CalendarIcon}></FaCalendarDay>
-                            <p>{proyecto.diasRestantes} días restantes</p>
-                            <p>{proyecto.porcentajeFundado}</p>
+                <div className={styles.ShownContainer}>
+                    <div
+                        className={styles.mediaContainer}
+                        onMouseEnter={() => setHoveredProject(proyecto.idProyecto)}
+                        onMouseLeave={() => setHoveredProject(null)}
+                    >
+                        {hoveredProject === proyecto.idProyecto && videoIndex !== -1 ? (
+                            <video
+                                src={proyecto.media[videoIndex]}
+                                className={styles.VideoDisplay}
+                                controls
+                                autoPlay
+                                muted
+                                loop
+                                preload='metadata'
+                            />
+                        ) : (
+                            <img
+                                src={proyecto.media[0]}
+                                alt={proyecto.nombre}
+                                className={styles.ImageDisplay}
+                            />
+                        )}
+                    </div>
+                    <div className={styles.UserDisplay}>
+                        <FaUser className={styles.UserIcon}/>
+                        <div className={styles.UserInfo}>
+                            <h3>{proyecto.nombre}</h3>
+                            <p className={styles.infoProyecto}>{proyecto.nombre_creador}</p>
+                            <div className={styles.TimeFundsData}>
+                                <FaCalendarDay className={styles.CalendarIcon}></FaCalendarDay>
+                                <p>{proyecto.diasRestantes} días restantes</p>
+                                <p>{proyecto.porcentajeFundado}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
