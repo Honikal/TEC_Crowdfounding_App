@@ -1,8 +1,8 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileText } from '@fortawesome/free-solid-svg-icons';
-import { useUser } from '../../Components/UserContext'; // Usar el contexto de usuario
-import styles from '../../Styles/DonationsManagement.module.css';
+import { useUser } from '../../Components/UserContext'; // Asegúrate de la ruta del contexto
+import styles from '../../Styles/DonationsManagement.module.css'; // Importa el archivo CSS correctamente
 
 const DonationsManagement = () => {
     const { user } = useUser(); // Obtener el usuario actual desde el contexto
@@ -30,6 +30,7 @@ const DonationsManagement = () => {
 
     return (
         <div className={styles.fullPage}>
+            <h1 className={styles.title}>Monitoreo de Donaciones</h1>
             <div className={styles.container}>
                 {listaDonaciones.length === 0 ? (
                     <p className={styles.noResults}>No existen donaciones en el sistema</p>
@@ -40,14 +41,14 @@ const DonationsManagement = () => {
                                 <FontAwesomeIcon icon={faFileText} className={styles.icon} />
                                 <div className={styles.infoDonationContainer}>
                                     <p className={styles.infoDescription}>{donacion.projectoName}</p>
-                                    {user?.role === 'admin' && ( // Verificar si el usuario es admin
+                                    {user?.role === 'admin' && (
                                         <p className={styles.infoDonadorText}>
                                             Encargado de la donación:
                                             <span className={styles.infoDonadorName}> {donacion.donadorName}</span>
                                         </p>
                                     )}
                                     <p className={styles.infoDonationText}>Fecha de donación: {donacion.fecha_donacion}</p>
-                                    <p className={styles.infoDonationText}>Monto de donación: {donacion.monto}$</p>
+                                    <p className={styles.infoDonationText}>Monto de donación: ${donacion.monto}</p>
                                 </div>
                             </div>
                         ))}

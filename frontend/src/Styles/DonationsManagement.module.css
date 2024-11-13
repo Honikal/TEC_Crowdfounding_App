@@ -4,12 +4,21 @@
     height: 100vh;
 }
 
+.title {
+    font-family: 'Kadwa';
+    font-size: 2rem;
+    font-weight: bold;
+    color: #456796;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
 .container {
-    flex: 1;
-    padding: 10px;
-    align-items: center;
-    display: flex;
+    width: 100%;
+    max-width: 800px; /* Establece un ancho máximo */
+    margin-left: 500px;
     flex-direction: column;
+    align-items: center; /* Centra el contenido horizontalmente */
 }
 
 .scroller {
@@ -26,9 +35,10 @@
 .donacionesContainer {
     display: flex;
     flex-direction: row;
-    width: 100%;
-    margin: 6px 0;
-    padding: 10px 12px;
+    width: 80%;
+    max-width: 700px; /* Ancho máximo para mantener centrado */
+    margin: 10px auto; /* Centra el contenedor horizontalmente */
+    padding: 10px;
     align-items: center;
     background-color: #ECF7FD;
     border: 3px solid #0B3979;
@@ -67,3 +77,11 @@
     font-weight: bold;
     color: #0B3979;
 }
+
+@font-face {
+    font-family: 'Kadwa';
+    src: url('../Styles/Fonts/Kadwa-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+

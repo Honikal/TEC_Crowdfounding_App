@@ -8,8 +8,12 @@ import SignUpPage from "../Views/SignUpPage";
 import ChangePassword from "../Views/ChangePassword";
 import MainPage from "../Views/MainPage";
 import ModifyUserPage from "../Views/ModifyUserPage";
+
+//Admin Pages
 import DonationsManagement from "../Views/admin/DonationsManagement";
-//Main Page
+import UserManagement from "../Views/admin/UserManagement";
+import ProjectValidation from "../Views/admin/ProjectValidation";
+import EventConfiguration from "../Views/admin/EventConfiguration";
 
 
 //Acá nos encargaremos de manejar las rutas dentro de la página
@@ -54,7 +58,27 @@ export const router = createBrowserRouter([
                 //Página de administración de donaciones
                 path: "/donations-management",
                 element: <DonationsManagement/>
+            },
+
+            {
+                //Página de administración de usuarios
+                path: "/user-management",
+                element: <UserManagement/>
+            },
+
+            {
+                //Página de validación de proyectos
+                path: "/validate-projects",
+                element: <ProjectValidation/>
+            },
+             
+            {
+                //Página de configuración de eventos
+                path: "/configure-events",
+                element: <EventConfiguration/>
             }
+
+
         ]        
     }
 ]);
