@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 
-//Pagina inicial
+// Páginas principales
 import App from "../App";
 import HomePage from "../Views/HomePage";
 import LoginPage from "../Views/LoginPage";
@@ -13,52 +13,85 @@ import ProjectPage from "../Views/ProjectPage";
 import NewProjectPage from "../Views/NewProjectPage";
 import SearchedProjectPage from "../Views/SearchedProjectPage";
 
-
-//Admin Pages
+// Páginas de administración
 import DonationsManagement from "../Views/admin/DonationsManagement";
 import UserManagement from "../Views/admin/UserManagement";
 import ProjectValidation from "../Views/admin/ProjectValidation";
 import EventConfiguration from "../Views/admin/EventConfiguration";
 
-
-//Acá nos encargaremos de manejar las rutas dentro de la página
+// Acá nos encargaremos de manejar las rutas dentro de la página
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <App/>,
+        element: <App />,
         children: [
             {
-                //Landing page
+                // Página de inicio
                 path: "",
-                element: <HomePage/>
+                element: <HomePage />
             },
             {
-                //Página de Login
+                // Página de Login
                 path: "/login",
-                element: <LoginPage/>
+                element: <LoginPage />
             },
             {
-                //Página de SignUp
+                // Página de SignUp
                 path: "/signup",
-                element: <SignUpPage/>
+                element: <SignUpPage />
             },
             {
-                //Página de contraseña
+                // Página para cambiar la contraseña
                 path: "/change-password",
-                element: <ChangePassword/>
+                element: <ChangePassword />
             },
             {
-                //Página para modificar los datos del usuario
+                // Página para modificar los datos del usuario
                 path: "/user-settings",
-                element: <ModifyUserPage/>
+                element: <ModifyUserPage />
             },
-
-            /*Sección de main-page y búsqueda respectiva*/
             {
-                //Página de inicio de usuario
+                // Página de inicio para usuarios
                 path: "/main-page",
-                element: <MainPage/>
-            }
-        ]        
+                element: <MainPage />
+            },
+            {
+                // Página de Proyecto
+                path: "/project/:projectId",
+                element: <ProjectPage />
+            },
+            {
+                // Página para crear un nuevo proyecto
+                path: "/new-project",
+                element: <NewProjectPage />
+            },
+            {
+                // Página de proyectos buscados
+                path: "/searched-projects",
+                element: <SearchedProjectPage />
+            },
+            // Páginas de administración
+            {
+                path: "/admin/donations-management",
+                element: <DonationsManagement />
+            },
+            {
+                path: "/admin/user-management",
+                element: <UserManagement />
+            },
+            {
+                path: "/admin/project-validation",
+                element: <ProjectValidation />
+            },
+            {
+                path: "/admin/event-configuration",
+                element: <EventConfiguration />
+            },
+            // Sección de proyectos
+            {
+                path: "/search/categories",
+                element: <SearchedProjectPage />
+            },
+        ]
     }
 ]);

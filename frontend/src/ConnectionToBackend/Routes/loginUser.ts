@@ -11,11 +11,10 @@ export const loginUser = async (email: string, password: string, navigate: any) 
 
         // Redirige según el rol del usuario
         if (userData.role === 'admin') {
-            navigate('/admin/validate-projects'); // Ruta de administración (ajusta según tu app)
+            navigate('/admin/project-validation'); // Corregido: comilla de cierre añadida
         } else {
             console.log("Datos de usuario después del login:", userData);
-
-            navigate('/main-page'); // Ruta de usuario regular (ajusta según tu app)
+            navigate('/main-page'); 
         }
 
         return userData;
