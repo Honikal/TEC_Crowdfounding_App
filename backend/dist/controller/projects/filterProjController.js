@@ -15,15 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.filterProjController = void 0;
 const projectDBConnection_1 = __importDefault(require("../../entities/projectDBConnection"));
 const usersDBConnection_1 = __importDefault(require("../../entities/usersDBConnection"));
-const getDate = () => {
-    const date = new Date();
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    return `Fecha: ${day}/${month}/${year} a las ${hours}:${minutes} hora de Costa Rica.`;
-};
 const filterProjController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         //Checamos la solicitud sea un POST

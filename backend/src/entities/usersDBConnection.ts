@@ -81,28 +81,6 @@ export default class UsuarioEntidad {
             throw error;
         }
     }
-    /*
-    async getUsers() {
-        try {
-            const snapshot = await this.#dbRef.get();
-            if (snapshot.exists()){
-                const usuarioData = snapshot.val(); 
-
-                const usuarios = Object.keys(usuarioData).map((id) => {
-                    return {
-                        ...usuarioData[id],
-                        idUsuario: id
-                    }
-                });
-                return usuarios;
-            }
-            return null;
-        } catch (error){
-            console.error("Error en la capa entidad, (authenticateUser): ", error);
-            throw error;
-        }
-    }
-    */
 
     //ADD
     /**

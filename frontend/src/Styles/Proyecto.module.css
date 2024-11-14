@@ -1,0 +1,138 @@
+h1{
+    font-family: 'Jomhuria', sans-serif;
+    font-size: 3.2rem;
+    font-weight: normal;
+    margin: 0;
+}
+p{
+    font-family: 'Kadwa', sans-serif;
+    font-size: 1.1rem;
+}
+h2{
+    font-family: 'Kadwa', sans-serif;
+    font-size: 1.6rem;
+    margin: 0;
+    color: #78787a;
+}
+
+/*Sección proyecto*/
+.ProjectPage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 10px;
+}
+.ProjectName{
+    display: flex;
+    flex-direction: column;
+    max-height: 20vh;
+    align-items: center;
+    margin: 20px;
+}
+
+/*Sección proyecto content*/
+.ProyectContent{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.MediaContent{
+    display: flex;
+    flex-direction: column;
+
+    height: auto;
+}
+img{
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+.MediaContentCategories{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 20px 10px;
+    gap: 10px;
+}
+.Category{
+    padding: 2px 20px;
+
+    border: 3px solid #75A1DE;
+    border-radius: 22px;
+    text-transform: capitalize;
+
+    transition: background-color 0.2s ease;
+    transition: color 0.2s ease;
+
+    cursor: pointer;
+}
+.CategoryUser{
+    background-color: #0B3979;
+    color: #FEFEFE;   
+}
+.Category:hover{
+    background-color: #4f617a;
+    color: #aabcbe;
+}
+
+.CardContent{
+    display: flex;
+    flex-direction: column;
+    width: 100vh;
+
+    border-top: 5px solid #75A1DE;
+}
+.CardContentLabel{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 10px;
+}
+.CardContentLabel p {
+    margin: 0;
+    font-size: 1rem;
+    color: #78787a;
+}
+.DonateButton{
+    width: 100%;
+    padding: 10px;
+
+    background-color: #4f617a;
+    transition: background-color 0.2s ease;
+
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+.DonateButton:hover{
+    background-color: #0B3979;
+}
+.DonateButton p{
+    font-family: 'Kadwa', sans-serif;
+    font-size: 1.2rem;
+    color: #FEFEFE;
+}
+
+
+
+
+
+
+/*Usamos los fonts importados*/
+@font-face {
+    font-family: 'Jomhuria';
+    src: url('./Fonts/Jomhuria-Regular.ttf') format('truetype');
+    font-weight: lighter;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Kadwa';
+    src: url('./Fonts/Kadwa-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+

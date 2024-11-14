@@ -6,8 +6,13 @@ import HomePage from "../Views/HomePage";
 import LoginPage from "../Views/LoginPage";
 import SignUpPage from "../Views/SignUpPage";
 import ChangePassword from "../Views/ChangePassword";
+
 import MainPage from "../Views/MainPage";
 import ModifyUserPage from "../Views/ModifyUserPage";
+import ProjectPage from "../Views/ProjectPage";
+import NewProjectPage from "../Views/NewProjectPage";
+import SearchedProjectPage from "../Views/SearchedProjectPage";
+
 
 //Admin Pages
 import DonationsManagement from "../Views/admin/DonationsManagement";
@@ -48,37 +53,12 @@ export const router = createBrowserRouter([
                 element: <ModifyUserPage/>
             },
 
+            /*Sección de main-page y búsqueda respectiva*/
             {
                 //Página de inicio de usuario
                 path: "/main-page",
                 element: <MainPage/>
-            },
-
-            {
-                //Página de administración de donaciones
-                path: "/donations-management",
-                element: <DonationsManagement/>
-            },
-
-            {
-                //Página de administración de usuarios
-                path: "/user-management",
-                element: <UserManagement/>
-            },
-
-            {
-                //Página de validación de proyectos
-                path: "/validate-projects",
-                element: <ProjectValidation/>
-            },
-             
-            {
-                //Página de configuración de eventos
-                path: "/configure-events",
-                element: <EventConfiguration/>
             }
-
-
         ]        
     }
 ]);

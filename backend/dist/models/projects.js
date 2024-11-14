@@ -84,6 +84,21 @@ class Proyecto {
     get getMedia() {
         return __classPrivateFieldGet(this, _Proyecto_media, "f");
     }
+    toJson() {
+        return {
+            idProyecto: __classPrivateFieldGet(this, _Proyecto_idProyecto, "f"),
+            id_creador: __classPrivateFieldGet(this, _Proyecto_idCreador, "f"),
+            activa: __classPrivateFieldGet(this, _Proyecto_activa, "f"),
+            nombre: __classPrivateFieldGet(this, _Proyecto_nombre, "f"),
+            descripcion: __classPrivateFieldGet(this, _Proyecto_descripcion, "f"),
+            categorias: __classPrivateFieldGet(this, _Proyecto_categoria, "f"),
+            fecha_creacion: __classPrivateFieldGet(this, _Proyecto_fechaCreacion, "f"),
+            fecha_limite: __classPrivateFieldGet(this, _Proyecto_fechaLimite, "f"),
+            fondos_recaudados: __classPrivateFieldGet(this, _Proyecto_fondosRecaudados, "f"),
+            objetivo_financiero: __classPrivateFieldGet(this, _Proyecto_objetivoFinanciero, "f"),
+            media: __classPrivateFieldGet(this, _Proyecto_media, "f")
+        };
+    }
 }
 _Proyecto_idProyecto = new WeakMap(), _Proyecto_idCreador = new WeakMap(), _Proyecto_activa = new WeakMap(), _Proyecto_nombre = new WeakMap(), _Proyecto_descripcion = new WeakMap(), _Proyecto_categoria = new WeakMap(), _Proyecto_objetivoFinanciero = new WeakMap(), _Proyecto_fondosRecaudados = new WeakMap(), _Proyecto_fechaCreacion = new WeakMap(), _Proyecto_fechaLimite = new WeakMap(), _Proyecto_media = new WeakMap();
 exports.default = Proyecto;

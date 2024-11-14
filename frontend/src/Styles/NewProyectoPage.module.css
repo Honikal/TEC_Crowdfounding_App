@@ -1,0 +1,308 @@
+.NewProyectoPage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    min-height: 90vh;
+    padding: 10px;
+}
+.StepIndicator{
+    align-self: flex-start;
+
+    font-family: 'Kadwa', sans-serif;
+    font-size: 0.8rem;
+    margin-bottom: 20px;
+}
+
+/*Secciones individuales de cada paso, y cada uno de sus decoradores*/
+.StepContentContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    height: 60vh;
+    width: 100%;
+}
+/*Sección izquierda*/
+.ProyectoContent{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+.Indications{
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    max-width: 60%;
+    margin-bottom: 20px;
+}
+.Indications h2{
+    font-family: 'Jomhuria', sans-serif;
+    font-size: 3rem;
+    font-weight: normal;
+    color: #0B3979;
+    margin: 0;
+}
+.Indications p{
+    text-wrap: wrap;
+    font-family: 'Kadwa', sans-serif;
+    font-size: 0.85rem;
+}
+/*Sección derecha*/
+.InputContainer{
+    width: 600px; 
+    max-width: 60%;
+    padding: 20px;
+
+    border: 2px solid #7E81A4;
+    border-radius: 14px;
+}
+
+
+/*Sección categorías*/
+.Categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.Category {
+    padding: 10px;
+    border: 2px solid #007bff;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.Category:hover {
+    transform: scale(1.05);
+}
+.Selected{
+    background-color: #75A1DE;
+    border: 2px solid #75A1DE;
+    font-weight: bolder;
+}
+
+/*Sección inputs de nombres y datos*/
+.InputContainer h3{
+    font-family: 'Jomhuria', sans-serif;
+    font-size: 2rem;
+    font-weight: normal;
+    color: #75A1DE;
+    margin: 0;
+}
+.InputSection{
+    margin-top: 2px;
+    margin-bottom: 15px;
+    padding: 5px 10px;
+
+    border: 1px solid #7E81A4;
+    border-radius: 15px;
+}
+.InputSection input{
+    font-family: 'Kadwa', sans-serif;
+    font-size: 0.85rem;
+    width: 100%;
+
+    border: none;
+    outline: none;
+}
+.textarea{
+    width: 100%;
+    font-family: 'Kadwa', sans-serif;
+    font-size: 0.85rem;
+
+    border: none;
+    outline: none;
+}
+
+/*Manejo con las fechas*/
+.DateSection{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+}
+.DateSubsections{
+    display: flex;
+    flex-direction: column;
+}
+.DateSubsections p{
+    font-family: 'Kadwa', sans-serif;
+    font-size: 0.7rem;
+    color: #3B5272;
+}
+.DateSection .icon{
+    width: 35px;
+    height: 35px;
+    color: #7E81A4;
+    opacity: 0.6;
+}
+
+/*Sección para el manejo del botón para subir archivos multimedia*/
+.mediaGetter{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 200px;
+
+    border: 3px dotted rgba(126, 129, 164, 0.7);
+    border-radius: 20px;
+
+    background-color: #f9f9f9;
+    margin-top: 20px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+
+    transition: background-color 0.3s ease;
+}
+.mediaGetter{
+    background-color: #e3f0ff;
+}
+.mediaButton{
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+.placeholderText{
+    font-family: 'Kadwa', sans-serif;
+    font-size: 1rem;
+    color: #7E81A4;
+    text-align: center;
+    pointer-events: none;
+
+}
+
+/*Manejo del preview*/
+.mediaDisplayer{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+}
+.mediaSection{
+    display: flex;
+    overflow: hidden;
+    width: 500px;
+    gap: 5px;
+    scroll-behavior: smooth;
+}
+.previewItem{
+    position: relative;
+    cursor: pointer;
+    flex: 0 0 auto;
+}
+.previewImage, .previewVideo{  
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+.previewItem:hover .previewImage{
+    transform: scale(1.05);
+}
+.previewVideo{
+    border-radius: 10px;
+}
+.arrowButton{
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #7E81A4;
+    transition: color 0.3 ease;
+    transition: transform 0.3 ease-in;
+}
+.arrowButton:hover{
+    color: #0B3979;
+    transform: scale(1.05);
+}
+
+
+
+/*Sección de los botones para avanzar e ir atrás*/
+.StepButtonsContainer{
+    display: flex;
+    width: 65%;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+.StepButtons {
+    display: flex;
+    width: 255px;
+
+    padding: 4px 20px;
+    border: none;
+    border-radius: 5px;
+
+    align-items: center;
+    justify-content: center;
+
+    font-family: 'Kadwa', sans-serif;
+    
+    cursor: pointer;
+    transition: background-color 0.3s;
+    transition: color 0.3s;
+}
+.StepButtons .icon{
+    width: 20px;
+    height: 20px;
+    margin: 0 5px;
+}
+
+.StepButtonsBackward{
+    background: none;
+    color: #78787a;
+}
+.StepButtonsForward{
+    background-color: #4f617a;
+    color: #FEFEFE;
+}
+.StepButtonsBackward:hover{
+    color: #000000;
+}
+.StepButtonsForward:hover{
+    background-color: #0B3979;
+}
+.DeliverProject{
+    background-color: #4f617a;
+    color: #FEFEFE;
+}
+.DeliverProject:hover{
+    background-color: #3638ac;
+    color: #FEFEFE;
+}
+/*Casos de botón step 1 y step 4*/
+.Disabled{
+    opacity: 0.5;
+    cursor: text;
+}
+
+.errorMessage {
+    color: #ff4d4f;
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+
+@font-face {
+    font-family: 'Kadwa';
+    src: url('./Fonts/Kadwa-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Jomhuria';
+    src: url('./Fonts/Jomhuria-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

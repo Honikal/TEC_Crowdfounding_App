@@ -35,7 +35,7 @@ function SignUpPage() {
         budget: 0.00,
         password: "",
         confirmPassword: "",
-        categories: ["tecnologia", "cocina", "videojuegos"]
+        categories: ["Tecnología", "Cocina", "Videojuegos"]
     });
 
     //Activamos la navegacion

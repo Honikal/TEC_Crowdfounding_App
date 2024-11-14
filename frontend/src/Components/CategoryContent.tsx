@@ -1,18 +1,36 @@
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa'
-import styles from '../Styles/CategoryContent.module.css'
+import styles from '../Styles/ComponentStyles/CategoryContent.module.css'
 import React, { useEffect, useRef, useState } from 'react';
+
+import { useNavigate } from 'react-router-dom';
+
+interface User{
+    idUsuario: string,
+    nombre: string,
+    activa: boolean,
+    areaTrabajo: string,
+    categorias: string[],
+    cedula: string,
+    correo: string,
+    password: string,
+    presupuesto: number,
+    role: string,
+    telefono: string
+}
 
 interface CategoryContentProps{
     categories: string[];
+    user: User
 }
 
-function CategoryContent( { categories }: CategoryContentProps){
+function CategoryContent( { categories, user }: CategoryContentProps){
     //Seteamos valores y funciones para chequear caso de overflowing
     const [scrollPosition, setScrollPosition] = useState(0);
 
     const [isOverflowing, setIsOverflowing] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
-    console.log("Categorias pasadas a CategoryContent: ")
+
+    const navigate = useNavigate();
 
     const checkOverflow = () => {
         const container = containerRef.current;
@@ -44,6 +62,13 @@ function CategoryContent( { categories }: CategoryContentProps){
         }
     }
 
+    const navigateToSection = (category: string) => {
+        
+        navigate("/search/categories", {
+            state: { category, user }
+        });
+    }
+
     return (
         <div className={`${styles.HeaderContainer} ${isOverflowing ? styles.overflowing : ''}`}>
             {isOverflowing  && (
@@ -56,7 +81,7 @@ function CategoryContent( { categories }: CategoryContentProps){
                 ref={containerRef}
             >
                 {categories.map((category, index) => (
-                    <div key={index} className={styles.categoryButton}>
+                    <div key={index} className={styles.categoryButton} onClick={() => navigateToSection(category)}>
                         {category}
                     </div>
                 ))}

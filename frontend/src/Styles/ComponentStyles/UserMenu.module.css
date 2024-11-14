@@ -1,0 +1,88 @@
+p{
+    margin: 0
+}
+
+.UserBtn{
+    padding: 10px 12px;
+    border: none;
+    border-radius: 2.1rem;
+    background-color: #682d43;
+    color: #75A1DE;
+    font-size: 1.1rem;
+
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.UserBtn:hover{
+    transform: scale(1.15);
+}
+
+.UserDropdown{
+    position: absolute;
+    background-color: #ffffff;
+    box-shadow: 0 8px 16px 4px rbga(0, 0, 0, 0.5);
+    width: 225px;
+    right: 20px;
+    top: 60px;
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 10;
+}
+
+/*Sección de detalles del usuario*/
+.UserDetails{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.UserImage{
+    width: 6.51vmin;
+    height: 6.51vmin;
+    background-color: #ccc;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    color: white;
+}
+.ProfileIcon{
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+
+.UserInfo{
+    margin-left: 10px;
+    color: black;
+    font-family: 'Kadwa', sans-serif;
+    font-size: 0.8rem;
+}
+
+.DropdownItem{
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    color: black;
+    text-decoration: none;
+    background: none;
+
+    text-align: left;
+    border: none;
+
+    cursor: pointer;
+
+    transition: transform 0.2s;
+}
+.DropdownItem:hover {
+    background-color: #dbd6d6;
+    transform: scale(1.05);
+}
+
+
+@font-face {
+    font-family: 'Kadwa';
+    src: url('../Fonts/Kadwa-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

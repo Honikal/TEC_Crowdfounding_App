@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ModUserController = void 0;
 const usersDBConnection_1 = __importDefault(require("../../entities/usersDBConnection"));
+const emailSender_1 = __importDefault(require("../../entities/emailSender"));
 const ModUserController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         //Checamos la solicitud sea un POST
@@ -22,9 +23,9 @@ const ModUserController = (req, res) => __awaiter(void 0, void 0, void 0, functi
             return;
         }
         //Extraemos correo y contraseña
-        const { usuario_id, name, work_area, telephone, budget } = req.body;
+        const { usuario_id, name, work_area, telephone, budget, categories } = req.body;
         //Validamos si las entradas son válidas (usualmente ya varios de éstos valores vendrán preconfirmados)
-        if (!usuario_id || !name || !work_area || !telephone || !budget) {
+        if (!usuario_id || !name || !work_area || !telephone || !budget || !categories) {
             res.status(400).send('Todos los campos son requeridos');
             return;
         }
@@ -36,7 +37,16 @@ const ModUserController = (req, res) => __awaiter(void 0, void 0, void 0, functi
             presupuesto: budget,
             telefono: telephone
         });
-        res.status(201).send('Datos del usuario modificados exitosamente');
+        //res.status(201).send('Datos del usuario modificados exitosamente');
+        //Buscamos ahora extraer al usuario modificado, y retornarlo con los cambios
+        const usuarioModificado = yield usuarioEntidad.getUserByID(usuario_id);
+        if (!usuarioModificado) {
+            res.status(400).send("Error de datos, el usuario ha sufrido una descompostura");
+        }
+        else {
+            (0, emailSender_1.default)(usuarioModificado.getCorreo, "Se han efectuado cambios de datos en tu cuenta", "Se han completado de forma exitosa los cambios hechos a tu cuenta");
+            res.status(200).send(usuarioModificado.toJson());
+        }
     }
     catch (error) {
         console.error(error);

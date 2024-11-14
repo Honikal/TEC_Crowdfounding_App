@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import styles from '../Styles/MainPage.module.css';
+import styles from '../Styles/SearchedProjectPage.module.css';
 import { FaUser, FaCalendarDay } from 'react-icons/fa';
 
 
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useUser } from '../Components/UserContext';
 import CategoryContent from '../Components/CategoryContent';
-import { getProjects } from '../ConnectionToBackend/Routes/getProjects';
+import { getProjectsCategory } from '../ConnectionToBackend/Routes/getProjectCategory';
+
 
 interface Proyecto {
     idProyecto: string,
@@ -26,23 +27,21 @@ interface Proyecto {
     porcentajeFundado: number
 }
 
-function MainPage(){
+function SearchedProjectPage(){
     //Manejamos el recibo de parámetros
     const location = useLocation();
     const { setUser } = useUser();
     const user = location.state?.user; //Recibimos al usuario
     const navigate = useNavigate();
 
-    console.log("Usuario: ", user);
-
     //Manejar hover
+    const [categoria, setCategorias] = useState<string>("");
     const [hoveredProject, setHoveredProject] = useState<string | null>(null);
     const [videoIndexes, setVideoIndexes] = useState<{ [key: string]: number }>({});
 
     const [proyectos, setProyectos] = useState<Proyecto[]>([]);
     const [featuredProject, setFeaturedProject] = useState<Proyecto | null>(null);
     const [recommendedProjects, setRecommendedProjects] = useState<Proyecto[]>([]);
-    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
     const [totalCategorias, setTotalCategorias] = useState<string[]>([
         "Tecnología", 
@@ -63,13 +62,17 @@ function MainPage(){
         const userData = location.state?.user;
         if (userData){
             setUser(userData);
-            setSelectedCategories(userData.categorias);
             console.log("Asignamos las categorías del usuario: ", userData.categorias);
         }
     }, [location, setUser]);
 
     useEffect(() => {
         //Otro useEffect independiente que está conectado con el getter del sistema
+        
+        //Tomamos la existencia del posible texto de los proyectos a buscar
+        const categoryToSearch = location.state?.category;
+        setCategorias(categoryToSearch);
+        
         //Buscamos la existencia de un vídeo
         const fetchVideoIndexes = async (projects: Proyecto[]) => {
             const indexes: { [key: string]: number } = {};
@@ -81,49 +84,20 @@ function MainPage(){
         };
 
         const getProyectos = async() => {
-            const fetchedProyectos = await getProjects();
-            setProyectos(fetchedProyectos);
-            categorizeProjects(fetchedProyectos, selectedCategories);
-            await fetchVideoIndexes(fetchedProyectos);
+            const fetchedProyectos = await getProjectsCategory(categoryToSearch);
+            const filteredProyectos = categorizeProjects(fetchedProyectos);
+            setProyectos(filteredProyectos);
+            await fetchVideoIndexes(filteredProyectos);
         }
         getProyectos();
-    }, [selectedCategories])
+    }, [location.state?.category])
 
     //Filtrar proyectos
-    const categorizeProjects = (fetchedProyectos: Proyecto[], categorias: string[]) => {
+    const categorizeProjects = (fetchedProyectos: Proyecto[]) => {
         //Filtramos proyectos no expirados
         const activeProyectos = fetchedProyectos.filter(proyecto => proyecto.diasRestantes > 0);
-
-        //Filtrar por proyectos recomendados por las categorías del usuario
-        const filteredProjects = categorias.length > 0 
-            ? fetchedProyectos.filter(proyecto => 
-                proyecto.categorias.some(categoria => categorias.includes(categoria))
-            )
-            : fetchedProyectos;
-
-        if (activeProyectos.length){
-            //Determinamos el proyecto destacado
-            const ordenadosPorFondos = filteredProjects.sort((a, b) => 
-                (b.fondos_recaudados / b.objetivo_financiero) - (a.fondos_recaudados / a.objetivo_financiero)
-            );
-            setFeaturedProject(ordenadosPorFondos[0]);
-        }
-        setRecommendedProjects(filteredProjects);
+        return activeProyectos
     }
-
-    //Manejar el sistema de elección de nuevas categorías
-    const handleCategoryClick = (categoria: string) => {
-        const newCategories = selectedCategories.includes(categoria)
-            ? selectedCategories.filter(c => c !== categoria)
-            : [...selectedCategories, categoria]
-
-        console.log("Lista categorias anteriores: ", selectedCategories);
-        console.log("Lista de categorías nuevas: ", newCategories);
-
-        setSelectedCategories(newCategories);
-        categorizeProjects(proyectos, newCategories)
-    }
-
 
     const isVideoFile = async (fileUrl: string): Promise<boolean> => {
         try {
@@ -163,7 +137,7 @@ function MainPage(){
                     {hoveredProject === proyecto.idProyecto && videoIndex !== -1 ? (
                         <video
                             src={proyecto.media[videoIndex]}
-                            className={styles.previewVideo}
+                            className={styles.VideoDisplay}
                             controls
                             autoPlay
                             muted
@@ -174,17 +148,17 @@ function MainPage(){
                         <img
                             src={proyecto.media[0]}
                             alt={proyecto.nombre}
-                            className={styles.previewImage}
+                            className={styles.ImageDisplay}
                         />
                     )}
                 </div>
                 <div className={styles.UserDisplay}>
-                    <FaUser className={styles.userIcon}/>
+                    <FaUser className={styles.UserIcon}/>
                     <div className={styles.UserInfo}>
                         <h3>{proyecto.nombre}</h3>
                         <p className={styles.infoProyecto}>{proyecto.nombre_creador}</p>
-                        <div className={styles.timeFundsData}>
-                            <FaCalendarDay className={styles.calendarIcon}></FaCalendarDay>
+                        <div className={styles.TimeFundsData}>
+                            <FaCalendarDay className={styles.CalendarIcon}></FaCalendarDay>
                             <p>{proyecto.diasRestantes} días restantes</p>
                             <p>{proyecto.porcentajeFundado}</p>
                         </div>
@@ -192,12 +166,14 @@ function MainPage(){
                 </div>
 
                 <div className={styles.Description}>
-                    <p id={styles.desc}>{proyecto.descripcion}</p>
+                    <div className={styles.TextDescription}>
+                        <p id={styles.desc}>{proyecto.descripcion}</p>
+                    </div>
                     <div className={styles.Categories}>
                         {proyecto.categorias.map(categoria => (
                             <div
                                 className={`${styles.Category}
-                                ${selectedCategories.includes(categoria) ? styles.Selected : ''}`}>
+                                ${user.categorias.includes(categoria) ? styles.CategoryUser : ''}`}>
                                 <p>{categoria}</p>
                             </div>
                         ))}
@@ -210,49 +186,24 @@ function MainPage(){
     return (
         <>
             <CategoryContent categories={totalCategorias} user={user}/>
-            <div className={styles.Categories}>
-                {totalCategorias.map(categoria => (
-                    <div
-                        key={categoria}
-                        className={`${styles.Category} ${styles.SelectCategory}
-                        ${selectedCategories.includes(categoria) ? styles.Selected : ''}`}
-                        onClick={() => handleCategoryClick(categoria)}
-                    >
-                        <p>{categoria}</p>
+            <div className={styles.SearchedProjectPage}>
+                <div className={styles.ProjectSelector}>
+                    <p>Categoría: {categoria}</p>
+                </div>
+
+                <div className={styles.ProjectSection}>
+                    <div className={styles.ProjectsDivision}>
+                        {proyectos.map(proyecto => (
+                            <div className={styles.Project} onClick={() => navigateToProject(proyecto)}>
+                                {DisplayProjectContent(proyecto)}
+                            </div>
+                        ))}
                     </div>
-                ))}
-            </div>
-
-            <div className={styles.Mainpage}>
-
-                <div className={styles.Featured}>
-                    <h2>Proyecto destacado:</h2>
-                    {featuredProject && (
-                        <div className={styles.FeaturedProject} onClick={() => navigateToProject(featuredProject)}>
-                            {DisplayProjectContent(featuredProject)}
-                        </div>
-                    )}
                 </div>
-                <div className={styles.Recommended}>
-                    <h2>Proyectos recomendados:</h2>
 
-                    {recommendedProjects.map(project => (
-                        <div
-                            key={project.idProyecto}
-                            className={`
-                                ${styles.RecommendedProyecto}
-                                ${project.diasRestantes <= 0 ? styles.ProjectExpired : ''} 
-                            `}
-                            onClick={() => navigateToProject(project)}
-                        >
-                            {DisplayProjectContent(project)}
-                        </div>
-                    ))}
-                </div>
             </div>
         </>
-        
     )
 }
 
-export default MainPage;
+export default SearchedProjectPage;
