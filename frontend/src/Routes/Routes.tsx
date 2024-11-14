@@ -14,7 +14,11 @@ import NewProjectPage from "../Views/NewProjectPage";
 import SearchedProjectPage from "../Views/SearchedProjectPage";
 
 
-//Main Page
+//Admin Pages
+import DonationsManagement from "../Views/admin/DonationsManagement";
+import UserManagement from "../Views/admin/UserManagement";
+import ProjectValidation from "../Views/admin/ProjectValidation";
+import EventConfiguration from "../Views/admin/EventConfiguration";
 
 
 //Acá nos encargaremos de manejar las rutas dentro de la página
@@ -54,24 +58,6 @@ export const router = createBrowserRouter([
                 //Página de inicio de usuario
                 path: "/main-page",
                 element: <MainPage/>
-            },
-
-
-            /*Sección de Proyectos*/
-            {
-                //Página de creación de Proyectos
-                path: "/new-project",
-                element: <NewProjectPage/>
-            },
-            {
-                //Página de proyecto de forma individual
-                path: "/project",
-                element: <ProjectPage/>
-            },
-            {
-                //Páginas específicas para proyectos
-                path: "/search/categories",
-                element: <SearchedProjectPage/>
             }
         ]        
     }
