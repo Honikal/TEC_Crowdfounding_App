@@ -13,7 +13,7 @@ export const loginUser = async (email: string, password: string, navigate: any) 
         // Redirige según el rol del usuario
         if (userData.role === 'admin') {
             // Redirige a la página de administración si el rol es 'admin'
-            navigate('/admin/project-validation', { replace: true }); // Usar replace: true
+            navigate('/main-page', { replace: true }); // Usar replace: true
         } else {
             // Redirige a la página principal si es un usuario normal
             console.log("Datos de usuario después del login:", userData);

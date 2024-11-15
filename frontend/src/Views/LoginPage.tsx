@@ -60,7 +60,7 @@ try {
   
     // Redirección según el rol del usuario
     if (userData.role === 'admin') {
-      navigate("/admin/project-validation", { state: { user: userData } }); // Redirige a la página de administración
+      navigate("/main-page", { state: { user: userData } }); // Redirige a la página de administración
     } else {
       navigate("/main-page", { state: { user: userData } }); // Redirige a la página principal para usuarios normales
     }
