@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from '../Components/AuthContext';
 import { loginUser } from "../ConnectionToBackend/Routes/loginUser";
 
-//Por cada uso de datos tipo object se ocupa un posible Interface
+// Por cada uso de datos tipo object se ocupa un posible Interface
 interface User {
   email: string,
   password: string
@@ -18,7 +18,7 @@ function LoginPage() {
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  // Activamos la navegacion
+  // Activamos la navegación
   const navigate = useNavigate();
 
   // Función encargada de controlar el struct esperado para recibir datos de entrada del usuario
@@ -65,7 +65,7 @@ function LoginPage() {
   return (
     <div className={styles.LoginPage}>
       <div className={styles.ContentLeft}>
-
+        {/* Este espacio se puede llenar según se necesite */}
       </div>
       <div className={styles.ContentRight}>
         <div className={styles.Form}>

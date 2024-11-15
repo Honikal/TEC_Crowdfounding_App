@@ -56,11 +56,6 @@ export const router = createBrowserRouter([
                 element: <MainPage />
             },
             {
-                // Página de Proyecto
-                path: "/project/:projectId",
-                element: <ProjectPage />
-            },
-            {
                 // Página para crear un nuevo proyecto
                 path: "/new-project",
                 element: <NewProjectPage />
@@ -91,6 +86,11 @@ export const router = createBrowserRouter([
             {
                 path: "/search/categories",
                 element: <SearchedProjectPage />
+            },
+            {
+                //Página de proyecto de forma individual
+                path: "/project",
+                element: <ProjectPage/>
             },
         ]
     }

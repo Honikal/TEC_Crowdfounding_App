@@ -3,18 +3,23 @@ import { useNavigate } from 'react-router-dom';
 
 export const loginUser = async (email: string, password: string, navigate: any) => {
     try {
+        // Realiza la solicitud al backend para loguear al usuario
         const response = await api.post('/login', { email, password });
         const userData = response.data;
+
+        // Verificar que el rol del usuario se recibe correctamente
+        console.log('Rol recibido:', userData.role); // Verifica el valor del rol
 
         // Guarda el rol del usuario en localStorage
         localStorage.setItem('userRole', userData.role);
 
-        // Redirige según el rol del usuario
-        if (userData.role === 'admin') {
-            navigate('/admin/project-validation'); // Corregido: comilla de cierre añadida
+        // Verifica el rol y redirige directamente a la página correcta
+        if (userData.role.trim().toLowerCase() === 'admin') {
+            // Si es admin, redirige directamente a /admin/project-validation
+            navigate('/admin/project-validation', { replace: true }); // Reemplaza la ruta en el historial
         } else {
-            console.log("Datos de usuario después del login:", userData);
-            navigate('/main-page'); 
+            // Si no es admin, redirige a /main-page
+            navigate('/main-page', { replace: true }); // Reemplaza la ruta en el historial
         }
 
         return userData;
