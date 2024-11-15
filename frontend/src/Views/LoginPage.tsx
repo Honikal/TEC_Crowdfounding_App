@@ -52,14 +52,23 @@ function LoginPage() {
     */
     
     // Una vez ya validado, iniciamos con el sistema
-    try {
-      // Pasa el navigate a la función loginUser
-      const userData = await loginUser(email, password, navigate);  // Corregido: pasamos navigate aquí
-      login();
-      navigate("/main-page", { state: { user: userData } });
-    } catch (error) {
-      alert('Inicio de sesión fallido, intenta de nuevo');
+// Una vez ya validado, iniciamos con el sistema
+try {
+    // Pasa el navigate a la función loginUser
+    const userData = await loginUser(email, password, navigate);  // Corregido: pasamos navigate aquí
+    login();
+  
+    // Redirección según el rol del usuario
+    if (userData.role === 'admin') {
+      navigate("/admin/project-validation", { state: { user: userData } }); // Redirige a la página de administración
+    } else {
+      navigate("/main-page", { state: { user: userData } }); // Redirige a la página principal para usuarios normales
     }
+  
+  } catch (error) {
+    alert('Inicio de sesión fallido, intenta de nuevo');
+  }
+  
   }
 
   return (

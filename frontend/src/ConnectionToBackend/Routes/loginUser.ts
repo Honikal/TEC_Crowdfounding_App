@@ -7,19 +7,17 @@ export const loginUser = async (email: string, password: string, navigate: any) 
         const response = await api.post('/login', { email, password });
         const userData = response.data;
 
-        // Verificar que el rol del usuario se recibe correctamente
-        console.log('Rol recibido:', userData.role); // Verifica el valor del rol
-
-        // Guarda el rol del usuario en localStorage
+        // Guarda el rol del usuario en localStorage para uso posterior
         localStorage.setItem('userRole', userData.role);
 
-        // Verifica el rol y redirige directamente a la página correcta
-        if (userData.role.trim().toLowerCase() === 'admin') {
-            // Si es admin, redirige directamente a /admin/project-validation
-            navigate('/admin/project-validation', { replace: true }); // Reemplaza la ruta en el historial
+        // Redirige según el rol del usuario
+        if (userData.role === 'admin') {
+            // Redirige a la página de administración si el rol es 'admin'
+            navigate('/admin/project-validation', { replace: true }); // Usar replace: true
         } else {
-            // Si no es admin, redirige a /main-page
-            navigate('/main-page', { replace: true }); // Reemplaza la ruta en el historial
+            // Redirige a la página principal si es un usuario normal
+            console.log("Datos de usuario después del login:", userData);
+            navigate('/main-page', { replace: true }); // Usar replace: true
         }
 
         return userData;
