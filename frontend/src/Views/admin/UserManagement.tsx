@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from '../../Styles/UserManagement.module.css'; // Archivo CSS para estilos
+import { getUsers } from "../../ConnectionToBackend/Routes/getUsers"; // Función para obtener los usuarios desde el backend
 
 const UserManagement = () => {
     interface User {
@@ -11,17 +12,20 @@ const UserManagement = () => {
     const [users, setUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState(true);
 
-    // Datos de ejemplo para los usuarios
+    // Obtiene los usuarios desde la API (en lugar de usar datos de ejemplo)
     useEffect(() => {
-        const usuariosEjemplo = [
-            { id: "1", nombre: "Juan Pérez", activa: true },
-            { id: "2", nombre: "María López", activa: false },
-            { id: "3", nombre: "Carlos Ramírez", activa: true },
-        ];
-        setTimeout(() => {
-            setUsers(usuariosEjemplo);
-            setLoading(false);
-        }, 1000);
+        const fetchUsers = async () => {
+            try {
+                const fetchedUsers = await getUsers();  // Llamada al backend para obtener los usuarios
+                setUsers(fetchedUsers);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error al obtener los usuarios:', error);
+                setLoading(false);
+            }
+        };
+
+        fetchUsers();
     }, []);
 
     // Función para cambiar el estado activo de un usuario

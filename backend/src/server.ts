@@ -40,7 +40,25 @@ const PORT = process.env.PORT || 8000;
 app.use('/', userRoutes);
 app.use('/', projectRoutes);
 app.use('/admin', adminRoutes);
+
+// Usar las rutas de usuarios
+app.use('/api/users', userRoutes); // Usamos la ruta '/api/users' para las peticiones de gestión de usuarios
+
 app.listen(PORT, () => {
     console.log(`Server está siendo ejecutado en puerto: ${PORT}`)
 })
 export default app;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
