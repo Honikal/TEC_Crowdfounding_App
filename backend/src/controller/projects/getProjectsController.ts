@@ -76,8 +76,6 @@ export const getProjectController = async(req: Request, res: Response): Promise<
                 porcentajeFundado: calculateFundingPercentage(proyecto.fondos_recaudados, proyecto.objetivo_financiero)
             })
         }
-
-        console.log("Transformed projects:", proyectosTransformados);  // Ensure this logs expected data
         //Respondemos con la lista de los proyectos
         res.status(200).json(proyectosTransformados);
     } catch (error: any) {

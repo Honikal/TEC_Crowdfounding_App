@@ -15,6 +15,7 @@ import SearchedProjectPage from "../Views/SearchedProjectPage";
 import MyProjectsPage from "../Views/MyProjectsPage";
 
 import DonatePage from "../Views/DonatePage";
+import MyDonationsPage from "../Views/MyDonationsPage";
 
 
 //Main Page
@@ -85,6 +86,13 @@ export const router = createBrowserRouter([
                 //Páginas específicas para proyecto de usuario
                 path: "/my-projects",
                 element: <MyProjectsPage/>
+            },
+
+            /*Área de donación*/
+            {
+                //Páginas específicas para mostrar donaciones
+                path: "/my-donations",
+                element: <MyDonationsPage/>
             }
         ]        
     }

@@ -1,8 +1,6 @@
 import { Request, Response } from 'express';
-import axios from 'axios';
 
 //Acá haremos acceso a todas las rutas que puede acceder la aplicación
-import admin from '../../config/firebaseAdmin';
 import UsuarioEntidad from '../../entities/usersDBConnection';
 import ProyectoEntidad from '../../entities/projectDBConnection';
 import sendEmail from '../../entities/emailSender';
@@ -15,6 +13,14 @@ const convertirDateToString = (date: Date) => {
     let day = date.getDate();
 
     return `${day}/${month}/${year}`;
+}
+
+const getTime = (date: Date) => {
+    const h = date.getHours();
+    const m = date.getMinutes();
+    const s = date.getSeconds();
+
+    return `${h}:${m}:${s}`
 }
 
 export const donateController = async(req: Request, res: Response): Promise<void> => {
@@ -58,17 +64,22 @@ export const donateController = async(req: Request, res: Response): Promise<void
             return;
         }
 
-        console.log("Si pasamos sin problema");
-
         //Primero, vamos a crear una donación como tal, con los siguientes datos
         const donacionEntidad = new DonacionEntidad();
-        const donacion = new Donacion('',
-            proyecto.getIdProyecto,
-            donador.getIdUsuario,
-            convertirDateToString(new Date()),
-            monto_donado
-        )
+        const idDonacion = await donacionEntidad.generateIDKey();
+        if (!idDonacion){
+            res.status(404).send('Error generando la id de donación');
+            return;
+        }
 
+        const fecha_donacion = new Date();
+        const donacion = new Donacion(idDonacion,
+            id_proyecto,
+            id_donador,
+            convertirDateToString(fecha_donacion),
+            getTime(fecha_donacion),
+            monto_donado
+        );
 
         //Aumentamos como tal el cantidad de fondos del proyecto con base al dinero recibido
         //Proyecto
@@ -105,6 +116,8 @@ export const donateController = async(req: Request, res: Response): Promise<void
             `Felicidades, su proyecto ha recibido una donación de $${donacion}, donados por el grandioso usuario ${donador?.getNombre}.
 Sigan motivados a continuar fervosamente su proyecto`
         );
+
+        res.status(200).json(idDonacion);
     } catch (error: any) {
         console.error(error);
         res.status(500).send(error.message || 'Internal Server Error'); 

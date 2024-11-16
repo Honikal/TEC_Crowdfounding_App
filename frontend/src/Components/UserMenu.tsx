@@ -39,12 +39,20 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, logout }) => {
         }})
     }
 
+    //Página que muestra la lista de donaciones hechas por el usuario
+    const handleMyDonations = async() => {
+        navigate("/my-donations", 
+            { state: {user: user}}
+        )
+    }
+
     //Función para manejar el cambio del usuario
     const handleModifyUser = () => {
         navigate("/user-settings", 
             { state: {user: user}}
         )
     }
+
 
     return (
         <div>
@@ -68,7 +76,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, logout }) => {
                     <button className={styles.DropdownItem} onClick={handleMyProjects}>
                         Mis Proyectos
                     </button>
-                    <button className={styles.DropdownItem}>
+                    <button className={styles.DropdownItem} onClick={handleMyDonations}>
                         Mis donaciones
                     </button>
                     <button className={styles.DropdownItem} onClick={handleLogout}>

@@ -38,7 +38,7 @@ export default class DonacionEntidad {
                 }));
                 return donaciones.filter((donacion) => donacion.idDonante === id_donador);
             }
-            return null;
+            return [];
         } catch (error){
             console.error("Error en la capa entidad, (authenticateUser): ", error);
             throw error;
@@ -92,15 +92,15 @@ export default class DonacionEntidad {
 
     //ADD
     //Función encargada de la creación de la factura o prueba de la donación
-    async addDonacion(donacion: Donacion) {
+    async addDonacion(donacion: Donacion, donacionId?: string) {
         try {
-            const newDonacionRef = this.#dbRef.push();
+            const newDonacionRef = donacionId ? this.#dbRef.child(donacionId) : this.#dbRef.push();
             await newDonacionRef.set(
                 {
-                    idDonacion: donacion.getIdDonador,
                     idProyecto: donacion.getIdProyecto,
                     idDonante: donacion.getIdDonador,
                     fecha_donacion: donacion.getFechaDonacion,
+                    hora_donacion: donacion.getHoraDonacion,
                     monto_donado: donacion.getMonto
                 }
             );
@@ -108,6 +108,10 @@ export default class DonacionEntidad {
             console.error("Error en la capa entidad, (authenticateUser): ", error);
             throw error;
         }
+    }
+    async generateIDKey(){
+        const newProjectRef = this.#dbRef.push();
+        return newProjectRef.key;
     }
 
     //Función encargada de aplicar formato de base de datos a la clase donación
@@ -118,6 +122,7 @@ export default class DonacionEntidad {
             idProyecto,
             idDonante,
             fecha_donacion,
+            hora_donacion,
             monto_donado
         } = donacionData;
 
@@ -126,6 +131,7 @@ export default class DonacionEntidad {
             idProyecto,
             idDonante,
             fecha_donacion,
+            hora_donacion,
             monto_donado
         );
         return donacion;
