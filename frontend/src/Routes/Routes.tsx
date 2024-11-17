@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 
-//Pagina inicial
+// Pagina inicial
 import App from "../App";
 import HomePage from "../Views/HomePage";
 import LoginPage from "../Views/LoginPage";
@@ -13,49 +13,87 @@ import ProjectPage from "../Views/ProjectPage";
 import NewProjectPage from "../Views/NewProjectPage";
 import SearchedProjectPage from "../Views/SearchedProjectPage";
 
-
-//Admin Pages
+// Admin Pages
 import DonationsManagement from "../Views/admin/DonationsManagement";
 import UserManagement from "../Views/admin/UserManagement";
 import ProjectValidation from "../Views/admin/ProjectValidation";
 import EventConfiguration from "../Views/admin/EventConfiguration";
+import ProjectMonitoring from "../Views/admin/ProjectMonitoring";
+import MentorManagement from "../Views/admin/MentorManagement";
+import NotificationSettings from "../Views/admin/NotificationSettings";
 
-// Acá nos encargaremos de manejar las rutas dentro de la página
+// Configuración de rutas
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <App />,
+        element: <App/>,
         children: [
             {
-                //Landing page
                 path: "",
-                element: <HomePage />
+                element: <HomePage/>
             },
             {
-                // Página de Login
                 path: "/login",
-                element: <LoginPage />
+                element: <LoginPage/>
             },
             {
-                // Página de SignUp
                 path: "/signup",
-                element: <SignUpPage />
+                element: <SignUpPage/>
             },
             {
-                //Página de contraseña
                 path: "/change-password",
-                element: <ChangePassword />
+                element: <ChangePassword/>
             },
             {
-                // Página para modificar los datos del usuario
                 path: "/user-settings",
-                element: <ModifyUserPage />
+                element: <ModifyUserPage/>
             },
             {
-                //Página de inicio de usuario
                 path: "/main-page",
                 element: <MainPage/>
+            },
+            {
+                path: "/project/:projectId",
+                element: <ProjectPage/>
+            },
+            {
+                path: "/new-project",
+                element: <NewProjectPage/>
+            },
+            {
+                path: "/searched-projects",
+                element: <SearchedProjectPage/>
+            },
+            // Admin routes
+            {
+                path: "/admin/donations-management",
+                element: <DonationsManagement/>
+            },
+            {
+                path: "/admin/user-management",
+                element: <UserManagement/>
+            },
+            {
+                path: "/admin/project-validation",
+                element: <ProjectValidation/>
+            },
+            {
+                path: "/admin/event-configuration",
+                element: <EventConfiguration/>
+            },
+            {
+                path: "/admin/project-monitoring",
+                element: <ProjectMonitoring/>
+            },
+            {
+                path: "/admin/mentor-management",
+                element: <MentorManagement/>
+            },
+            {
+                path: "/admin/notification-settings",
+                element: <NotificationSettings/>
             }
         ]        
     }
 ]);
+ 

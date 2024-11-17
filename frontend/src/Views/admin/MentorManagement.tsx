@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import styles from '../Styles/MentorManagement.module.css';
-import { fetchMentors } from "../ConnectionToBackend/Routes/fetchMentors";
+import React, { useState } from "react";
+import styles from '../../Styles/MentorManagement.module.css';
 
 // Interfaz para los mentores
 interface Mentor {
@@ -11,17 +10,11 @@ interface Mentor {
 }
 
 function MentorManagement() {
-    const [mentors, setMentors] = useState<Mentor[]>([]);
+    const [mentors, setMentors] = useState<Mentor[]>([
+        { id: "1", name: "Juan Pérez", email: "juan.perez@example.com", role: "Liderazgo" },
+        { id: "2", name: "María López", email: "maria.lopez@example.com", role: "Tecnología" },
+    ]); // Datos de ejemplo
     const [newMentor, setNewMentor] = useState({ name: "", email: "", role: "" });
-
-    useEffect(() => {
-        // Obtener lista de mentores
-        const getMentors = async () => {
-            const data = await fetchMentors();
-            setMentors(data);
-        };
-        getMentors();
-    }, []);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -30,9 +23,9 @@ function MentorManagement() {
 
     const handleRegisterMentor = (e: React.FormEvent) => {
         e.preventDefault();
-        // Aquí podrías añadir la lógica para enviar el nuevo mentor al backend
+        // Agregar el nuevo mentor a la lista localmente
         setMentors([...mentors, { id: Date.now().toString(), ...newMentor }]);
-        setNewMentor({ name: "", email: "", role: "" });
+        setNewMentor({ name: "", email: "", role: "" }); // Reiniciar el formulario
     };
 
     return (
@@ -80,20 +73,20 @@ function MentorManagement() {
                 <h2>Lista de Mentores</h2>
                 <table className={styles.MentorTable}>
                     <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Rol de Mentoría</th>
-                    </tr>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Rol de Mentoría</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    {mentors.map((mentor) => (
-                        <tr key={mentor.id}>
-                            <td>{mentor.name}</td>
-                            <td>{mentor.email}</td>
-                            <td>{mentor.role}</td>
-                        </tr>
-                    ))}
+                        {mentors.map((mentor) => (
+                            <tr key={mentor.id}>
+                                <td>{mentor.name}</td>
+                                <td>{mentor.email}</td>
+                                <td>{mentor.role}</td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </section>

@@ -62,7 +62,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, logout }) => {
                     </button>
                     
                     {/* Opciones específicas para administradores */}
-                    {user?.role === "admin" ? (
+                    {user?.role === "admin" && (
                         <>
                             <button className={styles.DropdownItem} onClick={() => navigate("/admin/donations-management")}>
                                 Gestión de Donaciones
@@ -76,14 +76,18 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, logout }) => {
                             <button className={styles.DropdownItem} onClick={() => navigate("/admin/event-configuration")}>
                                 Configuración de Eventos
                             </button>
-                        </>
-                    ) : (
-                        <>
-                            <button className={styles.DropdownItem} onClick={() => navigate("/user-projects")}>
-                                Mis Proyectos
+                            {/* Nuevas opciones */}
+                            <button className={styles.DropdownItem} onClick={() => navigate("/admin/project-monitoring")}>
+                                Monitoreo de Proyectos
                             </button>
-                            <button className={styles.DropdownItem} onClick={() => navigate("/user-donations")}>
-                                Mis Donaciones
+                            <button className={styles.DropdownItem} onClick={() => navigate("/admin/donations-management")}>
+                                Monitoreo de Donaciones
+                            </button>
+                            <button className={styles.DropdownItem} onClick={() => navigate("/admin/mentor-management")}>
+                                Gestión de Mentores
+                            </button>
+                            <button className={styles.DropdownItem} onClick={() => navigate("/admin/notification-settings")}>
+                                Configuración de Notificaciones
                             </button>
                         </>
                     )}
@@ -99,4 +103,3 @@ const UserMenu: React.FC<UserMenuProps> = ({ user, logout }) => {
 };
 
 export default UserMenu;
-

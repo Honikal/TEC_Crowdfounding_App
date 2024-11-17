@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import styles from '../Styles/NotificationSettings.module.css';
-import { fetchNotificationTemplates } from "../ConnectionToBackend/Routes/fetchNotificationTemplates";
+import React, { useState } from "react";
+import styles from '../../Styles/NotificationSettings.module.css';
 
 // Interfaz para plantillas de notificación
 interface NotificationTemplate {
@@ -12,17 +11,24 @@ interface NotificationTemplate {
 }
 
 function NotificationSettings() {
-    const [templates, setTemplates] = useState<NotificationTemplate[]>([]);
+    const [templates, setTemplates] = useState<NotificationTemplate[]>([
+        {
+            id: "1",
+            name: "Registro Exitoso",
+            subject: "Bienvenido a nuestra plataforma",
+            body: "Gracias por registrarte. Esperamos que disfrutes de la experiencia.",
+            eventTrigger: "Registro",
+        },
+        {
+            id: "2",
+            name: "Recordatorio de Evento",
+            subject: "No olvides tu próximo evento",
+            body: "Te recordamos que tienes un evento agendado para mañana.",
+            eventTrigger: "Recordatorio",
+        },
+    ]); // Datos de ejemplo
     const [selectedTemplate, setSelectedTemplate] = useState<NotificationTemplate | null>(null);
     const [newTemplate, setNewTemplate] = useState({ name: "", subject: "", body: "", eventTrigger: "" });
-
-    useEffect(() => {
-        const getTemplates = async () => {
-            const data = await fetchNotificationTemplates();
-            setTemplates(data);
-        };
-        getTemplates();
-    }, []);
 
     const handleTemplateChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -32,8 +38,10 @@ function NotificationSettings() {
     const handleTemplateSave = (e: React.FormEvent) => {
         e.preventDefault();
         if (selectedTemplate) {
-            setTemplates(templates.map(t => t.id === selectedTemplate.id ? newTemplate : t));
+            // Editar plantilla existente
+            setTemplates(templates.map(t => t.id === selectedTemplate.id ? { id: t.id, ...newTemplate } : t));
         } else {
+            // Crear nueva plantilla
             setTemplates([...templates, { id: Date.now().toString(), ...newTemplate }]);
         }
         setNewTemplate({ name: "", subject: "", body: "", eventTrigger: "" });
@@ -56,11 +64,23 @@ function NotificationSettings() {
                 <h2>Plantillas de Notificación</h2>
                 <ul className={styles.TemplateList}>
                     {templates.map(template => (
-                        <li key={template.id} onClick={() => handleTemplateSelect(template)} className={styles.TemplateItem}>
+                        <li
+                            key={template.id}
+                            onClick={() => handleTemplateSelect(template)}
+                            className={styles.TemplateItem}
+                        >
                             <h3>{template.name}</h3>
                             <p><strong>Asunto:</strong> {template.subject}</p>
                             <p><strong>Evento:</strong> {template.eventTrigger}</p>
-                            <button onClick={() => handleTemplateDelete(template.id)} className={styles.DeleteBtn}>Eliminar</button>
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleTemplateDelete(template.id);
+                                }}
+                                className={styles.DeleteBtn}
+                            >
+                                Eliminar
+                            </button>
                         </li>
                     ))}
                 </ul>
@@ -69,16 +89,38 @@ function NotificationSettings() {
                 <h2>{selectedTemplate ? "Editar Plantilla" : "Crear Nueva Plantilla"}</h2>
                 <form onSubmit={handleTemplateSave} className={styles.TemplateForm}>
                     <label>Nombre de la Plantilla:
-                        <input type="text" name="name" value={newTemplate.name} onChange={handleTemplateChange} required />
+                        <input
+                            type="text"
+                            name="name"
+                            value={newTemplate.name}
+                            onChange={handleTemplateChange}
+                            required
+                        />
                     </label>
                     <label>Asunto:
-                        <input type="text" name="subject" value={newTemplate.subject} onChange={handleTemplateChange} required />
+                        <input
+                            type="text"
+                            name="subject"
+                            value={newTemplate.subject}
+                            onChange={handleTemplateChange}
+                            required
+                        />
                     </label>
                     <label>Cuerpo del Mensaje:
-                        <textarea name="body" value={newTemplate.body} onChange={handleTemplateChange} required />
+                        <textarea
+                            name="body"
+                            value={newTemplate.body}
+                            onChange={handleTemplateChange}
+                            required
+                        />
                     </label>
                     <label>Evento que Activa:
-                        <select name="eventTrigger" value={newTemplate.eventTrigger} onChange={handleTemplateChange} required>
+                        <select
+                            name="eventTrigger"
+                            value={newTemplate.eventTrigger}
+                            onChange={handleTemplateChange}
+                            required
+                        >
                             <option value="" disabled>Selecciona un evento</option>
                             <option value="Registro">Registro</option>
                             <option value="Recordatorio">Recordatorio</option>

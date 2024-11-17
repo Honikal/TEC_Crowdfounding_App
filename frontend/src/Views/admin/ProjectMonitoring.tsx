@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FaEye } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-import styles from '../Styles/ProjectMonitoring.module.css';
-import { fetchProjects } from "../ConnectionToBackend/Routes/fetchProjects";
+import styles from '../../Styles/ProjectMonitoring.module.css';
 
 // Interfaz para los proyectos
 interface Project {
@@ -15,16 +14,29 @@ interface Project {
 }
 
 function ProjectMonitoring() {
-    const [projects, setProjects] = useState<Project[]>([]);
-
-    useEffect(() => {
-        // backend
-        const getProjects = async () => {
-            const data = await fetchProjects();
-            setProjects(data);
-        };
-        getProjects();
-    }, []);
+    const [projects, setProjects] = useState<Project[]>([
+        {
+            id: "1",
+            name: "Proyecto A",
+            description: "Este es un proyecto sobre tecnología innovadora.",
+            status: "En progreso",
+            created_at: "2024-11-10",
+        },
+        {
+            id: "2",
+            name: "Proyecto B",
+            description: "Este es un proyecto de desarrollo social.",
+            status: "Finalizado",
+            created_at: "2024-10-15",
+        },
+        {
+            id: "3",
+            name: "Proyecto C",
+            description: "Este es un proyecto de investigación científica.",
+            status: "Pendiente",
+            created_at: "2024-11-01",
+        },
+    ]); // Datos de ejemplo
 
     return (
         <div className={styles.ProjectMonitoring}>

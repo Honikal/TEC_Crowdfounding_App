@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaProjectDiagram, FaDonate, FaUserFriends } from 'react-icons/fa';
 
-import styles from '../Styles/AdminDashboard.module.css';
-import { fetchDashboardData } from "../ConnectionToBackend/Routes/fetchDashboardData";
+import styles from '../../Styles/AdminDashboard.module.css';
 
 // Interfaz para las estadísticas del dashboard
 interface DashboardStats {
@@ -15,12 +14,16 @@ function AdminDashboard() {
     const [stats, setStats] = useState<DashboardStats>({ projects: 0, donations: 0, activeUsers: 0 });
 
     useEffect(() => {
-        // Obtener los datos del backend
-        const getDashboardData = async () => {
-            const data = await fetchDashboardData();
-            setStats(data);
+        // Simular datos de ejemplo para el frontend
+        const getExampleData = () => {
+            const exampleData: DashboardStats = {
+                projects: 123,
+                donations: 4567,
+                activeUsers: 789,
+            };
+            setStats(exampleData);
         };
-        getDashboardData();
+        getExampleData();
     }, []);
 
     return (
