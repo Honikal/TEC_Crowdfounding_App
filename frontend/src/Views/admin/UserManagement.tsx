@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
+import { getUsers } from '../../ConnectionToBackend/Routes/getUsers'; // Asegúrate de que esta ruta sea correcta
 import styles from '../../Styles/UserManagement.module.css'; // Archivo CSS para estilos
 
 const UserManagement = () => {
@@ -6,6 +7,12 @@ const UserManagement = () => {
         id: string;
         nombre: string;
         activa: boolean;
+        area_trabajo: string;
+        cedula: string;
+        correo: string;
+        telefono: string;
+        rol: string;
+        presupuesto: number;
     }
 
     const [users, setUsers] = useState<User[]>([]);
@@ -13,18 +20,20 @@ const UserManagement = () => {
 
     // Datos de ejemplo para los usuarios
     useEffect(() => {
-        const usuariosEjemplo = [
-            { id: "1", nombre: "Juan Pérez", activa: true },
-            { id: "2", nombre: "María López", activa: false },
-            { id: "3", nombre: "Carlos Ramírez", activa: true },
-        ];
-        setTimeout(() => {
-            setUsers(usuariosEjemplo);
+        const fetchUsers = async () => {
+          try {
+            const usuariosData = await getUsers(); // Asegúrate de que esta función haga la llamada correcta a la API
+            console.log('Usuarios obtenidos del backend:', usuariosData); // Agrega un log para verificar
+            setUsers(usuariosData);
             setLoading(false);
-        }, 1000);
-    }, []);
+          } catch (error) {
+            console.error("Error al obtener los usuarios:", error);
+          }
+        };
+        fetchUsers();
+      }, []);
+      
 
-    // Función para cambiar el estado activo de un usuario
     const toggleUserActive = (id: string) => {
         setUsers((prevUsers) =>
             prevUsers.map((user) =>
@@ -79,3 +88,5 @@ const UserManagement = () => {
 };
 
 export default UserManagement;
+
+  

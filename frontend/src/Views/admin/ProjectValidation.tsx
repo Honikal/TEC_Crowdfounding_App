@@ -1,77 +1,72 @@
-import React, { useState, useEffect } from "react";
-import styles from '../../Styles/ProjectValidation.module.css';
+import React, { useEffect, useState } from 'react';
+import { getProjects } from '../../ConnectionToBackend/Routes/getProjects';
+import styles from '../../Styles/ValidateProject.module.css'; // Importamos el nuevo archivo de estilos
 
-type Project = {
-    id: string;
-    name: string;
-    description: string;
-    submittedBy: string;
-    isApproved: boolean | null;
-};
+interface Proyecto {
+    idProyecto: string;
+    nombre: string;
+    descripcion: string;
+    categorias: string[];
+    objetivo_financiero: number;
+    fondos_recaudados: number;
+    media: string[];
+    nombre_creador: string;
+    diasRestantes: number;
+    porcentajeFundado: number;
+}
 
-const ProjectValidation: React.FC = () => {
-    const [projects, setProjects] = useState<Project[]>([]);
-    const [loading, setLoading] = useState(true);
+const ProjectValidation = () => {
+    const [proyectos, setProyectos] = useState<Proyecto[]>([]);
 
-    // Simulación de carga de proyectos
     useEffect(() => {
-        const proyectosEjemplo: Project[] = [
-            { id: "1", name: "Proyecto A", description: "Descripción del Proyecto A", submittedBy: "Juan Pérez", isApproved: null },
-            { id: "2", name: "Proyecto B", description: "Descripción del Proyecto B", submittedBy: "María López", isApproved: null },
-            { id: "3", name: "Proyecto C", description: "Descripción del Proyecto C", submittedBy: "Carlos Ramírez", isApproved: null },
-        ];
-        setTimeout(() => {
-            setProjects(proyectosEjemplo);
-            setLoading(false);
-        }, 1000);
+        // Función para obtener proyectos del backend
+        const fetchProjects = async () => {
+            try {
+                const fetchedProyectos = await getProjects(); // Llamada a la API para obtener proyectos
+                setProyectos(fetchedProyectos); // Guardamos los proyectos en el estado
+            } catch (error) {
+                console.error("Error al obtener proyectos:", error);
+            }
+        };
+        fetchProjects();
     }, []);
 
-    // Función para aprobar o rechazar un proyecto
-    const handleApproval = (id: string, isApproved: boolean) => {
-        setProjects((prevProjects) =>
-            prevProjects.map((project) =>
-                project.id === id ? { ...project, isApproved } : project
-            )
-        );
-        alert(`Proyecto ${isApproved ? "aprobado" : "rechazado"} con éxito.`);
+    // Función para manejar la acción de aprobar un proyecto
+    const handleApprove = (id: string) => {
+        console.log("Proyecto aprobado:", id);
+        // Aquí puedes agregar la lógica para aprobar el proyecto (por ejemplo, actualizar en la base de datos)
     };
 
-    if (loading) {
-        return (
-            <div className={styles.loadingContainer}>
-                <div className={styles.loader}></div>
-                <p>Cargando proyectos...</p>
-            </div>
-        );
-    }
+    // Función para manejar la acción de rechazar un proyecto
+    const handleReject = (id: string) => {
+        console.log("Proyecto rechazado:", id);
+        // Aquí puedes agregar la lógica para rechazar el proyecto (por ejemplo, actualizar en la base de datos)
+    };
 
     return (
-        <div className={styles.container}>
-            <h1 className={styles.title}>Validación de Proyectos</h1>
-            <div className={styles.projectList}>
-                {projects.map((project) => (
-                    <div key={project.id} className={styles.projectContainer}>
-                        <h2 className={styles.projectName}>{project.name}</h2>
-                        <p className={styles.projectDescription}>{project.description}</p>
-                        <p className={styles.submittedBy}>Propuesto por: {project.submittedBy}</p>
-                        <div className={styles.buttonContainer}>
-                            <button
-                                className={`${styles.approveButton} ${project.isApproved === true ? styles.disabled : ''}`}
-                                onClick={() => handleApproval(project.id, true)}
-                                disabled={project.isApproved !== null}
-                            >
-                                Aprobar
-                            </button>
-                            <button
-                                className={`${styles.rejectButton} ${project.isApproved === false ? styles.disabled : ''}`}
-                                onClick={() => handleApproval(project.id, false)}
-                                disabled={project.isApproved !== null}
-                            >
-                                Rechazar
-                            </button>
+        <div className={styles.ProjectValidation}>
+            <h2>Validación de Proyectos</h2>
+            <div className={styles.ProjectList}>
+                {proyectos.length > 0 ? (
+                    proyectos.map((proyecto) => (
+                        <div key={proyecto.idProyecto} className={styles.ProjectCard}>
+                            <img src={proyecto.media[0]} alt={proyecto.nombre} className={styles.ProjectImage} />
+                            <div className={styles.ProjectInfo}>
+                                <h3>{proyecto.nombre}</h3>
+                                <p>{proyecto.descripcion}</p>
+                                <p><strong>Creado por:</strong> {proyecto.nombre_creador}</p>
+                                <p><strong>Fondos Recaudados:</strong> {proyecto.fondos_recaudados} / {proyecto.objetivo_financiero}</p>
+                                <p><strong>Días restantes:</strong> {proyecto.diasRestantes}</p>
+                            </div>
+                            <div className={styles.ProjectActions}>
+                                <button onClick={() => handleApprove(proyecto.idProyecto)} className={styles.ApproveButton}>Aprobar</button>
+                                <button onClick={() => handleReject(proyecto.idProyecto)} className={styles.RejectButton}>Rechazar</button>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))
+                ) : (
+                    <p>No hay proyectos para validar.</p>
+                )}
             </div>
         </div>
     );
