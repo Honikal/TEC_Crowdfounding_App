@@ -7,6 +7,12 @@ const deactivateAccController_1 = require("../controller/admin/deactivateAccCont
 const asignModController_1 = require("../controller/admin/asignModController");
 const getUsersController_1 = require("../controller/admin/getUsersController");
 const getProjectsController_1 = require("../controller/admin/getProjectsController");
+
+const getProjectsAdminController_1 = requiere("../controller/admin/getProjectsAdminController");
+
+
+
+
 const router = (0, express_1.Router)();
 //Hacemos routing para el logging del usuario
 router.post('/deactivateProject', deactivateProjController_1.deactivateProjController);
@@ -15,4 +21,9 @@ router.post('/asignMod', asignModController_1.asignModController);
 router.get('/deactivateProject', getProjectsController_1.getProjectsController);
 router.get('/deactivateAccount', getUsersController_1.getUsersController);
 router.get('/asignMod', getUsersController_1.getUsersController);
+
+
+router.get('/getProjects', getProjectsAdminController.getProjectsAdminController); 
+
+
 exports.default = router;

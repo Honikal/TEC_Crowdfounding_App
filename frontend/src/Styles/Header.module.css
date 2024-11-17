@@ -1,0 +1,325 @@
+.Header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.302vmin;
+    width: 100%;
+    box-sizing: border-box;
+}
+.HeaderLink{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+.MainHeaderSection{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.AppLogo{
+    height: 10vmin;
+    width: 10vmin;
+    pointer-events: none;
+    margin-right: 1.302vmin;
+}
+.HeaderText {
+    margin: 0;
+
+    font-family: 'Jomhuria', sans-serif;
+    font-size: 10vmin;
+    color: #75A1DE;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+    line-height: 1;
+}
+
+
+.HeaderButtons {
+    display: flex;
+    gap: 5.208vmin;
+    margin: 0px 2.604vmin;
+}
+.HeaderButton {
+    display: flex;
+    align-items: center;
+    padding: 1.302vmin 2.604vmin;
+    font-size: 2.708vmin;
+    border: none;
+    border-radius: 1.042vmin;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    text-decoration: none;
+}
+
+.LoginBtn {
+    background-color: #75A1DE;
+    color: #FEFEFE;
+}
+
+.SignUpBtn{
+    background-color: #4b5683;
+    color: #FEFEFE;
+}
+
+.userBtn{
+    padding: 10px 12px;
+    border: none;
+    border-radius: 2.1rem;
+    background-color: #682d43;
+    color: #75A1DE;
+    font-size: 1.1rem;
+
+    cursor: pointer;
+}
+
+.LogoutBtn{
+    background-color: #682d43;
+    color: #FEFEFE;
+}
+
+/*Sección de dropdown*/
+.UserDropdown{
+    position: absolute;
+    background-color: #ffffff;
+    box-shadow: 0 8px 16px 4px rbga(0, 0, 0, 0.5);
+    width: 225px;
+    right: 20px;
+    top: 60px;
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 10;
+}
+.UserDetails{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.UserImage{
+    width: 6.51vmin;
+    height: 6.51vmin;
+    background-color: #ccc;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    color: white;
+}   
+.ProfileIcon{
+    font-size: 1.5rem;
+}
+.UserInfo{
+    margin-left: 10px;
+    color: black;
+    font-family: 'Kadwa', sans-serif;
+    font-size: 0.8rem;
+}
+p{
+    margin: 0
+}
+.DropdownItem{
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    color: black;
+    text-decoration: none;
+    background: none;
+
+    text-align: left;
+    border: none;
+
+    cursor: pointer;
+}
+.DropdownItem:hover {
+    background-color: #dbd6d6;
+}
+
+.HeaderButton .Icon {
+    margin-right: 8px;
+    font-size: 2.708vmin;
+}
+
+/*Sección de búsqueda*/
+.searchContainer {
+    display: flex;
+
+    padding-left: 1.2rem;
+}
+.searchContainerInput{
+    display: flex;
+
+    align-items: center;
+
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+
+    box-shadow: 0px 6px 16px 0px rgba(0, 0, 0, 0.12);
+}
+.searchInput{
+    width: 80%;
+    padding: 0.5rem;
+    margin-right: 5px;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+}
+.searchButton{
+    margin-left: 5px;
+
+    background-color: #75A1DE;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: white;
+    border-radius: 2px;
+    cursor: pointer;
+}
+.searchIcon{
+    margin-left: 10px;
+    width: 1.2rem;
+    height: 1.2rem;
+    color: #ccc;
+}
+
+
+/*Usamos los fonts importados*/
+@font-face {
+    font-family: 'Jomhuria';
+    src: url('./Fonts/Jomhuria-Regular.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Kadwa';
+    src: url('./Fonts/Kadwa-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+.Header-button:hover {
+    background-color: #303d69;
+}
+
+@media (max-width: 1024px){
+    .HeaderText {
+        font-size: 8vmin;
+    }
+    .AppLogo{
+        height: 8vmin;
+        width: 8vmin;
+    }
+
+    .HeaderButtons{
+        gap: 10px;
+        max-width: 40%;
+    }
+
+    .HeaderButton{
+        font-size: 1.2rem;
+    }
+
+    .HeaderButton .Icon{
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 768px){
+    .Header {
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+
+    .AppLogo {
+        height: 6vmin;
+        width: 6vmin;
+    }
+
+    .HeaderText{
+        font-size: 6vmin;
+    }
+
+    .HeaderButtons{
+        width: 100%;
+        justify-content: space-evenly;
+    }
+
+    .HeaderButton{
+        font-size: 1rem;
+        padding: 6px 10px;
+        border-radius: 6px;
+    }
+
+    .HeaderButton .Icon {
+        margin-right: 8px;
+        font-size: 1.1rem;
+    }
+
+    .SearchInput, .SearchButton {
+        font-size: 0.9rem;  /* Adjust font size for smaller devices */
+    }
+}
+
+@media (max-width: 480px){
+    .Header {
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .AppLogo {
+        height:6vmin;
+        width: 6vmin;
+    }
+    .HeaderText{
+        font-size: 6vmin;
+    }
+
+    .HeaderButtons{
+        width: 100%;
+        justify-content: space-evenly;
+        gap: 1.7vmin;
+        margin-bottom: 3px;
+    }
+
+    .HeaderButton{
+        font-size: 3.2vmin;
+        padding: 4px 10px;
+        border-radius: 4px;
+    }
+
+    .HeaderButton .Icon {
+        margin-right: 2px;
+        font-size: 2.6vmin;
+    }
+}
+
+
+/*Pantallas 4K*/
+@media (min-width: 2560px) {
+    .Header{
+        justify-content: space-between;
+    }
+    .HeaderText{
+        font-size: 14vmin;
+    }
+    .AppLogo{
+        height: 14vmin;
+        width: 14vmin;
+    }
+    .HeaderButtons{
+        gap: 10px;
+    }
+    .HeaderButton{
+        font-size: 3.5rem;
+        padding: 16px 40px;
+        border-radius: 20px;
+    }
+    .HeaderButton .Icon{
+        margin-right: 20px;
+        font-size: 3.3rem;
+    }
+
+
+}
+

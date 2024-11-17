@@ -1,30 +1,57 @@
 import { Request, Response } from 'express';
+import UsuarioEntidad from '../../entities/usersDBConnection'; // Asegúrate de que esta ruta sea correcta
 
-//Acá haremos acceso a todas las rutas que puede acceder la aplicación
-import UsuarioEntidad from '../../entities/usersDBConnection';
-
-export const getUsersController = async(req: Request, res: Response): Promise<void> => {
+export const getUsersController = async (req: Request, res: Response): Promise<void> => {
     try {
-        //Checamos la solicitud sea un POST
-        if (req.method !== 'GET'){
-            console.log('Invalid method:', req.method);  // Log incorrect method
+        // Verificamos que la solicitud sea un GET
+        if (req.method !== 'GET') {
+            console.log('Método inválido:', req.method);
             res.status(405).send('Solo métodos GET son permitidos');
             return;
         }
 
-        //Creamos una instancia usuario del dato provisto
         const usuarioEntidad = new UsuarioEntidad();
+
+        // Si se proporciona un ID de usuario, obtenemos ese usuario
+        if (req.query.id) {
+            const id = req.query.id as string;
+            const usuario = await usuarioEntidad.getUserByID(id);
+            if (!usuario) {
+                res.status(404).send('Usuario no encontrado');
+                return;
+            }
+            res.status(200).json(usuario);
+            return;
+        }
+
+        // Si se proporciona un correo, obtenemos el usuario por correo
+        if (req.query.email) {
+            const email = req.query.email as string;
+            const usuario = await usuarioEntidad.getUserByEmail(email);
+            if (!usuario) {
+                res.status(404).send('Usuario no encontrado');
+                return;
+            }
+            res.status(200).json(usuario);
+            return;
+        }
+
+        // Si no se proporciona ningún parámetro, traemos todos los usuarios
         const usuarios = await usuarioEntidad.getUsers();
 
-        //Respondemos con la lista de los proyectos
-        console.log("Lista de usuarios dentro del sistema: ", usuarios);
+        if (!usuarios || usuarios.length === 0) {
+            res.status(404).send('No hay usuarios disponibles');
+            return;
+        }
+
+        // Enviamos los usuarios como respuesta
         res.status(200).json(usuarios);
-    } catch (error: any) {
-        console.error(error);
-        res.status(500).send(error.message || 'Internal Server Error'); 
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            console.error('Error en getUsersController:', error.message);
+            res.status(500).send(error.message || 'Internal Server Error');
+        } else {
+            res.status(500).send('Internal Server Error');
+        }
     }
-}
-
-
-
-
+};
