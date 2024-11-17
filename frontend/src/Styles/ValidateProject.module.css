@@ -1,0 +1,107 @@
+.ProjectValidation {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 20px;
+    min-height: 100vh;
+    background-color: #f4f5f7;
+}
+
+.ProjectList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.ProjectCard {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ProjectCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.ProjectImage {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.ProjectInfo {
+    font-family: 'Kadwa', sans-serif;
+}
+
+.ProjectInfo h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #333;
+}
+
+.ProjectInfo p {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.ProjectActions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.ApproveButton, .RejectButton {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.ApproveButton {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.ApproveButton:hover {
+    background-color: #218838;
+}
+
+.RejectButton {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.RejectButton:hover {
+    background-color: #c82333;
+}
+
+.ProjectExpired {
+    opacity: 0.6;
+    background-color: #ffcccc;
+    pointer-events: none;
+}
+
+.expiredMessage {
+    color: #d9534f;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-top: 10px;
+}
+
+@font-face {
+    font-family: 'Kadwa';
+    src: url('./Fonts/Kadwa-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}

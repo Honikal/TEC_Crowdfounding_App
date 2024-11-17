@@ -1,34 +1,39 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
+import { getUsers } from '../../ConnectionToBackend/Routes/getUsers'; // Asegúrate de que esta ruta sea correcta
 import styles from '../../Styles/UserManagement.module.css'; // Archivo CSS para estilos
-import { getUsers } from "../../ConnectionToBackend/Routes/getUsers"; // Función para obtener los usuarios desde el backend
 
 const UserManagement = () => {
     interface User {
         id: string;
         nombre: string;
         activa: boolean;
+        area_trabajo: string;
+        cedula: string;
+        correo: string;
+        telefono: string;
+        rol: string;
+        presupuesto: number;
     }
 
     const [users, setUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState(true);
 
-    // Obtiene los usuarios desde la API (en lugar de usar datos de ejemplo)
+    // Datos de ejemplo para los usuarios
     useEffect(() => {
         const fetchUsers = async () => {
-            try {
-                const fetchedUsers = await getUsers();  // Llamada al backend para obtener los usuarios
-                setUsers(fetchedUsers);
-                setLoading(false);
-            } catch (error) {
-                console.error('Error al obtener los usuarios:', error);
-                setLoading(false);
-            }
+          try {
+            const usuariosData = await getUsers(); // Asegúrate de que esta función haga la llamada correcta a la API
+            console.log('Usuarios obtenidos del backend:', usuariosData); // Agrega un log para verificar
+            setUsers(usuariosData);
+            setLoading(false);
+          } catch (error) {
+            console.error("Error al obtener los usuarios:", error);
+          }
         };
-
         fetchUsers();
-    }, []);
+      }, []);
+      
 
-    // Función para cambiar el estado activo de un usuario
     const toggleUserActive = (id: string) => {
         setUsers((prevUsers) =>
             prevUsers.map((user) =>
@@ -83,3 +88,5 @@ const UserManagement = () => {
 };
 
 export default UserManagement;
+
+  
