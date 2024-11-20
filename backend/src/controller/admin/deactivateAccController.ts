@@ -28,10 +28,10 @@ export const deactivateAccController = async(req: Request, res: Response): Promi
         }
 
         //Extraemos los datos
-        const { idAdmin, idUsuario, activa } = req.body;
+        const { idAdmin, idUsuario, estado } = req.body;
 
         //Validamos si las entradas son válidas
-        if (!idAdmin || !idUsuario || !activa === undefined){
+        if (!idAdmin || !idUsuario || !estado === undefined){
             res.status(400).send('Todos los campos son requeridos');
             return;
         }
@@ -46,10 +46,16 @@ export const deactivateAccController = async(req: Request, res: Response): Promi
             res.status(400).send('Usuario creador del proyecto no encontrado en la base de datos');
             return;
         }
+        if (!adminInstance){
+            res.status(400).send('Administrador no encontrado dentro del sistema');
+            return;
+        }
+
+        console.log(`Datos recibidos: (Id usuario: ${idUsuario}) (Id Admin: ${idAdmin}) (Estado: ${estado})`)
 
         //Una vez validado ésto, procederemos con la modificación del estado de cuenta del usuario
         await usuarioEntidad.editUsuario(idUsuario, {
-            activa: activa
+            activa: estado
         });
 
 
@@ -70,7 +76,7 @@ Si desea averiguar más información de la situación o el inconveniente, por fa
 `;
 
         //Una vez el usuario si ha sido registrado, enviaremos un correo electrónico
-        if (!activa){
+        if (estado === false){
             //Correo para bloquear el acceso a la cuenta
             await sendEmail(
                 usuarioInstance.getCorreo,

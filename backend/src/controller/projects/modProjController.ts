@@ -1,10 +1,13 @@
 import { Request, Response } from 'express';
 
 //Acá haremos acceso a todas las rutas que puede acceder la aplicación
+import admin from '../../config/firebaseAdmin';
 import UsuarioEntidad from '../../entities/usersDBConnection';
 import ProyectoEntidad from '../../entities/projectDBConnection';
+import Proyecto from '../../models/projects';
 import sendEmail from '../../entities/emailSender';
-import uploadMediaToFirebase, {clearMediaStorage} from '../../entities/storageDBConnection';
+import Usuario from '../../models/users';
+import uploadMediaToFirebase from '../../entities/storageDBConnection';
 
 const getDate = (): string => {
     const date = new Date();
@@ -49,9 +52,6 @@ export const ModProjectController = async(req: Request, res: Response): Promise<
             return;
         }
 
-        //Primero, nos encargaremos de liberar el sistema o el folder del proyecto
-
-
         //Separamos los tipos de datos entre los existentes guardados y los nuevos
         //Mapeareamos entre los elementos
         const finalMediaUrls = await Promise.all(
@@ -67,6 +67,8 @@ export const ModProjectController = async(req: Request, res: Response): Promise<
     
                     const fileName = `${usuarioInstance.getIdUsuario}_proyecto_${nombre}_${Date.now()}_${index}`;
                     const mediaUrl = await uploadMediaToFirebase(idProyecto, mediaItem, fileName);
+                    
+                    console.log("Colocamos los datos de media: ", mediaUrl)
                     if (mediaUrl !== undefined){
                         return mediaUrl;
                     }

@@ -7,6 +7,11 @@ import { ModUserController } from "../controller/users/ModUserController";
 import { logoutController } from "../controller/users/logoutController";
 import { getProjectController } from "../controller/projects/getProjectsController";
 
+import { getUsers, toggleUserActive } from '../controller/admin/userManagementController';
+import { getUsersController } from '../controller/admin/getUsersController';
+
+
+
 const router = Router();
 
 //Hacemos routing para el logging del usuario
@@ -18,4 +23,31 @@ router.post('/logout', logoutController);
 
 router.get('/main-page', getProjectController)
 
+// Ruta para obtener todos los usuarios activos
+router.get('/users', getUsers);
+router.get('/api/users', getUsersController);  // Llamamos al controlador de usuarios
+
+
+// Ruta para actualizar el estado "activa" de un usuario
+router.put('/users/:id', toggleUserActive);
+
+
+
+
+
+
 export default router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+

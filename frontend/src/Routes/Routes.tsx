@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 
-//Pagina inicial
+// Pagina inicial
 import App from "../App";
 import HomePage from "../Views/HomePage";
 import LoginPage from "../Views/LoginPage";
@@ -18,61 +18,58 @@ import DonatePage from "../Views/DonatePage";
 import MyDonationsPage from "../Views/MyDonationsPage";
 import ModifyProjectPage from "../Views/ModifyProjectPage";
 
+// Admin Pages
+import DonationsManagement from "../Views/admin/DonationsManagement";
+import UserManagement from "../Views/admin/UserManagement";
+import ProjectValidation from "../Views/admin/ProjectValidation";
+import EventConfiguration from "../Views/admin/EventConfiguration";
+import ProjectMonitoring from "../Views/admin/ProjectMonitoring";
+import MentorManagement from "../Views/admin/MentorManagement";
+import NotificationSettings from "../Views/admin/NotificationSettings";
 
-//Main Page
-
-
-//Acá nos encargaremos de manejar las rutas dentro de la página
+// Configuración de rutas
 export const router = createBrowserRouter([
     {
         path: "/",
         element: <App/>,
         children: [
             {
-                //Landing page
                 path: "",
                 element: <HomePage/>
             },
             {
-                //Página de Login
                 path: "/login",
                 element: <LoginPage/>
             },
             {
-                //Página de SignUp
                 path: "/signup",
                 element: <SignUpPage/>
             },
             {
-                //Página de contraseña
                 path: "/change-password",
                 element: <ChangePassword/>
             },
             {
-                //Página para modificar los datos del usuario
                 path: "/user-settings",
                 element: <ModifyUserPage/>
             },
-
-            /*Sección de main-page y búsqueda respectiva*/
             {
-                //Página de inicio de usuario
                 path: "/main-page",
                 element: <MainPage/>
             },
-
-
-            /*Sección de Proyectos*/
             {
-                //Página de creación de Proyectos
+                path: "/project/:projectId",
+                element: <ProjectPage/>
+            },
+            {
                 path: "/new-project",
                 element: <NewProjectPage/>
             },
             {
-                //Página de proyecto de forma individual
-                path: "/project",
-                element: <ProjectPage/>
+                path: "/searched-projects",
+                element: <SearchedProjectPage/>
             },
+            // Admin routes
             {
                 //Método para donar los proyectos
                 path: "/project/donate",
@@ -99,7 +96,36 @@ export const router = createBrowserRouter([
                 //Páginas específicas para mostrar donaciones
                 path: "/my-donations",
                 element: <MyDonationsPage/>
+            },
+            {
+                path: "/admin/donations-management",
+                element: <DonationsManagement/>
+            },
+            {
+                path: "/admin/user-management",
+                element: <UserManagement/>
+            },
+            {
+                path: "/admin/project-validation",
+                element: <ProjectValidation/>
+            },
+            {
+                path: "/admin/event-configuration",
+                element: <EventConfiguration/>
+            },
+            {
+                path: "/admin/project-monitoring",
+                element: <ProjectMonitoring/>
+            },
+            {
+                path: "/admin/mentor-management",
+                element: <MentorManagement/>
+            },
+            {
+                path: "/admin/notification-settings",
+                element: <NotificationSettings/>
             }
         ]        
     }
 ]);
+ 

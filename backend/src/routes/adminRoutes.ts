@@ -5,6 +5,7 @@ import { deactivateAccController } from "../controller/admin/deactivateAccContro
 import { asignModController } from "../controller/admin/asignModController";
 import { getUsersController } from "../controller/admin/getUsersController";
 import { getProjectsController } from "../controller/admin/getProjectsController";
+import { getDonationsController } from "../controller/admin/getDonationsController";
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.post('/asignMod', asignModController);
 router.get('/deactivateProject', getProjectsController)
 router.get('/deactivateAccount', getUsersController);
 router.get('/asignMod', getUsersController);
+router.get('/donations-management', getDonationsController);
 
 export default router;
