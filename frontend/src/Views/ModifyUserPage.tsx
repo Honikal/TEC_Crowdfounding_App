@@ -24,8 +24,6 @@ function ModifyUserPage() {
     const navigate = useNavigate();
     const initialUser = location.state?.user as User; //Recibimos al usuario
 
-    console.log("Usuario recibido en modificar usuario: ", initialUser);
-
     const [usuario, setUsuario] = useState<User>({
         idUsuario: initialUser.idUsuario || "",
         nombre: initialUser.nombre || "",
