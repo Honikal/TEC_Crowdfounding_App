@@ -47,6 +47,26 @@ const uploadMediaToFirebase = async(idProyecto: string, mediaData: string, fileN
         return Promise.reject(`Error subiendo el archivo a firebase: ${error}`)
     }
 }
+
+/**
+ * Se encarga de liberar o eliminar un folder dentro del firebase como tal
+ * @param {string} projectFolderPath - El path o ubicación del proyecto dentro de firebase storage
+ * @returns {Promise<string>} - The public URL of the uploaded file.
+ */
+export const clearMediaStorage = async(projectFolderPath: string): Promise<void> => {
+    //Primero, agarramos todos los archivos existentes
+    const [existingFiles] = await bucket.getFiles({ prefix: projectFolderPath });
+
+    //Luego, iteramos en cada una de éstas y nos encargamos de limpiarlo del sistema
+    await Promise.all(existingFiles.map((file) => file.delete()));
+}
+
+/**
+ * Se encarga de validar la existencia de un archivo en el storage
+ * @param {string} mediaData - The base64 or blob data.
+ * @param {string} fileName - The name of the file to be saved.
+ * @returns {Promise<string>} - The public URL of the uploaded file.
+ */
  
 export default uploadMediaToFirebase;
 

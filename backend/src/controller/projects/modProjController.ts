@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 import UsuarioEntidad from '../../entities/usersDBConnection';
 import ProyectoEntidad from '../../entities/projectDBConnection';
 import sendEmail from '../../entities/emailSender';
-import uploadMediaToFirebase from '../../entities/storageDBConnection';
+import uploadMediaToFirebase, {clearMediaStorage} from '../../entities/storageDBConnection';
 
 const getDate = (): string => {
     const date = new Date();
@@ -48,6 +48,9 @@ export const ModProjectController = async(req: Request, res: Response): Promise<
             res.status(404).send('Usuario creador del proyecto no encontrado en el sistema');
             return;
         }
+
+        //Primero, nos encargaremos de liberar el sistema o el folder del proyecto
+
 
         //Separamos los tipos de datos entre los existentes guardados y los nuevos
         //Mapeareamos entre los elementos

@@ -4,6 +4,7 @@ import { FaLongArrowAltLeft } from 'react-icons/fa'
 import { IoCalendarOutline, IoArrowBackOutline, IoArrowForwardOutline } from 'react-icons/io5'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { modifyProject } from '../ConnectionToBackend/Routes/modifyProject';
+import LoadingModal from '../Components/LoadingModal';
 
 interface Proyecto {
     idProyecto: string,
@@ -12,9 +13,15 @@ interface Proyecto {
     nombre: string,
     descripcion: string,
     categorias: string[],
+    fecha_creacion: string,
     fecha_limite: string,
+    fondos_recaudados: number,
     objetivo_financiero: number,
-    media: string[]
+    media: string[],
+
+    nombre_creador: string,
+    diasRestantes: number,
+    porcentajeFundado: number
 }
 
 function ModifyProjectPage() {
@@ -39,10 +46,19 @@ function ModifyProjectPage() {
         nombre: initialProject.nombre,
         descripcion: initialProject.descripcion,
         categorias: initialProject.categorias,
+        fecha_creacion: initialProject.fecha_creacion,
         fecha_limite: initialProject.fecha_limite,
+        fondos_recaudados: initialProject.fondos_recaudados,
         objetivo_financiero: initialProject.objetivo_financiero,
-        media: initialProject.media
+        media: initialProject.media,
+
+        nombre_creador: initialProject.nombre_creador,
+        diasRestantes: initialProject.diasRestantes,
+        porcentajeFundado: initialProject.porcentajeFundado
     })
+
+    //Sistema de carga de la página como tal
+    const [loading, setLoading] = useState(false);
 
     //El valor 
     const [selectedCategories, setSelectedCategories] = useState<string[]>(initialProject.categorias);
@@ -440,28 +456,44 @@ function ModifyProjectPage() {
         }
 
         if (formIsValid){
-            //Validamos o parseamos los datos
-            const validUserData = {
-                ...proyecto,
-                objetivo_financiero: Number(proyecto.objetivo_financiero),
-                fecha_limite: proyecto.fecha_limite,
-                categorias: selectedCategories
-            };
+            //Iniciamos seteando el sistema de carga
+            setLoading(true);
+            try {
+                //Validamos o parseamos los datos
+                const validUserData = {
+                    ...proyecto,
+                    objetivo_financiero: Number(proyecto.objetivo_financiero),
+                    fecha_limite: proyecto.fecha_limite,
+                    categorias: selectedCategories
+                };
 
-            console.log("dato validado: ", validUserData);
+                console.log("dato validado: ", validUserData);
 
-            const projecto = await modifyProject(validUserData)
-            console.log("Proyecto modificado: ", projecto);
-            
-            alert("Modificación realizada de forma exitosa");
-            navigate("/project", { state: {user: user, project: proyecto } })
+                const project = await modifyProject(validUserData)
+                
+                //En éste momento el sistema ya cargó el proyecto
+                setLoading(false);
+
+                alert("Modificación realizada de forma exitosa");
+                //Modificamos los datos del proyecto
+                proyecto.categorias = selectedCategories;
+
+                navigate("/project", { replace: true, state: {user: user, project: proyecto } })
+            } catch (error) {
+                console.error("Error modificando el proyecto: ", error);
+                alert("Ocurrió un error al modificar el proyecto. Inténtalo de nuevo");
+            } finally {
+                setLoading(false);
+            }
         }
         
     }
 
-
     return (
         <div className={styles.NewProyectoPage}>
+            {/*Modal de loading*/}
+            <LoadingModal isVisible={loading} message="Modificando el proyecto..."/>
+
             <div className={styles.StepIndicator}>
                 <p>Paso {currentSteps} de {totalSteps}</p>
             </div>

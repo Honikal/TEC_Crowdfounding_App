@@ -4,6 +4,7 @@ import { FaLongArrowAltLeft } from 'react-icons/fa'
 import { IoCalendarOutline, IoArrowBackOutline, IoArrowForwardOutline } from 'react-icons/io5'
 import { createProject } from '../ConnectionToBackend/Routes/createProject';
 import { useLocation, useNavigate } from 'react-router-dom';
+import LoadingModal from '../Components/LoadingModal';
 
 interface Proyecto {
     id_creador: string,
@@ -31,6 +32,8 @@ function NewProjectPage() {
     const [currentSteps, setCurrentSteps] = useState<number>(1);
     const totalSteps = 5;
     
+    //Sistema de carga de la página como tal
+    const [loading, setLoading] = useState(false);
 
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [totalCategorias, setTotalCategorias] = useState<string[]>([
@@ -395,19 +398,31 @@ function NewProjectPage() {
         }
 
         if (formIsValid){
-            //Validamos o parseamos los datos
-            const validUserData = {
-                ...proyecto,
-                objetivo_financiero: Number(proyecto.objetivo_financiero),
-                fecha_limite: parseDateString(proyecto.fecha_limite),
-                categorias: selectedCategories
-            };
+            //Iniciamos seteando el sistema de carga como tal
+            setLoading(true);
+            try {
+                //Validamos o parseamos los datos
+                const validUserData = {
+                    ...proyecto,
+                    objetivo_financiero: Number(proyecto.objetivo_financiero),
+                    fecha_limite: parseDateString(proyecto.fecha_limite),
+                    categorias: selectedCategories
+                };
 
-            console.log("dato validado: ", validUserData);
-            const projecto = await createProject(user, validUserData);
-            console.log("Proyecto creado: ", projecto);
-            alert("Proyecto creado de forma exitosa");
-            navigate("/main-page", { state: {user: user } })
+                console.log("dato validado: ", validUserData);
+                const projecto = await createProject(user, validUserData);
+                setLoading(false);
+                console.log("Proyecto creado: ", projecto);
+                alert("Proyecto creado de forma exitosa");
+                navigate("/main-page", { replace: true, state: {user: user } })
+            } catch (error) {
+                console.error("Error creando el proyecto: ", error);
+                alert("Ocurrió un error al crear el proyecto. Inténtalo de nuevo");
+            } finally {
+                setLoading(false);
+            }
+
+            
         }
         
     }
@@ -415,6 +430,9 @@ function NewProjectPage() {
 
     return (
         <div className={styles.NewProyectoPage}>
+            {/*Modal de loading*/}
+            <LoadingModal isVisible={loading} message="Creando el proyecto, por favor espere..."/>
+
             <div className={styles.StepIndicator}>
                 <p>Paso {currentSteps} de {totalSteps}</p>
             </div>

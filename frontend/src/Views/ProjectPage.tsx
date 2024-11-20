@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useUser } from '../Components/UserContext';
 import CategoryContent from '../Components/CategoryContent';
 import { getProjects } from '../ConnectionToBackend/Routes/getProjects';
+import LoadingModal from '../Components/LoadingModal';
 
 interface Proyecto {
     idProyecto: string,
@@ -68,6 +69,7 @@ function ProjectPage(){
         <>
             <CategoryContent categories={totalCategorias} user={user}/>
             <div className={styles.ProjectPage}>
+
                 <div className={styles.ProjectName}>
                     <h1>{proyecto.nombre}</h1>
                     <p>{proyecto.descripcion}</p>
