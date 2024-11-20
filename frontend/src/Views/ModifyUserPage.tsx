@@ -32,7 +32,7 @@ function ModifyUserPage() {
         areaTrabajo: initialUser.areaTrabajo || "",
         telefono: initialUser.telefono || "",
         presupuesto: initialUser.presupuesto || 0.00,
-        categorias: initialUser.categorias || ["tecnologia", "cocina", "videojuegos"]
+        categorias: initialUser.categorias
     });
 
     const [errorMessages, setErrorMessages] = useState<{[key: string]: string}>({});

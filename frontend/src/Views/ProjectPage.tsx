@@ -48,6 +48,10 @@ function ProjectPage(){
         "Artesanías"
     ])
 
+    const editProject = () => {
+        navigate("/project/edit-project", { state: { user: user, project: proyecto }})
+    }
+
     const donateToProject = () => {
         navigate("/project/donate", { state: { user: user, project: proyecto }})
     }
@@ -108,7 +112,7 @@ function ProjectPage(){
                         </div>
 
                         { proyecto.id_creador === user.idUsuario ? (
-                            <div className={styles.DonateButton}>
+                            <div className={styles.DonateButton} onClick={editProject}>
                                 <FaEdit className={styles.Icon}/>
                                 <p>Modificar proyecto</p>
                             </div>

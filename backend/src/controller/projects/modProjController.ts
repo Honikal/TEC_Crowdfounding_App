@@ -1,11 +1,10 @@
 import { Request, Response } from 'express';
 
 //Acá haremos acceso a todas las rutas que puede acceder la aplicación
-import admin from '../../config/firebaseAdmin';
+import UsuarioEntidad from '../../entities/usersDBConnection';
 import ProyectoEntidad from '../../entities/projectDBConnection';
-import Proyecto from '../../models/projects';
 import sendEmail from '../../entities/emailSender';
-import Usuario from '../../models/users';
+import uploadMediaToFirebase from '../../entities/storageDBConnection';
 
 const getDate = (): string => {
     const date = new Date();
@@ -19,7 +18,7 @@ const getDate = (): string => {
     return `Fecha: ${day}/${month}/${year} a las ${hours}:${minutes} hora de Costa Rica.`;
 }
 
-export const modProjectController = async(req: Request, res: Response): Promise<void> => {
+export const ModProjectController = async(req: Request, res: Response): Promise<void> => {
     try {
         //Checamos la solicitud sea un POST
         if (req.method !== 'POST'){
@@ -29,45 +28,65 @@ export const modProjectController = async(req: Request, res: Response): Promise<
         }
 
         //Extraemos los datos
-        const { usuario, idProyecto, name, description, category, reqBudget, actualBudget, startDate, limitDate, media } = req.body;
-        console.log(`Datos extraídos: ${usuario}, ${idProyecto}, ${name}, ${description}, ${category}, ${reqBudget}, ${actualBudget}, ${startDate}, ${limitDate}, ${media}`)
+        const { idProyecto, id_creador, nombre, descripcion, categorias, fecha_limite, objetivo_financiero, media } = req.body;
+        console.log(`Datos extraídos: ${id_creador}, ${idProyecto}, ${nombre}, ${descripcion}, ${categorias}, ${fecha_limite}, ${objetivo_financiero}, ${media}`)
 
         //Validamos si las entradas son válidas
-        if (!usuario || !idProyecto || 
-            !name || !description || !category ||
-            !reqBudget === undefined ||
-            !actualBudget === undefined ||
-            !startDate || !limitDate || !media){
+        if (!idProyecto || !id_creador || 
+            !nombre || !descripcion || !categorias || !fecha_limite ||
+            !objetivo_financiero === undefined ||
+            !media){
             res.status(400).send('Todos los campos son requeridos');
             return;
         }
 
         //Creamos una instancia usuario del dato provisto
-        const usuarioInstance = new Usuario(
-            usuario.idUsuario,
-            usuario.nombre,
-            usuario.cedula,
-            usuario.areaTrabajo,
-            usuario.presupuesto,
-            usuario.telefono,
-            usuario.correo,
-            usuario.password,
-            usuario.activa,
-            usuario.rol
+        const usuarioEntidad = new UsuarioEntidad();
+        const usuarioInstance = await usuarioEntidad.getUserByID(id_creador);
+
+        if (!usuarioInstance){
+            res.status(404).send('Usuario creador del proyecto no encontrado en el sistema');
+            return;
+        }
+
+        //Separamos los tipos de datos entre los existentes guardados y los nuevos
+        //Mapeareamos entre los elementos
+        const finalMediaUrls = await Promise.all(
+            media.map(async (mediaItem: string, index: number) => {
+                //Si es una id existente, la mantenemos como está
+                if (mediaItem.startsWith('https://')){
+                    return mediaItem;
+                }
+
+                //De no ser un objeto ya existente, entonces procederemos a asumir que es una 64baseString y a guardarla
+                try {
+                    console.log("Media data: ", mediaItem.split(',')[0]);
+    
+                    const fileName = `${usuarioInstance.getIdUsuario}_proyecto_${nombre}_${Date.now()}_${index}`;
+                    const mediaUrl = await uploadMediaToFirebase(idProyecto, mediaItem, fileName);
+                    if (mediaUrl !== undefined){
+                        return mediaUrl;
+                    }
+                    throw new Error ('Error en la subida de datos');
+                } catch (error) {
+                    console.error("Error subiendo los datos al bucket: ", error);
+                    res.status(500).send("Error al subir los archivos multimedia al sistema");
+                    return;
+                }
+
+            })
         )
 
         //Una vez validado ésto, procederemos con el cambio del proyecto
         const proyectoEntidad = new ProyectoEntidad();
         await proyectoEntidad.editProyecto(idProyecto, 
             {
-                nombre: name,
-                categorias: category,
-                descripcion: description,
-                fecha_creacion: startDate,
-                fecha_limite: limitDate,
-                objetivo_financiero: reqBudget,
-                fondos_recaudados: actualBudget,
-                media: media
+                nombre: nombre,
+                categorias: categorias,
+                descripcion: descripcion,
+                fecha_limite: fecha_limite,
+                objetivo_financiero: objetivo_financiero,
+                media: finalMediaUrls
             }
         )
 
