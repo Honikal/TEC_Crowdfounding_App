@@ -32,8 +32,78 @@ function ModifyUserPage() {
         areaTrabajo: initialUser.areaTrabajo || "",
         telefono: initialUser.telefono || "",
         presupuesto: initialUser.presupuesto || 0.00,
-        categorias: initialUser.categorias
+        categorias: initialUser.categorias || []
     });
+
+    const totalCategories = [
+        "Tecnología",
+        "Cocina",
+        "Videojuegos",
+        "Educación",
+        "Social",
+        "Ciencia",
+        "Arte",
+        "Salud y bienestar",
+        "Cómics",
+        "Música",
+        "Artesanías"
+    ];
+
+    const [isCategoriaModalVisible, setIsCategoriaModalVisible] = useState<boolean>(false);
+    const [selectedCategories, setSelectedCategories] = useState<string[]>(initialUser.categorias || []);
+
+    const saveSelectedCategories = () => {
+        setUsuario((prev) => ({
+            ...prev,
+            categorias: selectedCategories
+        }))
+        closeCategoryModal();
+    }
+
+    const openCategoryModal = () => setIsCategoriaModalVisible(true);
+    const closeCategoryModal = () => setIsCategoriaModalVisible(false);
+
+    //Función encargada de manejar el seleccionar las categorías
+    const handleCategoryClick = (categoria: string) => {
+        const newCategories = selectedCategories.includes(categoria)
+            ? selectedCategories.filter(c => c !== categoria)
+            : [...selectedCategories, categoria];
+
+        console.log("Lista de categorías nuevas: ", newCategories);
+
+        setSelectedCategories(newCategories);
+    };
+
+    //Función encargada de dibujar o generar el modal
+    const CategoryModal = () => {
+        return (
+            <div className={styles.modalBackdrop}>
+                <div className={styles.modalContent}>
+                    <h2>Selecciona categorías de búsqueda preferidas</h2>
+                    <div className={styles.Categories}>
+                        {totalCategories.map((categoria) => (
+                            <div
+                                key={categoria}
+                                className={`${styles.Category} ${styles.SelectCategory}
+                                ${selectedCategories.includes(categoria) ? styles.Selected : ''}`}
+                                onClick={() => handleCategoryClick(categoria)}
+                            >
+                                <p>{categoria}</p>
+                            </div>
+                        ))}
+                    </div>
+                    <div className={styles.ButtonGroup}>
+                        <button className={styles.ButtonSection} onClick={closeCategoryModal}>
+                            Cancelar
+                        </button>
+                        <button className={styles.ButtonSection} onClick={saveSelectedCategories}>
+                            Guardar categorias
+                        </button>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 
     const [errorMessages, setErrorMessages] = useState<{[key: string]: string}>({});
 
@@ -105,12 +175,14 @@ function ModifyUserPage() {
             //Validamos o parseamos los datos
             const validUserData = {
                 ...usuario,
-                presupuesto: Number(usuario.presupuesto)
+                presupuesto: Number(usuario.presupuesto),
+                categorias: selectedCategories
             };
 
             console.log("Datos modificados: ", validUserData);
-            const modifiedUser = await modifyUser(validUserData);
-            navigate("/main-page", { state: { user: modifiedUser } });
+            await modifyUser(validUserData);
+            console.log("Usuario modificado: ", validUserData);
+            navigate("/main-page", { state: { user: validUserData } });
         } else {
             alert("No se puede registrar, corrija los errores");
         }
@@ -118,6 +190,8 @@ function ModifyUserPage() {
 
     return (
         <div className={styles.SignUpPage}>
+            {isCategoriaModalVisible && <CategoryModal/>}
+
             <div className={styles.ContentLeft}></div>
             <div className={styles.ContentRight}>
                 <div className={styles.Form}>
@@ -199,6 +273,8 @@ function ModifyUserPage() {
                             <small className={styles.ErrorText}>{errorMessages.presupuesto}</small>
                         </div>
                     </div>
+
+                    <button className={styles.CategoryBtn} onClick={openCategoryModal}>Seleccionar categorías</button>
                         
                     <button className={styles.ModifyBtn} onClick={validateUserData}>Modificar Usuario</button>
                 </div>

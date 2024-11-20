@@ -15,6 +15,8 @@ export const ModUserController = async(req: Request, res: Response): Promise<voi
 
         //Extraemos correo y contraseña
         const { usuario_id, name, work_area, telephone, budget, categories } = req.body;
+
+        console.log("Categorias recibidas? ", categories);
         
         //Validamos si las entradas son válidas (usualmente ya varios de éstos valores vendrán preconfirmados)
         if ( !usuario_id || !name || !work_area || !telephone || !budget || !categories){
@@ -29,7 +31,8 @@ export const ModUserController = async(req: Request, res: Response): Promise<voi
                 nombre_completo: name,
                 area_trabajo: work_area,
                 presupuesto: budget,
-                telefono: telephone
+                telefono: telephone,
+                categorias: categories
             }
         )
 
@@ -44,7 +47,7 @@ export const ModUserController = async(req: Request, res: Response): Promise<voi
                 "Se han efectuado cambios de datos en tu cuenta",
                 "Se han completado de forma exitosa los cambios hechos a tu cuenta"
             )
-            res.status(200).send(usuarioModificado.toJson());
+            res.status(201).send("Usuario modificado exitosamente");
         }
 
     } catch (error: any) {

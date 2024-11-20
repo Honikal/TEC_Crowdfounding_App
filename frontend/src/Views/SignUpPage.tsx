@@ -35,8 +35,22 @@ function SignUpPage() {
         budget: 0.00,
         password: "",
         confirmPassword: "",
-        categories: ["Tecnología", "Cocina", "Videojuegos"]
+        categories: []
     });
+
+    const totalCategories = [
+        "Tecnología",
+        "Cocina",
+        "Videojuegos",
+        "Educación",
+        "Social",
+        "Ciencia",
+        "Arte",
+        "Salud y bienestar",
+        "Cómics",
+        "Música",
+        "Artesanías"
+    ];
 
     //Activamos la navegacion
     const navigate = useNavigate();
@@ -44,6 +58,63 @@ function SignUpPage() {
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [passwordStrength, setPasswordStrength] = useState<String>("");
     const [errorMessages, setErrorMessages] = useState<{[key: string]: string}>({});
+
+    //Manejo de modal y selección de categorías
+    const [isCategoriaModalVisible, setIsCategoriaModalVisible] = useState<boolean>(false);
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+
+    const openCategoryModal = () => setIsCategoriaModalVisible(true);
+    const closeCategoryModal = () => setIsCategoriaModalVisible(false);
+ 
+    const saveSelectedCategories = () => {
+        setUsuario((prev) => ({
+            ...prev,
+            categories: selectedCategories
+        }))
+        closeCategoryModal();
+    }
+
+    //Función encargada de manejar el seleccionar las categorías
+    const handleCategoryClick = (categoria: string) => {
+        const newCategories = selectedCategories.includes(categoria)
+            ? selectedCategories.filter(c => c !== categoria)
+            : [...selectedCategories, categoria];
+
+        console.log("Lista de categorías nuevas: ", newCategories);
+
+        setSelectedCategories(newCategories);
+    };
+
+    //Función encargada de dibujar o generar el modal
+    const CategoryModal = () => {
+        return (
+            <div className={styles.modalBackdrop}>
+                <div className={styles.modalContent}>
+                    <h2>Selecciona categorías de búsqueda preferidas</h2>
+                    <div className={styles.Categories}>
+                        {totalCategories.map((categoria) => (
+                            <div
+                                key={categoria}
+                                className={`${styles.Category} ${styles.SelectCategory}
+                                ${selectedCategories.includes(categoria) ? styles.Selected : ''}`}
+                                onClick={() => handleCategoryClick(categoria)}
+                            >
+                                <p>{categoria}</p>
+                            </div>
+                        ))}
+                    </div>
+                    <div className={styles.ButtonGroup}>
+                        <button className={styles.ButtonSection} onClick={closeCategoryModal}>
+                            Cancelar
+                        </button>
+                        <button className={styles.ButtonSection} onClick={saveSelectedCategories}>
+                            Guardar categorias
+                        </button>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 
     //Función encargada de controlar el struct esperado para recibir datos de entrada del usuario
     const handleUserChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -139,7 +210,8 @@ function SignUpPage() {
             //Validamos o parseamos los datos
             const validUserData = {
                 ...usuario,
-                budget: Number(usuario.budget)
+                budget: Number(usuario.budget),
+                categories: selectedCategories
             };
 
             const userData = await signUpUser(validUserData);
@@ -152,6 +224,9 @@ function SignUpPage() {
 
     return (
         <div className={styles.SignUpPage}>
+
+            {isCategoriaModalVisible && <CategoryModal/>}
+
             <div className={styles.ContentLeft}></div>
             <div className={styles.ContentRight}>
                 <div className={styles.Form}>
@@ -315,10 +390,13 @@ function SignUpPage() {
                             </div>
                         </div>
                     </div>
+
+                    <button className={styles.CategoryBtn} onClick={openCategoryModal}>Seleccionar categorías</button>
                     
                     <button className={styles.SignupBtn} onClick={validateUserData}>Sign Up</button>
                 </div>
             </div>
+
         </div>
     )
 }

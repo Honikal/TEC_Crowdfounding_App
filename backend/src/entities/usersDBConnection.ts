@@ -32,8 +32,7 @@ export default class UsuarioEntidad {
       const snapshot = await this.#dbRef.child(id_usuario).get();
       if (snapshot.exists()) {
         const usuarioData = snapshot.val();
-        const usuario = this.createUsuarioFromData(usuarioData);
-        return usuario;
+        return this.createUsuarioFromData(usuarioData);
       }
       return null;
     } catch (error) {
