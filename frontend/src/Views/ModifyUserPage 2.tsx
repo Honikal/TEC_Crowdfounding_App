@@ -1,6 +1,6 @@
-import React, {useState, useEffect, ChangeEvent} from "react";
-import { FaUserCircle, FaIdCard, FaPhoneSquareAlt, FaUserLock, FaEye, FaEyeSlash } from 'react-icons/fa';
-import { MdOutlineEmail, MdOutlineWork } from 'react-icons/md';
+import React, {useState, ChangeEvent} from "react";
+import { FaUserCircle, FaPhoneSquareAlt } from 'react-icons/fa';
+import { MdOutlineWork } from 'react-icons/md';
 import { GiReceiveMoney } from 'react-icons/gi';
 import { BiSolidInfoCircle } from 'react-icons/bi';
 import { useNavigate, useLocation } from "react-router-dom";

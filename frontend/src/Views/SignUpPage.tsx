@@ -1,4 +1,4 @@
-import React, {useState, useEffect, ChangeEvent} from "react";
+import React, {useState, ChangeEvent} from "react";
 import { FaUserCircle, FaIdCard, FaPhoneSquareAlt, FaUserLock, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { MdOutlineEmail, MdOutlineWork } from 'react-icons/md';
 import { GiReceiveMoney } from 'react-icons/gi';

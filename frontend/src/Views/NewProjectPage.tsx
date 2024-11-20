@@ -1,4 +1,4 @@
-import React, {useEffect, useState, ChangeEvent} from 'react';
+import React, {useState, ChangeEvent} from 'react';
 import styles from '../Styles/NewProyectoPage.module.css';
 import { FaLongArrowAltLeft } from 'react-icons/fa'
 import { IoCalendarOutline, IoArrowBackOutline, IoArrowForwardOutline } from 'react-icons/io5'
@@ -36,7 +36,7 @@ function NewProjectPage() {
     const [loading, setLoading] = useState(false);
 
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-    const [totalCategorias, setTotalCategorias] = useState<string[]>([
+    const [totalCategorias] = useState<string[]>([
         "Tecnología", 
         "Cocina",
         "Videojuegos", 

@@ -3,7 +3,7 @@ import styles from '../Styles/MyProjectsPage.module.css';
 import { FaUser, FaCalendarDay } from 'react-icons/fa';
 
 
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useUser } from '../Components/UserContext';
 import CategoryContent from '../Components/CategoryContent';
 import { getProjectsUser } from '../ConnectionToBackend/Routes/getProjectsUser';
@@ -29,8 +29,10 @@ interface Proyecto {
 function MyProjectsPage(){
     //Manejamos el recibo de parámetros
     const location = useLocation();
+    const navigate = useNavigate();
     const { setUser } = useUser();
     const user = location.state?.user;        //Recibimos al usuario
+
 
     const [proyectos, setProyectos] = useState<Proyecto[]>([]);
     const [hoveredProject, setHoveredProject] = useState<string | null>(null);
@@ -161,12 +163,16 @@ function MyProjectsPage(){
         )
     }
 
+    const goToProject = (proyecto: Proyecto) => {
+        navigate(`/project/${proyecto.idProyecto}`, { state: { user: user, project: proyecto }})
+    }
+
     return (
         <>
             <CategoryContent categories={totalCategorias} user={user}/>
             <div className={styles.MyProjectsPage}>
                 {proyectos.map(proyecto => (
-                    <div className={styles.Project}>
+                    <div className={styles.Project} onClick={() => goToProject(proyecto)}>
                         {DisplayProjectContent(proyecto)}
                     </div>
                 ))}

@@ -28,17 +28,25 @@ function MainPage(){
     const { setUser } = useUser();
     const user = location.state?.user;
     const navigate = useNavigate();
-    console.log("Usuario:", user);
-    console.log("Usuario categorías:", user?.categorias);
     const [hoveredProject, setHoveredProject] = useState<string | null>(null);
     const [videoIndexes, setVideoIndexes] = useState<{ [key: string]: number }>({});
     const [proyectos, setProyectos] = useState<Proyecto[]>([]);
     const [featuredProject, setFeaturedProject] = useState<Proyecto | null>(null);
     const [recommendedProjects, setRecommendedProjects] = useState<Proyecto[]>([]);
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-    const [totalCategorias, setTotalCategorias] = useState<string[]>([
-        "Tecnología", "Cocina", "Videojuegos", "Educación", "Social", "Ciencia",
-        "Arte", "Salud y bienestar", "Cómics", "Música", "Artesanías"
+    
+    const [totalCategorias] = useState<string[]>([
+        "Tecnología",
+        "Cocina",
+        "Videojuegos",
+        "Educación",
+        "Social",
+        "Ciencia",
+        "Arte",
+        "Salud y bienestar",
+        "Cómics",
+        "Música",
+        "Artesanías"
     ]);
 
     useEffect(() => {
@@ -124,7 +132,7 @@ function MainPage(){
     };
 
     const navigateToProject = (proyecto: Proyecto) => {
-        navigate('/project', { state: { user, project: proyecto } });
+        navigate(`/project/${proyecto.idProyecto}`, { state: { user, project: proyecto } });
     };
 
     const DisplayProjectContent = (proyecto: Proyecto) => {

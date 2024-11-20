@@ -40,10 +40,8 @@ function SearchedProjectPage(){
     const [videoIndexes, setVideoIndexes] = useState<{ [key: string]: number }>({});
 
     const [proyectos, setProyectos] = useState<Proyecto[]>([]);
-    const [featuredProject, setFeaturedProject] = useState<Proyecto | null>(null);
-    const [recommendedProjects, setRecommendedProjects] = useState<Proyecto[]>([]);
 
-    const [totalCategorias, setTotalCategorias] = useState<string[]>([
+    const [totalCategorias] = useState<string[]>([
         "Tecnología", 
         "Cocina",
         "Videojuegos", 
@@ -72,6 +70,16 @@ function SearchedProjectPage(){
         //Tomamos la existencia del posible texto de los proyectos a buscar
         const categoryToSearch = location.state?.category;
         setCategorias(categoryToSearch);
+
+        const getFirstVideoIndex = async (media: string[]): Promise<number> => {
+            for (let i = 0; i < media.length; i++) {
+                const isVideo = await isVideoFile(media[i]);
+                if (isVideo) {
+                    return i; // Return index if a video is found
+                }
+            }
+            return -1; // Return -1 if no video is found
+        };
         
         //Buscamos la existencia de un vídeo
         const fetchVideoIndexes = async (projects: Proyecto[]) => {
@@ -109,18 +117,9 @@ function SearchedProjectPage(){
             return false;
         }
     };
-    const getFirstVideoIndex = async (media: string[]): Promise<number> => {
-        for (let i = 0; i < media.length; i++) {
-            const isVideo = await isVideoFile(media[i]);
-            if (isVideo) {
-                return i; // Return index if a video is found
-            }
-        }
-        return -1; // Return -1 if no video is found
-    };
 
     const navigateToProject = (proyecto: Proyecto) => {
-        navigate('/project', { state: { user: user, project: proyecto }});
+        navigate(`/project/${proyecto.idProyecto}`, { state: { user, project: proyecto } });
     }
 
     const DisplayProjectContent = (proyecto: Proyecto) => {

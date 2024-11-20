@@ -62,7 +62,7 @@ function ModifyProjectPage() {
 
     //El valor 
     const [selectedCategories, setSelectedCategories] = useState<string[]>(initialProject.categorias);
-    const [totalCategorias, setTotalCategorias] = useState<string[]>([
+    const [totalCategorias] = useState<string[]>([
         "Tecnología", 
         "Cocina",
         "Videojuegos", 
@@ -469,7 +469,7 @@ function ModifyProjectPage() {
 
                 console.log("dato validado: ", validUserData);
 
-                const project = await modifyProject(validUserData)
+                await modifyProject(validUserData)
                 
                 //En éste momento el sistema ya cargó el proyecto
                 setLoading(false);
@@ -477,8 +477,7 @@ function ModifyProjectPage() {
                 alert("Modificación realizada de forma exitosa");
                 //Modificamos los datos del proyecto
                 proyecto.categorias = selectedCategories;
-
-                navigate("/project", { replace: true, state: {user: user, project: proyecto } })
+                navigate(`/project/${proyecto.idProyecto}`, { replace: true, state: {user: user, project: proyecto } })
             } catch (error) {
                 console.error("Error modificando el proyecto: ", error);
                 alert("Ocurrió un error al modificar el proyecto. Inténtalo de nuevo");

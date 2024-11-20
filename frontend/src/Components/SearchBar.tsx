@@ -96,7 +96,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, user }) => {
 
     //Habilidad para seleccionar el proyecto
     const handleSelectProject = (proyecto: Proyecto) => {
-        navigate('/project', { state: { user: user, project: proyecto }})
+        navigate(`/project/${proyecto.idProyecto}`, { state: { user: user, project: proyecto }})
     }
 
     //Limpiar el sistema de resultados
